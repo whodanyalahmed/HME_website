@@ -22,11 +22,12 @@ Route::get("login", function () {
     }
     return view('login');
 });
-Route::post('dashboard',[students::class,'Index']);
-Route::get('dashboard',[students::class,'Dashboard']);
+Route::post('dashboard',[students::class,'Index']) -> middleware('revalidate');
+Route::get('dashboard',[students::class,'Dashboard']) ->middleware('revalidate');
 Route::get('logout', function () {
     if(session()->has('user')){
         session()->pull('user');
     }
     return redirect('login');
-});
+})-> middleware('revalidate');
+

@@ -346,7 +346,7 @@
     <div class="container p-3">
     <div class="row">
     <div class="col-md-12 text-center">
-    <p>Copyright <a href="#">HME </a>  © 2021. All rights reserved.</p>
+    <p>Copyright <a href="#">HME</a>  © 2021. All rights reserved.</p>
     </div>
     </div>
     </div>

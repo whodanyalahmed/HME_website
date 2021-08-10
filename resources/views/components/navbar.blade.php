@@ -6,7 +6,7 @@
       </a>
 
       <ul class="nav nav-pills" id="top-menu">
-        <li class="nav-item active"><a href="#myCarousel" class="nav-link text-dark " aria-current="page">Home</a></li>
+        <li class="nav-item active"><a href="/" class="nav-link text-dark " aria-current="page">Home</a></li>
         <li class="nav-item"><a href="#services" class="nav-link text-dark">Services</a></li>
         <li class="nav-item"><a href="#Skills" class="nav-link text-dark">skills</a></li>
         <li class="nav-item"><a href="#" class="nav-link text-dark">Events</a></li>
