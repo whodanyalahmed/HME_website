@@ -5,6 +5,7 @@
 
 @section('content') 
 
+<x-navbar/>
 <div class="content">
 
 <div id="myCarousel" class="carousel slide hidden cover-container h-100" data-bs-ride="carousel">
@@ -318,7 +319,7 @@
     <div class="widget no-box">
     <h5 class="widget-title">Get Started<span></span></h5>
     <p>Get access to your full Training of presentation and other academic skills.</p>
-    <a class="btn" href="https://www.youtube.com/channel/UC_osRDuNAp1ZZxKckdKlNsw?sub_confirmation=1" target="_blank">Subscribe Now</a>
+    <a class="btn btn-outline-light" href="https://www.youtube.com/channel/UC_osRDuNAp1ZZxKckdKlNsw?sub_confirmation=1" target="_blank">Subscribe Now</a>
     </div>
     </div>
     
@@ -356,25 +357,6 @@
     <span > Copyright © and All rights reserved by <a href="#">HME</a> 2021</span>
   </div>
 </footer> --}}
-<div class="loader-wrapper">
-    <span class="loader"><span class="loader-inner"></span></span>
-    </div>
-    <script>
-        $(window).on("load",function(){
-        $('#navbar').removeClass('hidden');
-        $('#myCarousel').removeClass('hidden');
-        $(".loader-wrapper").fadeOut("slow");
-        });
-   
-        $(document).ready(function () {
-    $('.nav li a').click(function(e) {
 
-        $('.nav li.active').removeClass('active');
 
-        var $parent = $(this).parent();
-        $parent.addClass('active');
-        // e.preventDefault();
-    });
-});
-    </script>
 @endsection

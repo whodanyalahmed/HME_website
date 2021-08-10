@@ -15,8 +15,8 @@
       </ul>
       
       <div class="text-end ">
-        <button type="button" class="btn btn-outline-dark me-2">Login</button>
-        <button type="button" class="btn btn-warning pr-5">Sign-up</button>
+        <a type="button" href="login" class="btn btn-outline-dark me-2">Login</a>
+        <a type="button" href="signup" class="btn btn-warning pr-5">Sign-up</a>
       </div>
     </nav>
   </div>

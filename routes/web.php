@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\students;
+use App\Http\Controllers\Common;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/',[Common::class,'Index']);
+Route::get("login", function () {
+    if(session()->has('user')){
+        return redirect('dashboard');
+    }
+    return view('login');
+});
+Route::post('dashboard',[students::class,'Index']);
+Route::get('dashboard',[students::class,'Dashboard']);
+Route::get('logout', function () {
+    if(session()->has('user')){
+        session()->pull('user');
+    }
+    return redirect('login');
 });
