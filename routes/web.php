@@ -26,8 +26,11 @@ Route::post('dashboard',[students::class,'Index']) -> middleware('revalidate');
 Route::get('dashboard',[students::class,'Dashboard']) ->middleware('revalidate');
 Route::get('logout', function () {
     if(session()->has('user')){
-        session()->pull('user');
+        // session()->pull('user');
+        session()->flush();
     }
     return redirect('login');
 })-> middleware('revalidate');
+
+Route::post('upload',[students::class,'Upload']);
 

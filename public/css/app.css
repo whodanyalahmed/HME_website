@@ -16,6 +16,7 @@ html {
 }
 .btn-outline-dark:focus{
   background: #242f3f;
+  color:#ccc;
 }
 /* loader css */
   .loader-wrapper {
