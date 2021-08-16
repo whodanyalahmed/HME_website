@@ -10,17 +10,22 @@ use Illuminate\Support\Facades\DB;
 
 class students extends Controller
 {
+    public function getFeeId($id){
+        $monthId =DB::select("SELECT month_id FROM `months` where MONTH(month_name)=?",[intval(date('m'))]); 
+        $monthId = $monthId[0]->month_id;
+        $cred = [$id,$monthId];
+        
+        $feeId = DB::select('select fee_id from fees where s_id=? and month_id=?',$cred);
+        $feeId = $feeId[0]->fee_id;
+        return $feeId;
+    }
     public function Upload(Request $req)
     {   
         $name=  $req->file('file')->store('Snapshots', ['disk' => 'public']);
         
 
-        $monthId =DB::select("SELECT month_id FROM `months` where MONTH(month_name)=?",[intval(date('m'))]); 
-        $monthId = $monthId[0]->month_id;
-        $cred = [session('user')['id'],$monthId];
-        
-        $feeId = DB::select('select fee_id from fees where s_id=? and month_id=?',$cred);
-        $feeId = $feeId[0]->fee_id;
+      
+        $feeId = $this->getFeeId(session('user')['id']);
         $feeDetails = fee::select('*')
         ->where ('fee_id',$feeId) 
         ->update(
@@ -37,7 +42,7 @@ class students extends Controller
             ]
             );
         $req->session()->flash('upload', session('user')['name']);
-        return redirect('dashboard');
+        return redirect('students/dashboard');
 
     }
 
@@ -57,7 +62,7 @@ class students extends Controller
         else{
             $req->session()->put('user', ['id'=>$exe[0]->s_id,'name'=>$exe[0]->s_name,'pass'=>$data['password'],'fee_status'=>$exe[0]->fee_status]);
             // return view('dashboard', ['data'=>$exe]);
-            return redirect('dashboard');
+            return redirect('students/dashboard');
             
         }
         
@@ -70,17 +75,21 @@ class students extends Controller
             $exe= $this->getData($cred);
             $status=  $exe[0]->fee_status;
             $req->session()->put('user.fee_status',$status );
-
+            $feeId = $this->getFeeId(session('user')['id']);
+            $feeData = fee::select('fee_challan_url')
+            ->where('fee_id',$feeId)
+            ->get();
+            $challa_url = $feeData[0]->fee_challan_url;
             if(session('user')['fee_status'] == 1){
                 // return session('fee_status');
                 return view('dashboard');
             }
             else{
-                return view('s_payment');
+                return view('s_payment',['challan'=>$challa_url]);
             }
         }
         else{
-            return redirect('login');
+            return redirect('/students/login');
         }
     }
 }

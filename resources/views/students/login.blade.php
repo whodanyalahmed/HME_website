@@ -1,15 +1,15 @@
 @extends('layout')
 @section('title')
-    Log in | HME
+    Log in | Students
 @endsection
 
 @section('content') 
 
 <x-navbar/>
-<div class="registration-form">
-    <form action="/dashboard" method="POST">
+<div class="registration-form mt-5 ">
+    <form action="/students/dashboard" class="shadow rounded" method="POST">
         @csrf
-        <h1 class="text-center mb-4">Login for students</h1>
+        <h1 class="text-center mb-4 ">Login for students</h1>
         <div class="form-icon">
             <span><i class="far fa-user"></i></span>
         </div>

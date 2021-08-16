@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\students;
+use App\Http\Controllers\admin;
 use App\Http\Controllers\Common;
 
 /*
@@ -16,21 +17,40 @@ use App\Http\Controllers\Common;
 */
 
 Route::get('/',[Common::class,'Index']);
-Route::get("login", function () {
+// students
+// Students routes
+Route::get("students/login", function () {
     if(session()->has('user')){
-        return redirect('dashboard');
+        return redirect('students/dashboard');
     }
-    return view('login');
-});
-Route::post('dashboard',[students::class,'Index']) -> middleware('revalidate');
-Route::get('dashboard',[students::class,'Dashboard']) ->middleware('revalidate');
-Route::get('logout', function () {
+    return view('students.login');
+}) -> middleware('revalidate');
+Route::post('students/dashboard',[students::class,'Index']) -> middleware('revalidate');
+Route::get('students/dashboard',[students::class,'Dashboard']) ->middleware('revalidate');
+Route::get('students/logout', function () {
     if(session()->has('user')){
         // session()->pull('user');
         session()->flush();
     }
-    return redirect('login');
+    return redirect('students/login');
 })-> middleware('revalidate');
 
-Route::post('upload',[students::class,'Upload']);
-
+Route::post('students/upload',[students::class,'Upload']);
+// Admin
+// Admin data
+Route::get("admin/login", function () {
+    if(session()->has('admin')){
+        return redirect('admin/dashboard');
+    }
+    return view('admin.login');
+}) -> middleware('revalidate');
+Route::post('admin/dashboard',[admin::class,'Index']) -> middleware('revalidate');
+Route::get('admin/dashboard',[admin::class,'Dashboard']) ->middleware('revalidate');
+Route::get('admin/logout', function () {
+    if(session()->has('admin')){
+        // session()->pull('user');
+        session()->flush();
+    }
+    return redirect('admin/login');
+})-> middleware('revalidate');
+// admin dashboard

@@ -22,7 +22,7 @@
                 Please pay the fees.</h1>
                 <p class="lead">At this Account number XXXXXXXXXXXXXX and upload the screenshot here.</p>
                 <p class="lead">
-                <form action="/upload" method="post" enctype="multipart/form-data">
+                <form action="upload" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" name="file" class="form-control" accept="image/*" required><br>
                     <input type="submit" class="btn btn-outline-dark float-end">
@@ -38,7 +38,7 @@
                 <i style="font-size:90px;" class="fas fa-hourglass-half text-warning my-4 "></i><br>
                 Please wait till you get confirm after verification.</h1>
                 <p class="lead text-center">If you still in pending then please contact on this number 03XX-XXXXXXX.</p>
-                <img src="{{asset('uploads/Snapshots/Sac31Ne8byWQpO7YnaOZKjV1nw1bQDumq5Hc3O5v.png')}}" alt="pic">
+
           </main>    
     </section>
         
