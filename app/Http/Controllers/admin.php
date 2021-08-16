@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\student;
 class admin extends Controller
 {
     public function getData($cred){
@@ -42,5 +42,12 @@ class admin extends Controller
         else{
             return redirect('/admin/login');
         }
+    }
+    public function pending()
+    {
+        $data = student::select('*')
+        ->where('fee_status',0)
+        ->get();
+        return $data;
     }
 }

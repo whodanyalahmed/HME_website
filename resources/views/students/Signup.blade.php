@@ -1,16 +1,16 @@
 @extends('layout')
 
 @section('title')
-    Sign up | HME
+    Sign up | Students
 @endsection
 
 @section('content')
 
 <div class="registration-form">
-    <form action="/login" method="POST" >
+    <form action="signup" method="POST" >
         <h1 class="text-center mb-4">Sign-Up for students</h1>
         <div class="form-icon">
-            <span><i class="icon icon-user"></i></span>
+            <span><i class="far fa-user"></i></span>
         </div>
     <div class="form-group">
         <input type="text" class="form-control item" id="username" placeholder="Username">
@@ -24,9 +24,7 @@
     <div class="form-group">
         <input type="text" class="form-control item" id="phone-number" placeholder="Phone Number">
     </div>
-    <div class="form-group">
-        <input type="text" class="form-control item" id="birth-date" placeholder="Birth Date">
-    </div>
+    
     <div class="form-group">
         <button type="button" class="btn btn-block create-account">Create Account</button>
     </div>
