@@ -30,8 +30,8 @@
     </div>
   </div>
   <div class="row">
-    <div class="form-group col">
-    <select class="form-select item " aria-label="Default select example" name="interest" required>
+    <div class="form-group col-4">
+    <select class="form-select item " onchange="SelectField()" id="field" aria-label="Default select example" name="interest" required>
         <option value='' selected>Interested in</option>
         <option value="1">English Language</option>
         <option value="2">Tuition</option>
@@ -40,18 +40,7 @@
         <option value="5">Business</option>
       </select>
     </div>
-    <div class="form-group col">
-    
-      <select class="form-select item d-none" aria-label="Default select example" name="module" required>
-        <option value='' selected>Select Module</option>
-        <option value="7">Beginner</option>
-        <option value="8">Module - 1</option>
-        <option value="3">Module - 2</option>
-        <option value="3">Module - 3</option>
-        <option value="3">Special Advance</option>
-        <option value="3">Conversation</option>
-      </select>
-    </div>
+    <div id="ele" class="col-8"></div>
     </div>
       <select class="form-select item" aria-label="Default select example" name="Qualification" required>
         <option value='' selected>Qualification from</option>
@@ -83,5 +72,59 @@
 </form>
 
 </div>
-
+<script>
+  function SelectField() {
+    var data = document.getElementById('field').value
+    console.log(data)
+    l = [ `<div class="form-group">
+        <select class="form-select item " aria-label="Default select example" id="module" name="module" required>
+      <option value='' selected>Select Module</option>
+      <option value="7">Beginner</option>
+      <option value="8">Module - 1</option>
+      <option value="3">Module - 2</option>
+      <option value="3">Module - 3</option>
+      <option value="3">Special Advance</option>
+      <option value="3">Conversation</option>
+    </select>
+  </div>`,
+  `<div class="form-group ">
+  
+    <select class="form-select item " aria-label="Default select example" id="tuition" name="tuition" required>
+      <option value='' selected>Select tuition</option>
+      <option value="7">6th</option>
+      <option value="8">7th</option>
+      <option value="3">8th</option>
+      <option value="3">9th</option>
+      <option value="3">Matric</option>
+      <option value="3">1st year</option>
+      <option value="3">2nd year</option>
+    </select>
+  </div>`,
+  `<div class="form-group ">
+  
+    <select class="form-select item " aria-label="Default select example" id="Computer" name="Computer" required>
+      <option value='' selected>Select Computer Course</option>
+      <option value="7">Programming</option>
+      <option value="8">Graphics</option>
+      <option value="3">Video Editing</option>
+      <option value="3">MS Office</option>
+    </select>
+  </div>`];
+    switch (data) {
+      case '1':
+        document.getElementById('ele').innerHTML = l[0];
+        
+        break;
+        case '2':
+        document.getElementById('ele').innerHTML = l[1];
+        break;
+        case '3':
+          document.getElementById('ele').innerHTML = l[2];
+        
+        break;
+      default:
+        break;
+    }
+  }
+</script>
 @endsection
