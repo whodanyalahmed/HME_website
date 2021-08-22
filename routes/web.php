@@ -35,6 +35,7 @@ Route::get('students/logout', function () {
     return redirect('students/login');
 })-> middleware('revalidate');
 Route::view('students/signup','students.signup');
+Route::post('students/signup', [students::class,'signup']);
 Route::post('students/upload',[students::class,'Upload']);
 // Admin
 // Admin data
@@ -54,4 +55,5 @@ Route::get('admin/logout', function () {
     return redirect('admin/login');
 })-> middleware('revalidate');
 Route::get('admin/pending',[admin::class,'pending']);
+Route::get('admin/students',[admin::class,'All']);
 // admin dashboard

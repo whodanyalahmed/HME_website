@@ -6,6 +6,15 @@
 @section('content') 
 
 <x-navbar/>
+@if (session('new'))
+<div class="alert alert-success d-flex align-items-center container" role="alert" style="margin-top:100px;">
+        <i class="fas fa-check-circle"></i>&nbsp;
+        <div>
+        {{session('new')}} has been added.
+        </div>
+    </div>
+    
+@endif
 <div class="registration-form mt-5 ">
     <form action="/students/dashboard" class="shadow rounded" method="POST">
         @csrf

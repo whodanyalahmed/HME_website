@@ -92,4 +92,54 @@ class students extends Controller
             return redirect('/students/login');
         }
     }
+
+
+    public function Signup(Request $req)
+    {
+      
+        $this->AddStudent($req);
+        $req->session()->flash('new', $req->name);
+        
+        return redirect('students/login');
+
+    }
+
+    public function AddStudent($req){
+        $data = $req->input();
+        $new = new student;
+        $new->s_name = $req->name;
+        $new->s_email = $req->email;
+        // $new->s_password = password_hash($req->password,PASSWORD_DEFAULT);
+        $new->s_password = $req->password;
+        $new->s_co_id = 0;
+        $new->s_contactno = $req->number;
+        $new->onsite = $req->onsite;
+        $new->qualification_id = $req->Qualification;
+        $new->interest = $req->interest;
+        $new->s_status= 1;
+        $new->is_online= 0;
+        $new->s_joined_date= null;
+        $new->save();
+        return $new->s_id();
+    }
+    public function getStudentData($s_id){
+        $data = student::find($s_id);
+        return $data;
+    }
+    public function getfees($id){
+
+        $data = DB::select('select * from modules where id = ?', $id);
+        return $data;
+    }
+    public function GenerateFees($s_id){
+        $data = $this->getStudentData($s_id);
+        if($data ->is_new_admission == 1){
+            $admission = $this->getfees('6')->fee;
+        }
+        else{
+            $admission = 0;
+        }
+        
+
+    }
 }

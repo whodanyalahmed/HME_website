@@ -46,8 +46,15 @@ class admin extends Controller
     public function pending()
     {
         $data = student::select('*')
-        ->where('fee_status',0)
+        ->where('fee_status',3)
+        ->get();
+        return view('admin.pending');
+    }
+    public function All()
+    {
+        $data = student::select('*')
         ->get();
         return $data;
     }
+    
 }
