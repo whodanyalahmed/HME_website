@@ -5,11 +5,11 @@
 @endsection
 
 @section('content')
-
-<div class="registration-form">
+<x-navbar/>
+<div class="registration-form mt-5">
     <form action="signup" method="POST" >
         @csrf
-        <h1 class="text-center mb-4">Sign-Up for students</h1>
+        <h1 class="text-center mb-4">Signup for students</h1>
         <div class="form-icon">
             <span><i class="far fa-user"></i></span>
         </div>
@@ -77,35 +77,35 @@
     var data = document.getElementById('field').value
     console.log(data)
     l = [ `<div class="form-group">
-        <select class="form-select item " aria-label="Default select example" id="module" name="module" required>
+        <select class="form-select item " aria-label="Default select example" id="module" name="sub_interest" required>
       <option value='' selected>Select Module</option>
       <option value="7">Beginner</option>
       <option value="8">Module - 1</option>
-      <option value="3">Module - 2</option>
-      <option value="3">Module - 3</option>
-      <option value="3">Special Advance</option>
-      <option value="3">Conversation</option>
+      <option value="9">Module - 2</option>
+      <option value="10">Module - 3</option>
+      <option value="11">Special Advance</option>
+      <option value="12">Conversation</option>
     </select>
   </div>`,
   `<div class="form-group ">
   
-    <select class="form-select item " aria-label="Default select example" id="tuition" name="tuition" required>
+    <select class="form-select item " aria-label="Default select example" id="tuition" name="sub_interest" required>
       <option value='' selected>Select tuition</option>
-      <option value="7">6th</option>
-      <option value="8">7th</option>
-      <option value="3">8th</option>
-      <option value="3">9th</option>
-      <option value="3">Matric</option>
-      <option value="3">1st year</option>
-      <option value="3">2nd year</option>
+      <option value="13">6th</option>
+      <option value="13">7th</option>
+      <option value="13">8th</option>
+      <option value="14">9th</option>
+      <option value="14">Matric</option>
+      <option value="15">1st year</option>
+      <option value="15">2nd year</option>
     </select>
   </div>`,
   `<div class="form-group ">
   
-    <select class="form-select item " aria-label="Default select example" id="Computer" name="Computer" required>
+    <select class="form-select item " aria-label="Default select example" id="Computer" name="sub_interest" required>
       <option value='' selected>Select Computer Course</option>
-      <option value="7">Programming</option>
-      <option value="8">Graphics</option>
+      <option value="3">Programming</option>
+      <option value="3">Graphics</option>
       <option value="3">Video Editing</option>
       <option value="3">MS Office</option>
     </select>
@@ -120,6 +120,14 @@
         break;
         case '3':
           document.getElementById('ele').innerHTML = l[2];
+        
+        break;
+        case '4':
+          document.getElementById('ele').innerHTML = "";
+        
+        break;
+        case '5':
+          document.getElementById('ele').innerHTML = "";
         
         break;
       default:

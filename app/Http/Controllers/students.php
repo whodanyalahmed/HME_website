@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\DB;
 class students extends Controller
 {
     public function getFeeId($id){
-        $monthId =DB::select("SELECT month_id FROM `months` where MONTH(month_name)=?",[intval(date('m'))]); 
+        // echo intval(date('Y'));
+        $monthId =DB::select("SELECT month_id FROM `months` where MONTH(month_name)=? and Year(year)=?",[intval(date('m')),intval(date('Y'))]); 
         $monthId = $monthId[0]->month_id;
         $cred = [$id,$monthId];
         
@@ -51,6 +52,7 @@ class students extends Controller
         return $exe;
     }
     function Index(Request $req){
+        // return $this->getAddMonth();
         $data= $req->Input();
         $cred= [$data['email'],$data['email'],$data['password']];
         $exe = $this->getData($cred);
@@ -97,9 +99,9 @@ class students extends Controller
     public function Signup(Request $req)
     {
       
-        $this->AddStudent($req);
+        $s_id = $this->AddStudent($req);
         $req->session()->flash('new', $req->name);
-        
+        $this->GenerateFees($s_id);
         return redirect('students/login');
 
     }
@@ -116,29 +118,68 @@ class students extends Controller
         $new->onsite = $req->onsite;
         $new->qualification_id = $req->Qualification;
         $new->interest = $req->interest;
+        if($req->interest == "1" || $req->interest == "2" || $req->interest == "3"  ){
+            $new->sub_interest_id = $req->sub_interest;
+        }
+        else{
+            $new->sub_interest_id = $req->interest;
+        }
         $new->s_status= 1;
         $new->is_online= 0;
         $new->s_joined_date= null;
+
         $new->save();
-        return $new->s_id();
+        // echo "<script>console.log('Id is: ' ".$new->id.")</script>";
+        return $new->id;
+    }
+    public function getAddMonth(){
+        $data = DB::select('SELECT count(*) as num FROM months WHERE month_name = Month(CURDATE()) and year = year(CURDATE())');
+        echo json_encode($data[0]->num);
+        if(!($data[0]->num > 1)){
+            $data = DB::insert('insert into months(month_name,year) values (CURDATE(),CURDATE())');
+            return $data;
+        }
+        else{
+            $data = DB::select('SELECT * FROM months WHERE 
+            month_name = Month(CURDATE()) 
+            and 
+            year = year(CURDATE())');
+            return $data;
+        }
     }
     public function getStudentData($s_id){
-        $data = student::find($s_id);
-        return $data;
+        $data = DB::select('select * from students where s_id = ?', [$s_id]);
+        return $data[0];
     }
     public function getfees($id){
 
-        $data = DB::select('select * from modules where id = ?', $id);
-        return $data;
+        $data = DB::select('select * from modules where id = ?', [$id]);
+        return $data[0]->fee;
+    }
+    public function getAdmissionfees($id){
+
+        $data = DB::select('select fee from interest where id = ?', [$id]);
+        // echo json_encode($data);
+        return $data[0]->fee;
     }
     public function GenerateFees($s_id){
+        // echo $s_id;
         $data = $this->getStudentData($s_id);
+        // echo json_encode($data);
+        $m_id = $this->getAddMonth();
+        $admission = 0;
         if($data ->is_new_admission == 1){
-            $admission = $this->getfees('6')->fee;
+            // echo gettype($data->interest);
+            $admission = $this->getAdmissionfees($data->interest);
         }
-        else{
-            $admission = 0;
-        }
+        $fees = $this->getfees($data->sub_interest_id);
+        // echo gettype($fees);
+        // echo gettype($admission);
+        $total = $fees+$admission;
+        $all = ["fees" => $fees,"total"=>$total];
+        $fees = DB::insert('insert into fees (fees_amount, fees_paid,s_id,month_id,fee_challan_url) values (?, ?, ?, ?, ?)', [$total, 0,$s_id,$m_id,null]);
+        return $all;
+
         
 
     }

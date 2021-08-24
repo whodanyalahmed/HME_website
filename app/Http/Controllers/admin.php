@@ -52,9 +52,13 @@ class admin extends Controller
     }
     public function All()
     {
-        $data = student::select('*')
-        ->get();
-        return $data;
+        $data = DB::select('select *,qu.name as q_name,inte.name as i_name from students 
+        inner join qualification qu on students.Qualification_id = qu.id
+        inner join interest inte on students.interest = inte.id');
+        // return $data;
+        // echo gettype($data[0]['s_id']);
+        $data = json_decode(json_encode($data),true);
+        return view('admin.allstudents', ['data'=>$data]);
     }
     
 }

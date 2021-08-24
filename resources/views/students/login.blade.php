@@ -15,7 +15,7 @@
     </div>
     
 @endif
-<div class="registration-form mt-5 ">
+<div class="registration-form mt-5 " id="login">
     <form action="/students/dashboard" class="shadow rounded" method="POST">
         @csrf
         <h1 class="text-center mb-4 ">Login for students</h1>

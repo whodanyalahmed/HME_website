@@ -6,7 +6,7 @@
 @section('content') 
 
 <x-navbar/>
-<div class="registration-form mt-5 ">
+<div class="registration-form mt-5 " id="login">
     <form action="/admin/dashboard" class="shadow rounded" method="POST">
         @csrf
         <h1 class="text-center mb-4 ">Login for Admins</h1>
