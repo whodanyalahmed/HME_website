@@ -1,6 +1,7 @@
 @extends('layout')
+
 @php
-    $var = "Dashboard"
+    $var = "Active St."
 @endphp
 
 @section('title')
@@ -9,13 +10,12 @@
 
 @section('content')
 <body class="sb-nav-fixed">
-   
     <x-dash-side-nav data="{{$var}}"/>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">{{$var}}</h1>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body">Primary Card</div>
@@ -52,6 +52,59 @@
                                 </div>
                             </div>
                         </div>
+                    </div> --}}
+  
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            {{$var}}
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple" class="cell-border compact stripe hover" >
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        {{-- <th>Coaching Id</th> --}}
+                                        <th>Email</th>
+                                        {{-- <th>Joined Date</th> --}}
+                                        <th>fee status</th>
+                                        {{-- <th>Qualification</th>
+                                        <th>Onsite</th> --}}
+                                        <th>Interested in</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($data as $item)
+                                <tr>
+                                <td>{{$item['s_id']}}</td>
+                                <td>{{$item['s_name']}}</td>
+                                {{-- <td>{{$item['s_co_id']}}</td> --}}
+                                <td>{{$item['s_email']}}</td>
+                                {{-- <td>{{($item['s_status']) ? "yes" : "no"}}</td> --}}
+                                {{-- <td>{{$item['s_joined_date']}}</td> --}}
+                                @php
+                                $d = $item['fee_status'];
+                                $s = ($d == 0) ? "not paid" : (($d == 1)  ? "paid" : "pending");
+                                @endphp
+                                <td>{{$s}}
+                                </td>
+                                {{-- <td>{{$item['q_name']}}</td> --}}
+                                {{-- <td>{{($item['onsite']) ? "yes" : "no"}}</td> --}}
+                                <td>{{$item['i_name']}}</td>
+                                <td><a href="edit/{{$item['s_id']}}" class="btn btn-outline btn-success">Edit</a></td>
+                                <td><a href="delete/{{$item['s_id']}}"   onclick="update({{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a></td>
+                                
+                            </tr>
+                                
+                                @endforeach
+                                 
+                                
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
@@ -73,55 +126,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            All Students Data
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple" class="cell-border compact stripe hover" >
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Coaching Id</th>
-                                        <th>Email</th>
-                                        <th>Active Status</th>
-                                        <th>Joined Date</th>
-                                        <th>fee status</th>
-                                        <th>Qualification</th>
-                                        <th>Onsite</th>
-                                        <th>Interested in</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($data as $item)
-                                <tr>
-                                <td>{{$item['s_id']}}</td>
-                                <td>{{$item['s_name']}}</td>
-                                <td>{{$item['s_co_id']}}</td>
-                                <td>{{$item['s_email']}}</td>
-                                <td>{{($item['s_status']) ? "yes" : "no"}}</td>
-                                <td>{{$item['s_joined_date']}}</td>
-                                @php
-                                $d = $item['fee_status'];
-                                $s = ($d == 0) ? "not paid" : (($d == 1)  ? "paid" : "pending");
-                                @endphp
-                                <td>{{$s}}
-                                </td>
-                                <td>{{$item['q_name']}}</td>
-                                <td>{{($item['onsite']) ? "yes" : "no"}}</td>
-                                <td>{{$item['i_name']}}</td>
-                                
-                            </tr>
-                                
-                                @endforeach
-                                 
-                                
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -133,6 +137,65 @@
             </footer>
         </div>
     </div>
+         <!-- Modal -->
+         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Conirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you really wanna delete?
+                </div>
+                <div class="modal-footer">
+                <form action="" method="post" id="form">
+                    @csrf
+                    <input type="hidden" name="id" id="formVal" value="">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="delete" class="btn btn-primary">Delete</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        <script>
+            function update(params) {
+                document.getElementById('form').setAttribute('action','student/delete/'+params);
+                document.getElementById('formVal').setAttribute('value',params);
+            }
+            // $("#delete").click(function(){
+            // $('#form').attr('action');
+            // $.ajax({url: "demo_test.txt", success: function(result){
+            //     if(result.success == true){ // if true (1)
+            //         setTimeout(function(){// wait for 5 secs(2)
+            //             location.reload(); // then reload the page.(3)
+            //         }, 5000); 
+            // }});
+            // });
+
+
+            $("#form").submit(function(e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var form = $('#form');
+            var url = form.attr('action');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(), // serializes the form's elements.
+                success: function(data)
+                {
+                    location.reload();
+                }
+                });
+
+
+});
+       </script>
+         
     <script src="/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="/assets/demo/chart-area-demo.js"></script>

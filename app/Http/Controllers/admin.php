@@ -32,8 +32,9 @@ class admin extends Controller
     function Dashboard(Request $req){
         if(session('admin')){
             // if(session('user')['fee_status'] == 1){
-                // return session('fee_status');
-            return view('admin.dashboard');
+                // return session('fee_status');\
+            $data = $this->getStudentsData();
+            return view('admin.dashboard',['data' => $data]);
             // }
             // else{
             //     return view('s_payment',['challan'=>$challa_url]);
@@ -52,13 +53,72 @@ class admin extends Controller
     }
     public function All()
     {
+        if(session('admin')){
+            $data = $this->getStudentsData();
+            return view('admin.allstudents', ['data'=>$data]);}
+        else{
+            return redirect('admin/login');
+        }
+    }
+    public function Edit($id)
+    {
+        if(session('admin')){
+            $data = $this->getStudentData($id);
+            return $data;
+            // return view('admin.EditStudent', ['data'=>$data]);
+        }
+        else{
+            return redirect('admin/login');
+        }
+    }
+    public function ActiveStudents()
+    {
+        if(session('admin')){
+            $data = $this->getActiveStudentsData();
+            return view('admin.ActiveStudents', ['data'=>$data]);}
+        else{
+            return redirect('admin/login');
+        }
+    }
+    public function getStudentsData(){
         $data = DB::select('select *,qu.name as q_name,inte.name as i_name from students 
-        inner join qualification qu on students.Qualification_id = qu.id
-        inner join interest inte on students.interest = inte.id');
+        inner join qualification qu on students.Qualification_id = qu.id 
+        inner join interest inte on students.interest = inte.id
+
+        ');
         // return $data;
         // echo gettype($data[0]['s_id']);
         $data = json_decode(json_encode($data),true);
-        return view('admin.allstudents', ['data'=>$data]);
+        return $data;
     }
-    
+    public function getStudentData($id){
+        $data = DB::select('select *,qu.name as q_name,inte.name as i_name from students 
+        inner join qualification qu on students.Qualification_id = qu.id 
+        inner join interest inte on students.interest = inte.id
+        where s_id = '.$id);
+        // return $data;
+        // echo gettype($data[0]['s_id']);
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function getActiveStudentsData(){
+        $data = DB::select('select *,qu.name as q_name,inte.name as i_name from students 
+        inner join qualification qu on students.Qualification_id = qu.id 
+        inner join interest inte on students.interest = inte.id
+        where students.s_status = 1
+        ');
+        // return $data;
+        // echo gettype($data[0]['s_id']);
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function DeleteStudent($id)
+    {
+        $data = DB::update('update students set s_status = 0 where s_id = ?', [$id]);
+        
+    }
+    public function ActiveStudent($id){
+        $data = DB::update('update students set s_status = 1 where s_id = ?', [$id]);
+
+    }
 }

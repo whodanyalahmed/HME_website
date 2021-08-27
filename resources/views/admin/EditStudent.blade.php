@@ -1,6 +1,6 @@
 @extends('layout')
 @php
-    $var = "All Students"
+    $var = "Edit Students"
 @endphp
 
 @section('title')
@@ -14,44 +14,7 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">{{$var}}</h1>
-                    {{-- <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Primary Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                    
   
                     <div class="card mb-4">
                         <div class="card-header">
@@ -149,18 +112,18 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirm Disable</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Conirm Delete</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Do you really wanna disable?
+                    Do you really wanna delete?
                 </div>
                 <div class="modal-footer">
                 <form action="" method="post" name="form" id="Disform">
                     @csrf
                     <input type="hidden" name="id" value="">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit"  class="btn btn-primary">Disable</button>
+                    <button type="submit"  class="btn btn-primary">Delete</button>
                 </form>
                 </div>
             </div>
@@ -189,76 +152,7 @@
             </div>
         </div>
         <script>
-            function update(ele,p) {
-                action = $(ele).select();
-                href = action.attr('href');
-                
-                // console.log(href);
-                var forms = document.getElementsByName('form')
-                forms.forEach(element => {
-                    element.setAttribute('action','student/'+href);
-                });
-
-                var names = document.getElementsByName('id');
-                names.forEach(ele => {
-                    ele.setAttribute('value',p);
-                });
-            }
-            // $("#delete").click(function(){
-            // $('#form').attr('action');
-            // $.ajax({url: "demo_test.txt", success: function(result){
-            //     if(result.success == true){ // if true (1)
-            //         setTimeout(function(){// wait for 5 secs(2)
-            //             location.reload(); // then reload the page.(3)
-            //         }, 5000); 
-            // }});
-            // });
-
-
-            $("#Actform").submit(function(e) {
-
-
-                e.preventDefault();
-             // avoid to execute the actual submit of the form.
-
-            var form = $('#Actform');
-            var url = form.attr('action');
-            console.log(url)
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
-                success: function(data)
-                {
-                    location.reload();
-                }
-                });
-                return false;
-
-});
-            $("#Disform").submit(function(e) {
-
-                e.preventDefault();
-                // return false;
-             // avoid to execute the actual submit of the form.
-
-            var form = $('#Disform');
-            var url = form.attr('action');
-            console.log(url)
-
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: form.serialize(), // serializes the form's elements.
-                success: function(data)
-                {
-                    location.reload();
-                }
-                });
-
-                return false;
-});
+      
        </script>
          
     <script src="/js/scripts.js"></script>

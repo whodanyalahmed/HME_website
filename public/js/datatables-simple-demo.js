@@ -11,7 +11,7 @@
 $(document).ready( function () {
     $('#datatablesSimple').DataTable({
     "columnDefs": [
-        {"targets": [10,11], "orderable": false},
+        {"targets": [9,10], "orderable": false},
     ]
 });
 } );

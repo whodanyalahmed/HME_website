@@ -56,4 +56,10 @@ Route::get('admin/logout', function () {
 })-> middleware('revalidate');
 Route::get('admin/pending',[admin::class,'pending']);
 Route::get('admin/students',[admin::class,'All']);
+Route::get('admin/Activestudents',[admin::class,'ActiveStudents']);
+Route::post('/admin/student/delete/{id}',[admin::class,'DeleteStudent']);
+Route::post('/admin/student/active/{id}',[admin::class,'ActiveStudent']);
+Route::post('/admin/student/Edit/{id}',[admin::class,'EditStudent']);
+Route::get('admin/student/Edit/{id}',[admin::class,'Edit']);
+
 // admin dashboard
