@@ -4,14 +4,19 @@
 
 //     const datatablesSimple = document.getElementById('');
 //     if (datatablesSimple) {
-//         new simpleDatatables.DataTable(datatablesSimple);
+//         new simpleDatatables.DataTable(datatablesSimple,
+//     //           {  "columnDefs": [
+//     //     {"targets": [9,10], "orderable": false},
+//     // ]}
+
+//             );
 //     }
 // });
 
 $(document).ready( function () {
     $('#datatablesSimple').DataTable({
     "columnDefs": [
-        {"targets": [9,10], "orderable": false},
+        {bSortable: false, targets: [-1,-2]} ,
     ]
 });
 } );

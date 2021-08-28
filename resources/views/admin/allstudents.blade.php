@@ -72,8 +72,8 @@
                                         <th>Qualification</th>
                                         <th>Onsite</th>
                                         <th>Interested in</th>
-                                        <th>Edit</th>
-                                        <th>Disable/Acitve</th>
+                                        {{-- <th>Edit</th> --}}
+                                        <th>Edit/Disable/Acitve</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -94,10 +94,11 @@
                                 <td>{{$item['q_name']}}</td>
                                 <td>{{($item['onsite']) ? "yes" : "no"}}</td>
                                 <td>{{$item['i_name']}}</td>
-                                <td><a href="edit/{{$item['s_id']}}" class="btn btn-outline-warning">Edit</a></td>
+                                {{-- <td><a href="edit/{{$item['s_id']}}" class="btn btn-outline-warning">Edit</a></td> --}}
                                 <td>
                                     
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                        <a href="edit/{{$item['s_id']}}" class="btn btn-outline-warning">Edit</a>
                                         <a href="delete/{{$item['s_id']}}" name="action"  onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a>
                                         <a href="active/{{$item['s_id']}}" name="action" onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#ActiveModal" class="btn btn-outline-success">Active</a>
                                         

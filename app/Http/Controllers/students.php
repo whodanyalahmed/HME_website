@@ -59,7 +59,10 @@ class students extends Controller
         // $var = json_encode($exe,true);
         // echo json_encode(get_object_vars($exe[0]));
         if(empty($exe)){
-            echo view('something',['data'=>0]);
+            // echo view('something',['data'=>0]);
+            
+            $req->session()->flash('wrongId', 'Wrong Email or Password');
+            return redirect('/students/login');
         }
         else{
             $req->session()->put('user', ['id'=>$exe[0]->s_id,'name'=>$exe[0]->s_name,'pass'=>$data['password'],'fee_status'=>$exe[0]->fee_status]);
@@ -82,13 +85,25 @@ class students extends Controller
             ->where('fee_id',$feeId)
             ->get();
             $challa_url = $feeData[0]->fee_challan_url;
-            if(session('user')['fee_status'] == 1){
-                // return session('fee_status');
-                return view('dashboard');
+            // return $exe[0]->s_status;
+            if($exe[0]->s_status == 1){
+                if(session('user')['fee_status'] == 1){
+                    // return session('fee_status');
+                    return view('dashboard');
+                }
+                else{
+                    return view('s_payment',['challan'=>$challa_url]);
+                }
             }
             else{
-                return view('s_payment',['challan'=>$challa_url]);
+                if(session()->has('user')){
+                    // session()->pull('user');
+                    session()->flush();
+                    $req->session()->flash('disable', $name);
+                    return redirect('/students/login');
+                }
             }
+            
         }
         else{
             return redirect('/students/login');

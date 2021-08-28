@@ -94,7 +94,7 @@
                                 {{-- <td>{{$item['q_name']}}</td> --}}
                                 {{-- <td>{{($item['onsite']) ? "yes" : "no"}}</td> --}}
                                 <td>{{$item['i_name']}}</td>
-                                <td><a href="edit/{{$item['s_id']}}" class="btn btn-outline btn-success">Edit</a></td>
+                                <td><a href="edit/{{$item['s_id']}}" class="btn btn-outline-success">Edit</a></td>
                                 <td><a href="delete/{{$item['s_id']}}"   onclick="update({{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a></td>
                                 
                             </tr>
@@ -142,18 +142,18 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Conirm Delete</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Conirm disable</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Do you really wanna delete?
+                    Do you really wanna disable?
                 </div>
                 <div class="modal-footer">
                 <form action="" method="post" id="form">
                     @csrf
                     <input type="hidden" name="id" id="formVal" value="">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" id="delete" class="btn btn-primary">Delete</button>
+                    <button type="submit" id="delete" class="btn btn-primary">Disable</button>
                 </form>
                 </div>
             </div>
