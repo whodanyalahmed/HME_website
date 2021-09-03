@@ -70,7 +70,7 @@
                                         <th>Fee Paid</th>
                                         <th>Month</th>
                                         <th>year</th>
-                                        <th>View</th>
+                                        <th class="text-center">View</th>
                                         {{-- <th>Qualification</th>
                                         <th>Onsite</th> --}}
                                         <th>Interested in</th>
@@ -96,7 +96,7 @@
                                 {{-- <td>{{($item['onsite']) ? "yes" : "no"}}</td> --}}
                                 <td>{{$item['monthname']}}</td>
                                 <td>{{$item['year']}}</td>
-                                <td><a href="{{$item['url']}}"  onclick="updateView(this)" data-bs-toggle="modal" data-bs-target="#view">View</a></td>
+                                <td class="text-center"><a href="{{$item['url']}}"  onclick="updateView(this)" data-bs-toggle="modal" data-bs-target="#view">View</a></td>
                                 <td>{{$item['name']}}</td>
                                 {{-- <td><button 
                                     data-id="{{$item['s_id']}}"  
@@ -121,7 +121,7 @@
                                     <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic mixed styles example">
                                         <a href="notpaid/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Not Paid</a>
                                         <a href="pending/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#Pending" class="btn btn-outline-warning">Pending</a>
-                                        <a href="paid/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#Paid" class="btn btn-outline-success">Paid</a>
+                                        <a href="paid/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}},{{$item['fee_id']}})" data-bs-toggle="modal" data-bs-target="#Paid" class="btn btn-outline-success">Paid</a>
                                     </div>
                                 </td>
                             </tr>
@@ -223,6 +223,7 @@
                         <form action="" method="post" id="form" name="form" class="form" >
                             @csrf
                             <input type="hidden" name="id" id="formVal" value="">
+                            <input type="hidden" name="fee_id" id="fee_id" value="">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" id="delete" class="btn btn-success">Paid</button>
                         </form>
@@ -270,7 +271,10 @@
             }
             // alert(url);
           }
-          function update(ele,p) {
+          function update(ele,p,fee_id = 0) {
+            document.getElementById("fee_id").value = fee_id;
+
+
                 action = $(ele).select();
                 href = action.attr('href');
                 

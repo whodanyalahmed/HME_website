@@ -80,11 +80,11 @@ class students extends Controller
             $exe= $this->getData($cred);
             $status=  $exe[0]->fee_status;
             $req->session()->put('user.fee_status',$status );
-            $feeId = $this->getFeeId(session('user')['id']);
-            $feeData = fee::select('fee_challan_url')
-            ->where('fee_id',$feeId)
-            ->get();
-            $challa_url = $feeData[0]->fee_challan_url;
+            // $feeId = $this->getFeeId(session('user')['id']);
+            // $feeData = fee::select('fee_challan_url')
+            // ->where('fee_id',$feeId)
+            // ->get();
+            // $challa_url = $feeData[0]->fee_challan_url;
             // return $exe[0]->s_status;
             if($exe[0]->s_status == 1){
                 if(session('user')['fee_status'] == 1){
@@ -92,7 +92,7 @@ class students extends Controller
                     return view('dashboard');
                 }
                 else{
-                    return view('s_payment',['challan'=>$challa_url]);
+                    return view('s_payment');
                 }
             }
             else{
@@ -116,7 +116,11 @@ class students extends Controller
       
         $s_id = $this->AddStudent($req);
         $req->session()->flash('new', $req->name);
-        $this->GenerateFees($s_id);
+        $month = date("m");
+        $year = date("Y");
+        $m_id = $this->getAddMonth($month,$year);
+
+        $this->GenerateFees($s_id,$m_id);
         return redirect('students/login');
 
     }
@@ -141,24 +145,24 @@ class students extends Controller
         }
         $new->s_status= 1;
         $new->is_online= 0;
-        $new->s_joined_date= null;
+        $new->s_joined_date= date("Y-m-d");
 
         $new->save();
         // echo "<script>console.log('Id is: ' ".$new->id.")</script>";
         return $new->id;
     }
-    public function getAddMonth(){
-        $data = DB::select('SELECT count(*) as num FROM months WHERE Month(month_name) = Month(CURRENT_DATE()) and YEAR(year) = YEAR(CURRENT_DATE())');
+    public function getAddMonth($month,$year){
+        $data = DB::select('SELECT count(*) as num FROM months WHERE Month(month_name) = ? and YEAR(year) =?',[$month,$year]);
 
         // echo json_encode($data[0]->num);
         if($data[0]->num == 0){
-            $data = DB::insert('insert into months(month_name,year) values (CURRENT_DATE(),CURRENT_DATE())');
+            $data = DB::insert('insert into months(month_name,year) values (?,?)',[$month,$year]);
             // return $data;
         }
         $data = DB::select('SELECT * FROM months WHERE 
-        Month(month_name) = Month(CURDATE()) 
+        Month(month_name) = ? 
         and 
-        YEAR(year) = YEAR(CURDATE())');
+        YEAR(year) = ?',[$month,$year]);
         return $data[0]->month_id;
     
     }
@@ -184,11 +188,14 @@ class students extends Controller
         // echo json_encode($data);
         return $data[0]->fee;
     }
-    public function GenerateFees($s_id){
+   
+    public function GenerateFees($s_id,$m_id){
         // echo $s_id;cd 
         $data = $this->getStudentData($s_id);
         // echo json_encode($data);
-        $m_id = $this->getAddMonth();
+        // $month = date("m");
+        // $year = date("Y");
+        // $m_id = $this->getAddMonth($month,$year);
         $admission = 0;
         if($data ->is_new_admission == 1){
 
@@ -206,4 +213,54 @@ class students extends Controller
         
 
     }
+
+    public function GetStudentJoiningMonth($id)
+    {
+        $data = DB::select('SELECT Month(s_joined_date) as joining_month,YEAR(s_joined_date) as joining_year FROM `students` where s_id = ?', [$id]);
+        // echo json_encode($data);
+        return $data[0];
+    }
+    public function getLastGeneratedFeeMonth($id)
+    {
+        $data = DB::select("SELECT MONTH(months.month_name) as month,YEAR(months.month_name) as year  FROM `fees` 
+        INNER join months on fees.month_id=months.month_id
+        where s_id = ?
+        ORDER BY `fees`.`month_id` DESC limit 1", [$id]);
+        return $data[0];
+    }
+    
+    public function GenerateFeesAll($id)
+    {
+ 
+        $data = getLastGeneratedFeeMonth($id);
+        $last_gen_month =$this->$data->month;
+        $last_gen_year =$this->$data->year;
+        $cur_month = Date("m");
+        $cur_year = Date("Y");
+
+        if(!($last_gen_month == $cur_month && $last_gen_year == $cur_year)){
+
+            
+            while (true) {
+                if(i == 13){
+                    $last_gen_month = 1;
+                    $last_gen_year++;
+                } 
+                if ($last_gen_month == $cur_month && $last_gen_year == $cur_year){
+                    break;
+                }
+                $m_id = $this->getAddMonth($last_gen_month,$last_gen_year);
+
+                $last_gen_month++;
+            }
+        }
+    }
+
 }
+
+
+
+// SELECT MONTH(months.name) as month,YEAR(months.name) as year  FROM `fees` 
+// INNER join months on fees.month_id=months.month_id
+// where s_id = 1010
+// ORDER BY `fees`.`month_id` DESC limit 1
