@@ -114,8 +114,8 @@
                         <div class="col-md-6">
                             <h1 class="mt-4">{{$var}}</h1>
                         </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-outline-success mt-4"> + create new class</button>
+                        <div class="col-md-6 text-center">
+                            <button class="btn btn-outline-success mt-4"  data-bs-toggle="modal" data-bs-target="#ActiveModal"> + create new class</button>
                         </div>
                     </div>
                 </div>
@@ -130,6 +130,88 @@
             </footer>
         </div>
     </div>
+
+             <!-- Modal -->
+             <div class="modal fade" id="ActiveModal" tabindex="-1" aria-labelledby="ActiveModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="ActiveModalLabel">Create new class</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    <form action="" method="post" name="form" id="Actform">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <select class="form-select item rounded" aria-label="Default select example" name="module" id="module" required>
+                                        <option value='' selected>Select Class</option>
+                                        <option value="7">Beginner</option>
+                                        <option value="8">Module - 1</option>
+                                        <option value="9">Module - 2</option>
+                                        <option value="10">Module - 3</option>
+                                        <option value="11">Special Advance</option>
+                                        <option value="12">Conversation</option>
+                                        <option value="13">6th</option>
+                                        <option value="14">7th</option>
+                                        <option value="15">8th</option>
+                                        <option value="16">9th</option>
+                                        <option value="17">Matric</option>
+                                        <option value="18">1st year</option>
+                                        <option value="19">2nd year</option>
+                                        <option value="20">Programming</option>
+                                        <option value="21">Graphics</option>
+                                        <option value="22">Video Editing</option>
+                                        <option value="23">MS Office</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <label for="students"><strong>Select Students</strong></label>
+                                    <table class="table table-responsive table-stripe table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Id </th>
+                                                <th>Name</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            @php
+                                                $items = DB::select('select s_id,s_name from students');
+                                            @endphp
+
+                                            @foreach ($items  as $item)
+                                                
+                                                <tr>
+                                                    
+                                                    <td><input type="checkbox" name="students[]" value="{{$item->s_id}}" ></td>
+                                                    <td>{{$item->s_id}}</td>
+                                                    <td>{{$item->s_name}}</td>
+                                                    
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="modal-footer">
+                        @csrf
+                        
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+    
+    
     <script src="/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="/assets/demo/chart-area-demo.js"></script>
