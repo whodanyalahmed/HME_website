@@ -1,6 +1,5 @@
 @extends('layout')
 
-
 @section('title')
     Dashboard | HME
 @endsection 
@@ -169,55 +168,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            DataTable Example
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple" class="cell-border compact stripe hover" >
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Name</th>
-                                        <th>Coaching Id</th>
-                                        <th>Email</th>
-                                        <th>Active Status</th>
-                                        <th>Joined Date</th>
-                                        <th>fee status</th>
-                                        <th>Qualification</th>
-                                        <th>Onsite</th>
-                                        <th>Interested in</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($data as $item)
-                                <tr>
-                                <td>{{$item['s_id']}}</td>
-                                <td>{{$item['s_name']}}</td>
-                                <td>{{$item['s_co_id']}}</td>
-                                <td>{{$item['s_email']}}</td>
-                                <td>{{($item['s_status']) ? "yes" : "no"}}</td>
-                                <td>{{$item['s_joined_date']}}</td>
-                                @php
-                                $d = $item['fee_status'];
-                                $s = ($d == 0) ? "not paid" : (($d == 1)  ? "paid" : "pending");
-                                @endphp
-                                <td>{{$s}}
-                                </td>
-                                <td>{{$item['q_name']}}</td>
-                                <td>{{($item['onsite']) ? "yes" : "no"}}</td>
-                                <td>{{$item['i_name']}}</td>
-                                
-                            </tr>
-                                
-                                @endforeach
-                                 
-                                
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

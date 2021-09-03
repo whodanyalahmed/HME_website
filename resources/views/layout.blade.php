@@ -1,3 +1,9 @@
+@php
+    $basic = DB::select('select * from basic');
+@endphp
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

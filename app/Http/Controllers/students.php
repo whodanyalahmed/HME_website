@@ -76,6 +76,7 @@ class students extends Controller
     function Dashboard(Request $req){
         if(session('user')){
             $name = session('user')['name'];
+            $this->GenerateFeesAll(session('user')['id']);
             $cred = [$name,$name,session('user')['pass']];
             $exe= $this->getData($cred);
             $status=  $exe[0]->fee_status;
@@ -197,9 +198,15 @@ class students extends Controller
         // $year = date("Y");
         // $m_id = $this->getAddMonth($month,$year);
         $admission = 0;
-        if($data ->is_new_admission == 1){
-
-            $admission = $this->getAdmissionfees($data->interest);
+        $noofvouchers = $this->getNoofVouchers($s_id);
+        if($noofvouchers == 0){
+            if($data ->is_new_admission == 1){
+    
+                $admission = $this->getAdmissionfees($data->interest);
+            }
+        }
+        else{
+            DB::update('update students set is_new_admission =0 where s_id = ?', [$s_id]);        
         }
         $fees = $this->getfees($data->sub_interest_id);
         // echo gettype($fees);
@@ -207,7 +214,7 @@ class students extends Controller
         $total = $fees+$admission;
         $all = ["fees" => $fees,"total"=>$total];
         $fees = DB::insert('insert into fees (fees_amount, fees_paid,s_id,month_id,fee_challan_url) values (?, ?, ?, ?, ?)', [$total, 0,$s_id,$m_id,null]);
-        
+        DB::update('update students set fee_status = 0 where s_id = ?', [$s_id]);
         return $all;
 
         
@@ -232,9 +239,9 @@ class students extends Controller
     public function GenerateFeesAll($id)
     {
  
-        $data = getLastGeneratedFeeMonth($id);
-        $last_gen_month =$this->$data->month;
-        $last_gen_year =$this->$data->year;
+        $data = $this->getLastGeneratedFeeMonth($id);
+        $last_gen_month =$data->month;
+        $last_gen_year = $data->year;
         $cur_month = Date("m");
         $cur_year = Date("Y");
 
@@ -242,16 +249,17 @@ class students extends Controller
 
             
             while (true) {
-                if(i == 13){
+                if($last_gen_month == 13){
                     $last_gen_month = 1;
                     $last_gen_year++;
                 } 
+                $last_gen_month++;
+                $m_id = $this->getAddMonth($last_gen_month,$last_gen_year);
+                // echo json_encode($m_id);
+                $this->GenerateFees($id,$m_id);
                 if ($last_gen_month == $cur_month && $last_gen_year == $cur_year){
                     break;
                 }
-                $m_id = $this->getAddMonth($last_gen_month,$last_gen_year);
-
-                $last_gen_month++;
             }
         }
     }

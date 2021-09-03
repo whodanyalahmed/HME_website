@@ -1,6 +1,7 @@
 @extends('layout')
 @section('title')
-    Welcome | HME
+
+    Welcome | {{ $siteTitle }}
 @endsection
 
 @section('content') 
@@ -20,7 +21,7 @@
         <img src="https://source.unsplash.com/1400x680/?education" height="100%" width="100%" alt="school">
         <div class="container">
           <div class="carousel-caption text-start">
-            <h1>Life in HME.</h1>
+            <h1>Life in {{ $siteTitle }}.</h1>
             <p>Some representative placeholder content for the first slide of the carousel.</p>
             <p><a class="btn btn-lg btn-warning" href="#">Sign up today</a></p>
           </div>
@@ -346,7 +347,7 @@
     <div class="container p-3">
     <div class="row">
     <div class="col-md-12 text-center">
-    <p>Copyright <a href="#">HME</a>  © 2021. All rights reserved.</p>
+    <p>Copyright <a href="#">{{ $siteTitle }}</a>  © 2021. All rights reserved.</p>
     </div>
     </div>
     </div>
@@ -354,7 +355,7 @@
     </footer>
 {{-- <footer class="p-3 py-4 mt-4  border-top bg-warning text-white">
   <div class="container text-center">
-    <span > Copyright © and All rights reserved by <a href="#">HME</a> 2021</span>
+    <span > Copyright © and All rights reserved by <a href="#">{{ $siteTitle }}</a> 2021</span>
   </div>
 </footer> --}}
 
