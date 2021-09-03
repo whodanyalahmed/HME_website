@@ -171,6 +171,13 @@ class students extends Controller
         $data = DB::select('select * from modules where id = ?', [$id]);
         return $data[0]->fee;
     }
+    
+    public function getNoofVouchers($id){
+
+        $data = DB::select('SELECT count(*) as vouchers FROM `fees` where s_id = ?', [$id]);
+        return $data[0]->vouchers;
+    }
+
     public function getAdmissionfees($id){
 
         $data = DB::select('select fee from interest where id = ?', [$id]);
@@ -184,7 +191,7 @@ class students extends Controller
         $m_id = $this->getAddMonth();
         $admission = 0;
         if($data ->is_new_admission == 1){
-            // echo gettype($data->interest);
+
             $admission = $this->getAdmissionfees($data->interest);
         }
         $fees = $this->getfees($data->sub_interest_id);
@@ -193,6 +200,7 @@ class students extends Controller
         $total = $fees+$admission;
         $all = ["fees" => $fees,"total"=>$total];
         $fees = DB::insert('insert into fees (fees_amount, fees_paid,s_id,month_id,fee_challan_url) values (?, ?, ?, ?, ?)', [$total, 0,$s_id,$m_id,null]);
+        
         return $all;
 
         
