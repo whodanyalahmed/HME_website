@@ -20,3 +20,10 @@ $(document).ready( function () {
     ]
 });
 } );
+$(document).ready( function () {
+    $('#ActiveStudents').DataTable({
+    "columnDefs": [
+        {bSortable: false, targets: [-1]} ,
+    ]
+});
+} );

@@ -148,19 +148,19 @@ class students extends Controller
         return $new->id;
     }
     public function getAddMonth(){
-        $data = DB::select('SELECT count(*) as num FROM months WHERE month_name = Month(CURDATE()) and year = year(CURDATE())');
-        echo json_encode($data[0]->num);
-        if(!($data[0]->num > 1)){
-            $data = DB::insert('insert into months(month_name,year) values (CURDATE(),CURDATE())');
-            return $data;
+        $data = DB::select('SELECT count(*) as num FROM months WHERE Month(month_name) = Month(CURRENT_DATE()) and YEAR(year) = YEAR(CURRENT_DATE())');
+
+        // echo json_encode($data[0]->num);
+        if($data[0]->num == 0){
+            $data = DB::insert('insert into months(month_name,year) values (CURRENT_DATE(),CURRENT_DATE())');
+            // return $data;
         }
-        else{
-            $data = DB::select('SELECT * FROM months WHERE 
-            month_name = Month(CURDATE()) 
-            and 
-            year = year(CURDATE())');
-            return $data;
-        }
+        $data = DB::select('SELECT * FROM months WHERE 
+        Month(month_name) = Month(CURDATE()) 
+        and 
+        YEAR(year) = YEAR(CURDATE())');
+        return $data[0]->month_id;
+    
     }
     public function getStudentData($s_id){
         $data = DB::select('select * from students where s_id = ?', [$s_id]);
@@ -178,7 +178,7 @@ class students extends Controller
         return $data[0]->fee;
     }
     public function GenerateFees($s_id){
-        // echo $s_id;
+        // echo $s_id;cd 
         $data = $this->getStudentData($s_id);
         // echo json_encode($data);
         $m_id = $this->getAddMonth();

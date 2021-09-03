@@ -4,7 +4,15 @@
 @endsection
 
 @section('content') 
-
+@if (session('wrongId'))
+<div class="alert alert-warning d-flex align-items-center container" role="alert" style="margin-top:100px;">
+        <i class="fas fa-exclamation-circle fs-3 mr-3"></i>&nbsp;
+        <div>
+        {{session('wrongId')}}<br>
+        </div>
+    </div>
+    
+@endif
 <x-navbar/>
 <div class="registration-form mt-5 " id="login">
     <form action="/admin/dashboard" class="shadow rounded" method="POST">

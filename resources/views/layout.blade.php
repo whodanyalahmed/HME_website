@@ -21,12 +21,15 @@
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
     <script>
+
+
+    //   setTimeout(() => {
         $(window).on("load",function(){
         $('#navbar').removeClass('hidden');
         $('#myCarousel').removeClass('hidden');
         $(".loader-wrapper").fadeOut("slow");
         });
-   
+    // },1000);
         $(document).ready(function () {
     $('.nav li a').click(function(e) {
 
@@ -43,5 +46,6 @@
 <script src="https://kit.fontawesome.com/c88fca5868.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </html>

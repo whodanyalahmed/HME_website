@@ -45,7 +45,7 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="students">All Students</a>
-                            <a class="nav-link" href="Activestudents">Active Students</a>
+                            <a class="nav-link" href="studentsfee">Students Fee Details</a>
                             <a class="nav-link" href="pending">Pending Students</a>
                         </nav>
                     </div>

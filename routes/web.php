@@ -56,10 +56,14 @@ Route::get('admin/logout', function () {
 })-> middleware('revalidate');
 Route::get('admin/pending',[admin::class,'pending']);
 Route::get('admin/students',[admin::class,'All']);
-Route::get('admin/Activestudents',[admin::class,'ActiveStudents']);
+Route::get('admin/studentsfee',[admin::class,'ActiveStudents']);
 Route::post('/admin/student/delete/{id}',[admin::class,'DeleteStudent']);
 Route::post('/admin/student/active/{id}',[admin::class,'ActiveStudent']);
-Route::post('/admin/student/Edit/{id}',[admin::class,'EditStudent']);
-Route::get('admin/student/Edit/{id}',[admin::class,'Edit']);
+Route::post('/admin/student/update',[admin::class,'updateStudent']);
+Route::post('/admin/student/notpaid/{id}',[admin::class,'notpaidStudent']);
+Route::post('/admin/student/pending/{id}',[admin::class,'pendingStudent']);
+Route::post('/admin/student/paid/{id}',[admin::class,'paidStudent']);
+// Route::get('/students/test',[students::class,'getAddMonth']);
+
 
 // admin dashboard

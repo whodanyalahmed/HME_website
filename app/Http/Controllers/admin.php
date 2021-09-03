@@ -18,7 +18,8 @@ class admin extends Controller
         // $var = json_encode($exe,true);
         // echo json_encode(get_object_vars($exe[0]));
         if(empty($exe)){
-            echo view('something',['data'=>0]);
+            $req->session()->flash('wrongId', 'Wrong Email or Password');
+            return redirect('/admin/login');
         }
         else{
             $req->session()->put('admin', ['id'=>$exe[0]->id,'name'=>$exe[0]->a_name,'pass'=>$data['password']]);
@@ -102,23 +103,124 @@ class admin extends Controller
         return $data;
     }
     public function getActiveStudentsData(){
-        $data = DB::select('select *,qu.name as q_name,inte.name as i_name from students 
-        inner join qualification qu on students.Qualification_id = qu.id 
-        inner join interest inte on students.interest = inte.id
-        where students.s_status = 1
-        ');
+        // $data = DB::select('select *,qu.name as q_name,inte.name as i_name from students 
+        // inner join qualification qu on students.Qualification_id = qu.id 
+        // inner join interest inte on students.interest = inte.id
+        // where students.s_status = 1
+        // ');
         // return $data;
         // echo gettype($data[0]['s_id']);
+
+        $data = DB::select('select st.s_id,st.s_name,st.s_email,st.fee_status,fe.fees_paid,fe.fee_challan_url as url,MONTHNAME(mon.month_name) as monthname,YEAR(mon.year) as year,inte.name from students as st
+        inner join fees fe on st.s_id = fe.s_id
+        inner join months mon on fe.month_id = mon.month_id
+        inner join interest inte on st.interest = inte.id
+        where st.s_status = 1');
         $data = json_decode(json_encode($data),true);
         return $data;
     }
     public function DeleteStudent($id)
     {
-        $data = DB::update('update students set s_status = 0 where s_id = ?', [$id]);
+        try {
+            //code...
+            $data = DB::update('update students set s_status = 0 where s_id = ?', [$id]);
+            return ['msg'=> 'Successfully updated'];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
         
     }
     public function ActiveStudent($id){
-        $data = DB::update('update students set s_status = 1 where s_id = ?', [$id]);
+        try {
+            //code...
+            $data = DB::update('update students set s_status = 1 where s_id = ?', [$id]);
+            return ['msg'=> 'Successfully updated'];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+
+    }
+    public function notpaidStudent($id)
+    {
+        try {
+            $data = DB::update('update students set fee_status = 0 where s_id = ?', [$id]);
+            return ['msg'=> 'Successfully updated'];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+    }
+    public function pendingStudent($id)
+    {
+        try {
+            //code...
+            $data = DB::update('update students set fee_status = 3 where s_id = ?', [$id]);
+            return ['msg'=> 'Successfully updated'];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+    }
+    public function paidStudent($id)
+    {
+        try {
+            //code...
+            $data = DB::update('update students set fee_status = 1 where s_id = ?', [$id]);
+            return ['msg'=> 'Successfully updated'];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+    }
+    public function updateStudent(Request $req){
+
+
+        try {
+            DB::update("UPDATE `students` SET 
+            s_name = ?, 
+            s_co_id = ?,
+            s_email=?, 
+            s_password=?,
+            s_contactno=?,
+            fee_status=?,
+            interest=?,
+            Qualification_id=?,
+            onsite=?,
+            sub_interest_id=? WHERE `s_id` = ?", 
+            [$req->name,
+            $req->co_id,
+            $req->email,
+            $req->password,
+            $req->phone,
+            $req->fee_status,
+            $req->interest,
+            $req->qualification,
+            $req->onsite,
+            $req->sub_interest,
+            $req->id]);
+
+            return ["msg"=>"successfully updated ". $req->name];
+    
+    } 
+    catch (\Throwable $th) 
+    {
+            
+        return response( ["errorMsg"=>$th],422)
+        ->header('Content-Type', 'application/json');
+        // return ["errorMsg"=>$th];
+    }
+        
+
 
     }
 }
+
+
+// Query
+// select st.s_name,st.s_email,st.fee_status,fe.fees_paid ,MONTHNAME(mon.month_name) as monthname,YEAR(mon.year) as year,inte.name from students as st
+//         inner join fees fe on st.s_id = fe.s_id
+//         inner join months mon on fe.month_id = mon.month_id
+//         inner join interest inte on st.interest = inte.id
+//         where st.s_id = 1000

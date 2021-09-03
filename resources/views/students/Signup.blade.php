@@ -92,22 +92,22 @@
     <select class="form-select item " aria-label="Default select example" id="tuition" name="sub_interest" required>
       <option value='' selected>Select tuition</option>
       <option value="13">6th</option>
-      <option value="13">7th</option>
-      <option value="13">8th</option>
-      <option value="14">9th</option>
-      <option value="14">Matric</option>
-      <option value="15">1st year</option>
-      <option value="15">2nd year</option>
+      <option value="14">7th</option>
+      <option value="15">8th</option>
+      <option value="16">9th</option>
+      <option value="17">Matric</option>
+      <option value="18">1st year</option>
+      <option value="19">2nd year</option>
     </select>
   </div>`,
   `<div class="form-group ">
   
     <select class="form-select item " aria-label="Default select example" id="Computer" name="sub_interest" required>
       <option value='' selected>Select Computer Course</option>
-      <option value="3">Programming</option>
-      <option value="3">Graphics</option>
-      <option value="3">Video Editing</option>
-      <option value="3">MS Office</option>
+      <option value="20">Programming</option>
+      <option value="21">Graphics</option>
+      <option value="22">Video Editing</option>
+      <option value="23">MS Office</option>
     </select>
   </div>`];
     switch (data) {
