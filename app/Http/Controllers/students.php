@@ -80,6 +80,8 @@ class students extends Controller
             $cred = [$name,$name,session('user')['pass']];
             $exe= $this->getData($cred);
             $status=  $exe[0]->fee_status;
+            $total_payable = $this->getPayableFees(session('user')['id']);
+            $req->session()->put('user.payable_fee', $total_payable);
             $req->session()->put('user.fee_status',$status );
             // $feeId = $this->getFeeId(session('user')['id']);
             // $feeData = fee::select('fee_challan_url')
@@ -182,6 +184,16 @@ class students extends Controller
         $data = DB::select('SELECT count(*) as vouchers FROM `fees` where s_id = ?', [$id]);
         return $data[0]->vouchers;
     }
+    
+    public function getPayableFees($id){
+        $total = 0;
+        $data = DB::select('SELECT * FROM `fees` where s_id = ? and fees_paid = 0', [$id]);
+        foreach ($data as $value) {
+            $total += $value->fees_amount;
+          }
+        return $total;
+    }
+
 
     public function getAdmissionfees($id){
 

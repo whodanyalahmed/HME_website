@@ -168,8 +168,8 @@ class admin extends Controller
         try {
             //code...
             DB::update('update fees set fees_paiddate=current_date(), fees_paid = 1 where fee_id = ?', [$req->fee_id]);
-            $data = DB::update('update students set is_new_admission =0,fee_status = 1 where s_id = ?', [$id]);
-            return ['msg'=> 'Successfully updated'];
+           
+            
             
         } catch (\Throwable $th) {
             //throw $th;

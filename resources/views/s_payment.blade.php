@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Fee Payment | HME
+    Fee Payment | {{ $siteTitle }}
 
 @endsection
 
@@ -16,11 +16,11 @@
     @if (session('user')['fee_status'] == 0)
     <section class="d-flex justify-content-center">
         <main class="px-5 ">
-            <h1></h1>
+            <h1>Hello! <strong><span style="text-transform: uppercase">{{session('user')['name']}}</span></strong></h1>
             <h1 class="pt-5 text-center">
                 <i style="font-size:90px;" class="fas fa-exclamation-circle text-warning my-4 "></i><br>
-                Please pay the fees.</h1>
-                <p class="lead">At this Account number XXXXXXXXXXXXXX and upload the screenshot here.</p>
+                Please pay the fees <strong>Rs.{{session('user')["payable_fee"]}}/=</strong>.</h1>
+                <p class="lead">At this <br><strong>Account number {{$Accountnno}} - {{$Bank_name}}<br> Account Holder: {{$Account_holder}}</strong> <br>and upload the screenshot here.</p>
                 <p class="lead">
                 <form action="upload" method="post" enctype="multipart/form-data">
                     @csrf

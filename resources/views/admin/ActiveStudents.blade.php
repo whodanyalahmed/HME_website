@@ -80,7 +80,7 @@
                                 <tbody>
                                 @foreach ($data as $item)
                                 <tr>
-                                <td>{{$item['s_id']}}</td>
+                                <td>{{$item['fee_id']}}</td>
                                 <td>{{$item['s_name']}}</td>
                                 {{-- <td>{{$item['s_co_id']}}</td> --}}
                                 <td>{{$item['s_email']}}</td>
@@ -158,7 +158,7 @@
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; HME 2021</div>
+                        <div class="text-muted">Copyright &copy; {{ $siteTitle }} 2021</div>
                     </div>
                 </div>
             </footer>

@@ -24,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->share('siteTitle', 'HME');
+        view()->share('Accountnno', '1103071021002301');
+        view()->share('Bank_name', 'MCB');
+        view()->share('Account_holder', 'Danyal Ahmed');
     }
 }

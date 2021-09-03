@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\students;
+use App\Http\Controllers\teachers;
 use App\Http\Controllers\admin;
 use App\Http\Controllers\Common;
 
@@ -54,7 +55,6 @@ Route::get('admin/logout', function () {
     }
     return redirect('admin/login');
 })-> middleware('revalidate');
-Route::get('admin/pending',[admin::class,'pending']);
 Route::get('admin/students',[admin::class,'All']);
 Route::get('admin/studentsfee',[admin::class,'ActiveStudents']);
 Route::post('/admin/student/delete/{id}',[admin::class,'DeleteStudent']);
@@ -63,7 +63,26 @@ Route::post('/admin/student/update',[admin::class,'updateStudent']);
 Route::post('/admin/student/notpaid/{id}',[admin::class,'notpaidStudent']);
 Route::post('/admin/student/pending/{id}',[admin::class,'pendingStudent']);
 Route::post('/admin/student/paid/{id}',[admin::class,'paidStudent']);
+// Route::get('/admin/student/payable/{id}',[students::class,'getPayableFees']);
 // Route::get('/students/test',[students::class,'getAddMonth']);
 
 
-// admin dashboard
+// TEachers 
+Route::get("teachers/login", function () {
+    if(session()->has('teacher')){
+        return redirect('teachers/dashboard');
+    }
+    return view('teachers.login');
+}) -> middleware('revalidate');
+Route::post('teachers/dashboard',[teachers::class,'Index']) -> middleware('revalidate');
+Route::get('teachers/dashboard',[teachers::class,'Dashboard']) ->middleware('revalidate');
+Route::get('teachers/logout', function () {
+    if(session()->has('teacher')){
+        // session()->pull('user');
+        session()->flush();
+    }
+    return redirect('teachers/login');
+})-> middleware('revalidate');
+
+Route::view('teachers/signup','teachers.signup');
+Route::post('teachers/signup', [teachers::class,'signup']);
