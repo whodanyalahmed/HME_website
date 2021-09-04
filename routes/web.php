@@ -87,4 +87,7 @@ Route::get('teachers/logout', function () {
 Route::view('teachers/signup','teachers.signup');
 Route::post('teachers/signup', [teachers::class,'signup']);
 Route::post('teachers/class/create', [teachers::class,'CreateClass']);
-// Route::get('teachers/classes/{id}', [teachers::class,'GetCourses']);
+Route::post('teachers/class/delete', [teachers::class,'DeleteClass']);
+Route::post('teachers/punchin/{id}', [teachers::class,'Punchin']);
+
+// Route::get('teachers/class/get/{id}',[teachers::class,'GetCourses']);

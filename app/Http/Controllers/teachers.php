@@ -109,7 +109,9 @@ class teachers extends Controller
             (array(
                 'name'=>$req['name'],
                 't_id'=>$req['t_id'],
-                'module_id'=>$req['module'])
+                'module_id'=>$req['module'],
+                'course_status' => 1
+                )
             );
 
             foreach ($students as $ele) 
@@ -136,9 +138,52 @@ class teachers extends Controller
 
     public function GetCourses($id)
     {
-        $data = DB::select("SELECT co.id as c_id,co.name as course,mo.name as module,mo.id FROM course co inner join modules mo on co.module_id = mo.id where co.t_id = ?", [$id]);
+        $data = DB::select("SELECT co.id as c_id,co.name as course,mo.name as module,mo.id FROM course co 
+        inner join modules mo on co.module_id = mo.id 
+        -- inner join class on co.id = class.course_id
+        where co.t_id = ? and co.course_status = 1 ", [$id]);
 
+        for ($i=0; $i < sizeof($data); $i++) { 
+            # code...
+            // echo $i;
+            $no = DB::select("SELECT count(*) as noofstudents FROM `class` where course_id = ?", 
+            [$data[$i]->c_id])
+            [0]->noofstudents
+            ;
+
+            // echo json_encode($no);
+            $data[$i]->noofstudents = $no;
+        }
+        
         return $data;
     }
+    public function DeleteClass(Request $req)
+    {
+        try {
+            // DB::table('class')->where('course_id',$req['id'])->delete();
+            DB::table('course')->where('id',$req['id'])->update(['course_status'=>0]);
 
+            return ["msg"=>"Successfully Deleted"];
+            
+        } catch (\Throwable $th) {
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>json_encode($th)];
+        }
+    }
+    public function Punchin($id)
+    {
+        try {
+            // date_default_timezone_set('Pakistan/Karachi');  
+            // DB::table('daily_logs')
+            // ->insert(["t_id"=>$req->t_id,"punchin"=>date_default_timezone_get(),"punchout"=>null]);
+            return ["msg"=>"Successfully punched in ".$id];
+            
+        } catch (\Throwable $th) {
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>json_encode($th)];
+        }
+
+    }
 }

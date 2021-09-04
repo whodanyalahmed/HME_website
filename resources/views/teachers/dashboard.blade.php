@@ -114,24 +114,56 @@
                         <div class="col-md-6">
                             <h1 class="mt-4">{{$var}}</h1>
                         </div>
-                        <div class="col-md-6 text-center">
-                            <button class="btn btn-outline-success mt-4"  data-bs-toggle="modal" data-bs-target="#ActiveModal"> + create new class</button>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 float-end">
+                            <button class="btn btn-outline-success mt-4 float-end"  data-bs-toggle="modal" data-bs-target="#ActiveModal"> + create new class</button>
                         </div>
                     </div>
                 </div>
                 <div class="container">
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2><span class="fw-1">Hello!</span> <strong style="text-transform: uppercase">{{session('teacher')['name']}}</strong></h2>
+                        </div>
+                        <div class="col-md-6 ">
+                            <button class="btn btn-outline-warning float-end">Punch out</button>
+                            <form action="/teachers/punchin/" id="punchin" method="POST">
+                                @csrf
+                                <input type="hidden" name="t_id" value="{{session('teacher')['id']}}" id="t_id" >
+                                
+                                <button type="submit" class="btn btn-outline-warning float-end mx-3 mr-sm-0" id="teacher_punchin"   >Punch in </button>
+                            </form>
+                        </div>
+                    </div>
+                    <h4 class="my-3">Classes</h4>
                     <div class="row">
                         @foreach ($courses as $course)
                             
                         <div class="col-md-6">
-                            <div class="card border-dark mb-3" >
+                            <div class="card border-dark mb-4" >
                                 <input type="hidden" name="course_id" value="{{$course->c_id}}">
-                                <div class="card-header">Course id: {{$course->c_id}}</div>
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3">
+
+                                            Course id: <strong>{{$course->c_id}}</strong> 
+                                        </div>
+                                        <div class="col-md-6">
+
+                                        </div>
+                                        <div class="col-md-3 float-end text-right">
+                                            <button class="btn btn-outline-danger float-end" onclick="update(this)" data-id="{{$course->c_id}}"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                </div>  
                                 <div class="card-body">
                                   <h5 class="card-title"><a href="#" class="text-dark">{{$course->course}}</a></h5>
-                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                  <p class="card-text">This is the class of <strong>{{$course->module}}</strong></p>
                                 </div>
-                              </div>
+                                <div class="card-footer bg-transparent border-dark">No. of students: <strong>{{$course->noofstudents}}</strong></div>
+                            </div>
                         </div>
                         @endforeach
 
@@ -238,7 +270,90 @@
                 </div>
                 </div>
             </div>
-    <script>
+             <!-- Modal -->
+         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Delete?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you really wanna delete?
+                </div>
+                <div class="modal-footer">
+                <form action="class/delete" method="post" name="form" id="Delete">
+                    @csrf
+                    <input type="hidden" name="id" value="" id="delete">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit"  class="btn btn-danger">Delete</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        {{-- toaster start here --}}
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 110">
+            <div id="liveToast" class="toast bg-success hide" role="alert" aria-live="assertive" data-autohide="true" data-bs-animation="true" aria-atomic="true">
+              <div class="toast-header bg-outline-success">
+                <strong class="me-auto">Successfully Punched in...</strong>
+                <small>Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body bg-white">
+                <strong style="text-transform: uppercase">{{session("teacher")['name']}}</strong> has been punched in...
+              </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script> 
+   
+
+
+        function update(params) {
+            var id = $(params).data("id");
+            $("#delete").val(id);
+            $('#exampleModal').modal('toggle');
+        }
+        $("#Delete").submit(function(e) {
+
+            e.preventDefault();
+            // return false;
+            // avoid to execute the actual submit of the form.
+
+            var form = $('#Delete');
+            var url = form.attr('action');
+
+
+            $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                .then(function(value) {
+                            location.reload();
+                        });
+            },
+            error:function(requestObject, error, errorThrown){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+
+            return false;
+            });
+
+
         function CreateClass(params) {
             
             var students = $.map($('input[name="students[]"]:checked'), function(c){return c.value; });
@@ -276,12 +391,47 @@
             
         });
         }
+        var myToastEl = document.getElementById('liveToast')
+        var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) 
+        $("#punchin").submit(function (e) {
+            e.preventDefault();
+            var form = $('#punchin');
+            var action = form.attr('action');
+            var t_id = $("#t_id").val();
+ 
+
+            $.ajax({
+            type: "POST",
+            url: action+t_id,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                // window.swal("Success", response.msg, "success")
+                // .then(function(value) {
+                //             location.reload();
+                //         });
+                myToast.show()
+
+             
+            },
+            error:function(requestObject, error, errorThrown){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+        });
     </script>
     
     <script src="/js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="/js/datatables-simple-demo.js"></script>
-
 {{-- <div class="container">
         
 <h1>Hello! {{session('admin')}} </h1>
