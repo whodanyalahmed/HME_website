@@ -86,3 +86,5 @@ Route::get('teachers/logout', function () {
 
 Route::view('teachers/signup','teachers.signup');
 Route::post('teachers/signup', [teachers::class,'signup']);
+Route::post('teachers/class/create', [teachers::class,'CreateClass']);
+// Route::get('teachers/classes/{id}', [teachers::class,'GetCourses']);

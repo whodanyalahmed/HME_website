@@ -119,6 +119,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="container">
+                    <div class="row">
+                        @foreach ($courses as $course)
+                            
+                        <div class="col-md-6">
+                            <div class="card border-dark mb-3" >
+                                <input type="hidden" name="course_id" value="{{$course->c_id}}">
+                                <div class="card-header">Course id: {{$course->c_id}}</div>
+                                <div class="card-body">
+                                  <h5 class="card-title"><a href="#" class="text-dark">{{$course->course}}</a></h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                              </div>
+                        </div>
+                        @endforeach
+
+                    </div>
+                </div>
                     
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -141,7 +159,7 @@
                     </div>
                     <div class="modal-body">
                         
-                    <form action="" method="post" name="form" id="Actform">
+                    <form action="class/create" method="post" name="form" id="CreateClass">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
@@ -169,8 +187,14 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12">
+                                    <label for="name">Class Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-12">
                                     <label for="students"><strong>Select Students</strong></label>
-                                    <table class="table table-responsive table-stripe table-hover">
+                                    <table  id="students" class="table table-responsive table-striped table-hover compact">
                                         <thead>
                                             <tr>
                                                 <th></th>
@@ -186,11 +210,15 @@
 
                                             @foreach ($items  as $item)
                                                 
-                                                <tr>
-                                                    
-                                                    <td><input type="checkbox" name="students[]" value="{{$item->s_id}}" ></td>
-                                                    <td>{{$item->s_id}}</td>
-                                                    <td>{{$item->s_name}}</td>
+                                                <tr >
+
+                                                    <td><input class="form-check-input" type="checkbox" name="students[]" id="student{{$item->s_id}}" value="{{$item->s_id}}" ></td>
+                                                    {{-- <label for="student{{$item->s_id}}" class="form-check-label"> --}}
+                                                        
+                                                        <td ><label for="student{{$item->s_id}}" >{{$item->s_id}}</label></td>
+                                                        <td> <label for="student{{$item->s_id}}" >{{$item->s_name}}</label></td>
+                                                    {{-- </label> --}}
+                                                
                                                     
                                                 </tr>
                                             @endforeach
@@ -202,22 +230,58 @@
                     </div>
                     <div class="modal-footer">
                         @csrf
-                        
+                        <input type="hidden" name="t_id" value="{{session('teacher')['id']}}">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="submit" class="btn btn-primary" onclick="CreateClass(this)">Create</button>
                     </form>
                     </div>
                 </div>
                 </div>
             </div>
+    <script>
+        function CreateClass(params) {
+            
+            var students = $.map($('input[name="students[]"]:checked'), function(c){return c.value; });
+            console.log(students);
+
+            
+        $("#CreateClass").submit(function(e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var form = $('#CreateClass');
+        var url = form.attr('action');
     
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                        .then(function(value) {
+                            location.reload();
+                        });
+        },
+        error:function(requestObject, error, errorThrown){
+            $("#form").modal('toggle');
+
+            window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+
+            }
+            });
+            
+        });
+        }
+    </script>
     
     <script src="/js/scripts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/assets/demo/chart-area-demo.js"></script>
-    <script src="/assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="/js/datatables-simple-demo.js"></script>
+
 {{-- <div class="container">
         
 <h1>Hello! {{session('admin')}} </h1>

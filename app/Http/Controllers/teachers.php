@@ -44,7 +44,8 @@ class teachers extends Controller
             // $challa_url = $feeData[0]->fee_challan_url;
             // return $exe[0]->s_status;
             if($exe[0]->t_status == 1){
-                return view('teachers.dashboard');
+                $courses = $this->GetCourses(session('teacher')['id']);
+                return view('teachers.dashboard',["courses"=>$courses]);
             }
             else{
                 if(session()->has('teacher')){
@@ -95,6 +96,49 @@ class teachers extends Controller
 
         return redirect('teachers/login');
 
+    }
+
+    public function CreateClass(Request $req)
+    {
+        try {
+
+            $selected = $req->all(); 
+            $students = $selected['students'];
+            
+            $id = DB::table('course')->insertGetId 
+            (array(
+                'name'=>$req['name'],
+                't_id'=>$req['t_id'],
+                'module_id'=>$req['module'])
+            );
+
+            foreach ($students as $ele) 
+            {
+                DB::table('class')->insert(
+                    array('course_id' => $id, 's_id' => $ele)
+                );
+            }
+        
+        
+            // return ["msg"=>$ele];
+            return ["msg"=>"Successfully Created Class"];
+    
+        } 
+        catch (\Throwable $th) 
+        {
+                
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>json_encode($th)];
+        }
+    }
+
+
+    public function GetCourses($id)
+    {
+        $data = DB::select("SELECT co.id as c_id,co.name as course,mo.name as module,mo.id FROM course co inner join modules mo on co.module_id = mo.id where co.t_id = ?", [$id]);
+
+        return $data;
     }
 
 }

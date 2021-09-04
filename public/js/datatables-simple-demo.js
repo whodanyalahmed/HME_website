@@ -27,3 +27,11 @@ $(document).ready( function () {
     ]
 });
 } );
+$(document).ready( function () {
+    $('#students').DataTable({
+        "paging":   false,
+    "columnDefs": [
+        {bSortable: false, targets: [0]} ,
+    ]
+});
+} );
