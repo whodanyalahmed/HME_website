@@ -37,6 +37,7 @@ class teachers extends Controller
             $exe= $this->getData($cred);
             $status=  $exe[0]->t_status;
             $req->session()->put('teacher.status',$status );
+            
             // $feeId = $this->getFeeId(session('teacher')['id']);
             // $feeData = fee::select('fee_challan_url')
             // ->where('fee_id',$feeId)
@@ -157,6 +158,11 @@ class teachers extends Controller
         
         return $data;
     }
+    public function GetCourse($id,$t_id)
+    {
+        $data = DB::select("SELECT * FROM `course` where id=? and t_id=?", [$id,$t_id]);
+        return $data[0];
+    }
     public function DeleteClass(Request $req)
     {
         try {
@@ -171,12 +177,14 @@ class teachers extends Controller
             return ["errorMsg"=>json_encode($th)];
         }
     }
-    public function Punchin($id)
+    public function Punchin($c_id,$id)
     {
         try {
-            // date_default_timezone_set('Pakistan/Karachi');  
-            // DB::table('daily_logs')
-            // ->insert(["t_id"=>$req->t_id,"punchin"=>date_default_timezone_get(),"punchout"=>null]);
+            date_default_timezone_set('Asia/Karachi');
+            DB::table('daily_logs')
+            ->insert(["t_id"=>$id,"punchin"=>date_create(),"punchout"=>null,"course_id"=>$c_id]);
+            
+            // return ['msg' =>date_timestamp_get()];
             return ["msg"=>"Successfully punched in ".$id];
             
         } catch (\Throwable $th) {
@@ -185,5 +193,64 @@ class teachers extends Controller
             return ["errorMsg"=>json_encode($th)];
         }
 
+    }
+    public function Punchout($c_id,$id)
+    {
+        try {
+            // DB::table('daily_logs')
+            // ->where("t_id",$id)
+            // ->where("Date(punchin)","current_date()")
+            // ->update(['punchout'=>date_create()]);
+            DB::update('update daily_logs set punchout = ? where t_id = ? and course_id =? and Date(punchin) = current_date()', [date_create(),$id,$c_id]);
+            
+            // return ['msg' =>date_timestamp_get()];
+            return ["msg"=>"Successfully punched in ".$id];
+            
+        } catch (\Throwable $th) {
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>json_encode($th)];
+        }
+
+    }
+    public function getPunchin($id,$c_id){
+        $data = DB::select('select count(punchin) as punchin from daily_logs where t_id = ? and course_id =? and Date(punchin) =CURRENT_DATE()', [$id,$c_id]);
+        return $data[0]->punchin;
+    }
+    public function getPunchout($id,$c_id){
+        $data = DB::select('select count(punchout) as Punchout from daily_logs where t_id = ? and course_id =? and Date(punchout) = CURRENT_DATE()', [$id,$c_id]);
+        return $data[0]->Punchout;
+    }
+
+
+    public function ClassView($id,Request $req)
+    {
+        $name = session('teacher')['name'];
+        $cred = [$name,$name,session('teacher')['pass']];
+        $exe= $this->getData($cred);
+        if(session('teacher')){
+            if($exe[0]->t_status == 1){
+                
+                $punchin = $this->getPunchin(session('teacher')['id'],$id);
+                $punchout = $this->getPunchout(session('teacher')['id'],$id);
+                $req->session()->put('teacher.punchin', $punchin);
+                $req->session()->put('teacher.punchout', $punchout);
+                $course = $this->GetCourse($id,session('teacher')['id']);
+                return view('teachers.class',['course'=>$course]);
+            }
+            else{
+                if(session()->has('teacher')){
+                    // session()->pull('teacher');
+                    session()->flush();
+                    $req->session()->flash('disable', $name);
+                    return redirect('/teachers/login');
+                }
+                
+            }
+
+        }
+        else{
+            return redirect('/teachers/login');
+        }
     }
 }

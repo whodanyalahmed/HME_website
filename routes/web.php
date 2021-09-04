@@ -88,6 +88,7 @@ Route::view('teachers/signup','teachers.signup');
 Route::post('teachers/signup', [teachers::class,'signup']);
 Route::post('teachers/class/create', [teachers::class,'CreateClass']);
 Route::post('teachers/class/delete', [teachers::class,'DeleteClass']);
-Route::post('teachers/punchin/{id}', [teachers::class,'Punchin']);
-
-// Route::get('teachers/class/get/{id}',[teachers::class,'GetCourses']);
+Route::get('teachers/class/{id}', [teachers::class,'ClassView']);
+// Route::get('teachers/class/puchin/{id}',[teachers::class,'getPunchin']);
+Route::post('teachers/class/{c_id}/punchin/{id}', [teachers::class,'Punchin']);
+Route::post('teachers/class/{c_id}/punchout/{id}',[teachers::class,'Punchout']);

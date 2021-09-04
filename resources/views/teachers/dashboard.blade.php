@@ -123,20 +123,36 @@
                 <div class="container">
 
                     <hr>
-                    <div class="row">
-                        <div class="col-md-6">
+                    {{-- <div class="row"> --}}
+                        {{-- <div class="col-md-6">
                             <h2><span class="fw-1">Hello!</span> <strong style="text-transform: uppercase">{{session('teacher')['name']}}</strong></h2>
                         </div>
                         <div class="col-md-6 ">
-                            <button class="btn btn-outline-warning float-end">Punch out</button>
+                            <form action="/teachers/punchout/" id="punchout" method="POST">
+                            @csrf
+                            <input type="hidden" name="t_id" value="{{session('teacher')['id']}}" id="t_id" >
+                            @if (session('teacher')['punchout'] == 0)
+                            
+                                <button type="submit" class="btn btn-outline-primary rounded float-end" id="teacher_punchout"   >Punch out</button>
+                            @else
+                                <button class="btn btn-outline-primary rounded float-end" disabled>  Punch out</button>
+                            
+                            @endif
+                            </form>
+
                             <form action="/teachers/punchin/" id="punchin" method="POST">
                                 @csrf
                                 <input type="hidden" name="t_id" value="{{session('teacher')['id']}}" id="t_id" >
+                                @if (session('teacher')['punchin'] == 0)
                                 
-                                <button type="submit" class="btn btn-outline-warning float-end mx-3 mr-sm-0" id="teacher_punchin"   >Punch in </button>
-                            </form>
-                        </div>
-                    </div>
+                                    <button type="submit" class="btn btn-outline-primary rounded float-end mx-3 mr-sm-0" id="teacher_punchin"   >Punch in </button>
+                                    @else
+                                    <button type="submit" class="btn btn-outline-primary rounded float-end mx-3 mr-sm-0"   disabled > Punch in </button>
+                                    
+                                @endif
+                            </form> --}}
+                        {{-- </div>
+                    </div> --}}
                     <h4 class="my-3">Classes</h4>
                     <div class="row">
                         @foreach ($courses as $course)
@@ -159,7 +175,7 @@
                                     </div>
                                 </div>  
                                 <div class="card-body">
-                                  <h5 class="card-title"><a href="#" class="text-dark">{{$course->course}}</a></h5>
+                                  <h5 class="card-title"><a href="class/{{$course->c_id}}" class="text-dark">{{$course->course}}</a></h5>
                                   <p class="card-text">This is the class of <strong>{{$course->module}}</strong></p>
                                 </div>
                                 <div class="card-footer bg-transparent border-dark">No. of students: <strong>{{$course->noofstudents}}</strong></div>
@@ -293,19 +309,6 @@
             </div>
         </div>
 
-        {{-- toaster start here --}}
-        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 110">
-            <div id="liveToast" class="toast bg-success hide" role="alert" aria-live="assertive" data-autohide="true" data-bs-animation="true" aria-atomic="true">
-              <div class="toast-header bg-outline-success">
-                <strong class="me-auto">Successfully Punched in...</strong>
-                <small>Just now</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-              <div class="toast-body bg-white">
-                <strong style="text-transform: uppercase">{{session("teacher")['name']}}</strong> has been punched in...
-              </div>
-            </div>
-        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script> 
    
@@ -391,8 +394,10 @@
             
         });
         }
-        var myToastEl = document.getElementById('liveToast')
-        var myToast = bootstrap.Toast.getOrCreateInstance(myToastEl) 
+        var punchinel = document.getElementById('punchin')
+        var punchin = bootstrap.Toast.getOrCreateInstance(punchinel) 
+        var punchoutel = document.getElementById('punchout')
+        var punchout = bootstrap.Toast.getOrCreateInstance(punchoutel) 
         $("#punchin").submit(function (e) {
             e.preventDefault();
             var form = $('#punchin');
@@ -409,14 +414,48 @@
                 // .then(function(value) {
                 //             location.reload();
                 //         });
-                myToast.show()
-
+                punchin.show()
+                $("#teacher_punchin").attr("disabled","disabled");
              
             },
-            error:function(requestObject, error, errorThrown){
+            error:function(requestObject){
             $("#form").modal('toggle');
 
-                    window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                    window.swal("Oops!", requestObject.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+        });
+        $("#punchout").submit(function (e) {
+            e.preventDefault();
+            var form = $('#punchout');
+            var action = form.attr('action');
+            var t_id = $("#t_id").val();
+ 
+
+            $.ajax({
+            type: "POST",
+            url: action+t_id,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                // window.swal("Success", response.msg, "success")
+                // .then(function(value) {
+                //             location.reload();
+                //         });
+                punchout.show()
+                $("#teacher_punchout").attr("disabled","disabled");
+             
+            },
+            error:function(requestObject){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.errorMsg, "error")
                     .then(function(value) {
                             location.reload();
                         });
