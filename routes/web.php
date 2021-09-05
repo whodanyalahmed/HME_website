@@ -38,6 +38,7 @@ Route::get('students/logout', function () {
 Route::view('students/signup','students.signup');
 Route::post('students/signup', [students::class,'signup']);
 Route::post('students/upload',[students::class,'Upload']);
+Route::get('students/class/{id}', [students::class,'ClassView']) -> middleware('revalidate');
 // Admin
 // Admin data
 Route::get("admin/login", function () {
@@ -75,7 +76,7 @@ Route::get("teachers/login", function () {
     return view('teachers.login');
 }) -> middleware('revalidate');
 Route::post('teachers/dashboard',[teachers::class,'Index']) -> middleware('revalidate');
-Route::get('teachers/dashboard',[teachers::class,'Dashboard']) ->middleware('revalidate');
+Route::get('teachers/dashboard',[teachers::class,'Dashboard']) ->middleware('revalidate') -> middleware('revalidate');
 Route::get('teachers/logout', function () {
     if(session()->has('teacher')){
         // session()->pull('user');
@@ -88,7 +89,10 @@ Route::view('teachers/signup','teachers.signup');
 Route::post('teachers/signup', [teachers::class,'signup']);
 Route::post('teachers/class/create', [teachers::class,'CreateClass']);
 Route::post('teachers/class/delete', [teachers::class,'DeleteClass']);
-Route::get('teachers/class/{id}', [teachers::class,'ClassView']);
+Route::get('teachers/class/{id}', [teachers::class,'ClassView']) -> middleware('revalidate');
 // Route::get('teachers/class/puchin/{id}',[teachers::class,'getPunchin']);
 Route::post('teachers/class/{c_id}/punchin/{id}', [teachers::class,'Punchin']);
 Route::post('teachers/class/{c_id}/punchout/{id}',[teachers::class,'Punchout']);
+Route::post('teachers/class/{c_id}/messsage',[teachers::class,'PostMessage']);
+Route::post('teachers/class/{c_id}/delete/message',[teachers::class,'DeleteMessage']);
+Route::post('teachers/class/{c_id}/edit/message',[teachers::class,'EditMessage']);

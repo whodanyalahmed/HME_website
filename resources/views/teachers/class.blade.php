@@ -53,13 +53,19 @@
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="far fa-user"></i></div>
-                            Students
+                            Classes
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="students">All Students</a>
-                                <a class="nav-link" href="studentsfee">Students Fee Details</a>
+
+                                <a class="nav-link" href="/teachers/dashboard">All Classes</a>
+
+                                @foreach ($courses as $cou)
+                                
+                                <a class="nav-link" href="/teachers/class/{{$cou->c_id}}">{{$cou->course}}</a>
+
+                                @endforeach
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -154,7 +160,36 @@
                             <h1 class="mt-4">{{$var}} : <strong>{{$course->name}}</strong></h1>
                         </div>
                         <div class="col-md-4 float-end">
-                            <button class="btn btn-outline-primary mt-4 float-end"  data-bs-toggle="modal" data-bs-target="#ActiveModal"> + create new post</button>
+                            <button class="btn btn-outline-primary mt-4 float-end" data-bs-toggle="modal" data-bs-target="#Message"> + create new post</button>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            @foreach ($messages as $message)
+                                
+                                <div class="accordion-item">
+                                <h2 class="accordion-header rounded" id="panelsStayOpen-{{$message->id}}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" aria-expanded="false" data-bs-target="#panelsStayOpen-collapseOne{{$message->id}}" >
+                                        
+                                            <div class="col-md-8">
+                                                <span class="text-dark">Message Id: <strong class="me-3">{{$message->id}}</strong></span>{{$message->posted_at}}
+
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <a href="{{$message->id}}" onclick="update(this)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="far fa-trash-alt text-danger float-end mx-4"></i></a>
+                                                <a href="{{$message->id}}" data-msg="{{$message->message}}" onclick="edit(this)" data-bs-toggle="modal" data-bs-target="#EditModal"><i class="fas fa-pencil-alt text-primary float-end"></i></a>
+                                            </div>
+                                        
+                                    </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne{{$message->id}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-{{$message->id}}">
+                                    <div class="accordion-body rounded">
+                                    This is the posted at <strong>{{$message->posted_at}}</strong><br>
+                                    The message/url is: <strong>{{$message->message}}</strong> 
+                                    </div>
+                                </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -198,8 +233,75 @@
               </div>
             </div>
         </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- Modal -->
+<div class="modal fade" id="Message" tabindex="-1" aria-labelledby="MessageLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="MessageLabel">Create new post</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="messsage/" method="POST" id="messageform">
+            @csrf
+            <div class="modal-body">
+                <div class="mb-3">
+                    <input type="hidden" name="t_id" id="t_id" value="{{session('teacher')['id']}}" />
+                    <label for="exampleFormControlTextarea1" class="form-label">Enter url/message: </label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="message"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="postbtn">post</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+         <!-- Modal -->
+         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Disable</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you really want to delete message with id <strong><span id="msgId"></span></strong>?
+                </div>
+                <div class="modal-footer">
+                <form action="delete/message" method="post" name="form" id="DeleteMessage">
+                    @csrf
+                    <input type="hidden" name="m_id" value="">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit"  class="btn btn-danger">Delete</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+         <!-- Modal -->
+         <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="EditModalLabel">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="edit/message" method="post" name="form" id="EditMessage">
+                <div class="modal-body">
+                    <textarea class="form-control" id="EditTextarea" rows="5" name="message" value=""></textarea>
+                </div>
+                <div class="modal-footer">
+                    @csrf
+                    <input type="hidden" name="m_id" value="">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit"  class="btn btn-primary">update</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
     <script>
          var punchinel = document.getElementById('Toastpunchin');
         var punchin = bootstrap.Toast.getOrCreateInstance(punchinel) ;
@@ -260,6 +362,129 @@
                 punchout.show()
                 $("#teacher_punchout").attr("disabled","disabled");
              
+            },
+            error:function(requestObject){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+        });
+
+
+
+        $("#messageform").submit(function (e) {
+            e.preventDefault();
+            var form = $("#messageform");
+            var action = form.attr("action");
+            var msg = $("textarea[name=message]").val();
+            var t_id = $("#t_id").val();
+            var pathname = window.location.pathname; 
+            $("#postbtn").attr("disabled","disabled");
+
+            $.ajax({
+            type: "POST",
+            url: pathname+"/"+action,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                .then(function(value) {
+                            location.reload();
+                        });
+                // punchout.show()
+                // $("#teacher_punchout").attr("disabled","disabled");
+            
+            },
+            error:function(requestObject){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+            
+        });
+
+        function update(ele) {
+                action = $(ele).select();
+                href = action.attr('href');
+                $("#msgId").text(href);
+                $("input[name=m_id]").val(href);
+                
+            }
+        function edit(ele) {
+                action = $(ele).select();
+                href = action.attr('href');
+                msg = action.data("msg");
+
+                $("#msgId").text(href);
+                $("input[name=m_id]").val(href);
+
+                $("#EditTextarea").val(msg);
+                
+            }
+        $("#DeleteMessage").submit(function (e) {
+            e.preventDefault();
+            var form = $("#DeleteMessage");
+            var action = form.attr("action");
+            var pathname = window.location.pathname; 
+            $.ajax({
+            type: "POST",
+            url: pathname+"/"+action,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                .then(function(value) {
+                            location.reload();
+                        });
+                // punchout.show()
+                // $("#teacher_punchout").attr("disabled","disabled");
+            
+            },
+            error:function(requestObject){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+        });
+        $("#EditMessage").submit(function (e) {
+            e.preventDefault();
+            var form = $("#EditMessage");
+            var action = form.attr("action");
+            var pathname = window.location.pathname; 
+            $.ajax({
+            type: "POST",
+            url: pathname+"/"+action,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                .then(function(value) {
+                            location.reload();
+                        });
+                // punchout.show()
+                // $("#teacher_punchout").attr("disabled","disabled");
+            
             },
             error:function(requestObject){
             $("#form").modal('toggle');

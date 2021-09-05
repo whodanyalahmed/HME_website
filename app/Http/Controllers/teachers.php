@@ -225,18 +225,20 @@ class teachers extends Controller
 
     public function ClassView($id,Request $req)
     {
+        
+        if(session('teacher')){
         $name = session('teacher')['name'];
         $cred = [$name,$name,session('teacher')['pass']];
         $exe= $this->getData($cred);
-        if(session('teacher')){
             if($exe[0]->t_status == 1){
-                
+                $courses = $this->GetCourses(session('teacher')['id']);
                 $punchin = $this->getPunchin(session('teacher')['id'],$id);
                 $punchout = $this->getPunchout(session('teacher')['id'],$id);
                 $req->session()->put('teacher.punchin', $punchin);
                 $req->session()->put('teacher.punchout', $punchout);
                 $course = $this->GetCourse($id,session('teacher')['id']);
-                return view('teachers.class',['course'=>$course]);
+                $messages = $this->getMessages($id);
+                return view('teachers.class',['course'=>$course,'courses'=>$courses,'messages'=>$messages]);
             }
             else{
                 if(session()->has('teacher')){
@@ -252,5 +254,71 @@ class teachers extends Controller
         else{
             return redirect('/teachers/login');
         }
+    }
+
+    public function GetCourseStudents($c_id)
+    {
+        $s_ids = [];
+        $s_idsOBj = DB::table('class')
+                        ->where('course_id',$c_id)
+                        ->get("s_id");
+        foreach ($s_idsOBj as $key ) {
+            array_push($s_ids,$key->s_id);
+        }
+        return $s_ids;
+    }
+    public function PostMessage($c_id,Request $req)
+    {
+        try {
+            $s_ids = $this->GetCourseStudents($c_id);
+
+            $m_id = DB::table('message')->insertGetId(
+                [
+                    'message'=>$req->message,
+                    'course_id'=>$c_id
+                ]
+                );
+
+            foreach ($s_ids as $s_id ) {
+                # code...
+                DB::insert('insert into post (message_id, course_id,student_id) values (?, ?, ? )', [$m_id,$c_id,$s_id]);
+                
+            }   
+            return ["msg"=>"Message is Successfully posted"];
+        }catch (\Throwable $th) {
+                return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
+            }
+    }
+    public function getMessages($c_id)
+    {
+        $data = DB::select("SELECT * FROM `message` where course_id = ? order by posted_at DESC",[$c_id]);
+        return $data;
+    }   
+
+    public function DeleteMessage(Request $req)
+    {
+        try {
+            DB::delete('delete from post where message_id = ?', [$req->m_id]);
+            DB::delete('delete from message where id = ?', [$req->m_id]);
+            
+            return ["msg"=>"Message is Successfully deleted"];
+        }catch (\Throwable $th) {
+                return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
+            }
+    }
+    public function EditMessage(Request $req)
+    {
+        try {
+            DB::update('update message set message = ? where id =?', [$req->message,$req->m_id]);
+            return ["msg"=>"Message is Successfully updated"];
+        }catch (\Throwable $th) {
+                return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
+            }
     }
 }

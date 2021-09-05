@@ -306,7 +306,7 @@
 
             var form = $('.form');
             var url = form.attr('action');
-
+            $("button[type=submit]").attr("disabled","disabled");
             $.ajax({
                 type: "POST",
                 url: url,

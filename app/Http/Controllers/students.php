@@ -91,8 +91,9 @@ class students extends Controller
             // return $exe[0]->s_status;
             if($exe[0]->s_status == 1){
                 if(session('user')['fee_status'] == 1){
+                    $courses = $this->GetCourses(session('user')['id']);
                     // return session('fee_status');
-                    return view('dashboard');
+                    return view('dashboard',['courses'=>$courses]);
                 }
                 else{
                     return view('s_payment');
@@ -274,6 +275,21 @@ class students extends Controller
                 }
             }
         }
+    }
+
+    public function GetCourses($id)
+    {
+        $data = DB::select("SELECT mo.name as module,co.id as course_id,co.name,class.id as class_id,class.s_id FROM `class` 
+        INNER join course co on class.course_id = co.id
+        INNER join modules mo on co.module_id = mo.id
+        where s_id = ? and course_status = 1", [$id]);
+        
+        return $data;
+    }
+    public function GetCourse($id,$t_id)
+    {
+        $data = DB::select("SELECT * FROM `course` where id=? and t_id=?", [$id,$t_id]);
+        return $data[0];
     }
 
 }

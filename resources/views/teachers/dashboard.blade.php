@@ -8,6 +8,7 @@
 @endsection 
 
 @section('content')
+
 <body class="sb-nav-fixed">
    
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -50,22 +51,26 @@
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="far fa-user"></i></div>
-                            Students
+                            Classes
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="students">All Students</a>
-                                <a class="nav-link" href="studentsfee">Students Fee Details</a>
+                                <a class="nav-link" href="/teachers/dashboard"><i class="fas fa-list me-2"></i> All Classes</a>
+                                @foreach ($courses as $course)
+                                
+                                <a class="nav-link" href="class/{{$course->c_id}}"><i class="fas fa-arrow-right me-2"></i>{{$course->course}}</a>
+
+                                @endforeach
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Pages
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
+                        </a> --}}
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            {{-- <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Authentication
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -88,9 +93,9 @@
                                         <a class="nav-link" href="#">500 Page</a>
                                     </nav>
                                 </div>
-                            </nav>
+                            </nav> --}}
                         </div>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        {{-- <div class="sb-sidenav-menu-heading">Addons</div>
                         <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Charts
@@ -98,7 +103,7 @@
                         <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Tables
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -170,7 +175,7 @@
 
                                         </div>
                                         <div class="col-md-3 float-end text-right">
-                                            <button class="btn btn-outline-danger float-end" onclick="update(this)" data-id="{{$course->c_id}}"><i class="fas fa-trash"></i></button>
+                                            <button class="btn btn-outline-danger float-end" onclick="update(this)" data-id="{{$course->c_id}}"><i class="far fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                 </div>  
@@ -308,8 +313,6 @@
             </div>
             </div>
         </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script> 
    
 

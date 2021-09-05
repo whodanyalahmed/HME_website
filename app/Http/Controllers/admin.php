@@ -146,7 +146,7 @@ class admin extends Controller
     {
         try {
             $data = DB::update('update students set fee_status = 0 where s_id = ?', [$id]);
-            return ['msg'=> 'Successfully updated'];
+            return ['msg'=> 'Successfully changed to not paid'];
         } catch (\Throwable $th) {
             //throw $th;
             return ['errorMsg'=> $th];
@@ -157,7 +157,7 @@ class admin extends Controller
         try {
             //code...
             $data = DB::update('update students set fee_status = 3 where s_id = ?', [$id]);
-            return ['msg'=> 'Successfully updated'];
+            return ['msg'=> 'Successfully added to pending'];
         } catch (\Throwable $th) {
             //throw $th;
             return ['errorMsg'=> $th];
@@ -168,8 +168,9 @@ class admin extends Controller
         try {
             //code...
             DB::update('update fees set fees_paiddate=current_date(), fees_paid = 1 where fee_id = ?', [$req->fee_id]);
+            DB::update('update students set fee_status = 1 where s_id = ?', [$req->id]);
            
-            
+            return ['msg'=> 'Successfully paid'];
             
         } catch (\Throwable $th) {
             //throw $th;
@@ -211,7 +212,7 @@ class admin extends Controller
             
         return response( ["errorMsg"=>$th],422)
         ->header('Content-Type', 'application/json');
-        // return ["errorMsg"=>$th];
+        return ["errorMsg"=>$th];
     }
         
 
