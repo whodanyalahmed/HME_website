@@ -4,7 +4,7 @@
 @endphp
 
 @section('title')
-    {{$var}} | Admin
+    {{$var}} | Teacher
 @endsection 
 
 @section('content')
@@ -15,7 +15,7 @@
    
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="/teachers/dashboard">Admin | {{$var}}</a>
+        <a class="navbar-brand ps-3" href="/teachers/dashboard">Teacher | {{$var}}</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
@@ -59,22 +59,22 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
 
-                                <a class="nav-link" href="/teachers/dashboard">All Classes</a>
+                                <a class="nav-link" href="/teachers/dashboard"><i class="fas fa-list me-2"></i>All Classes</a>
 
                                 @foreach ($courses as $cou)
                                 
-                                <a class="nav-link" href="/teachers/class/{{$cou->c_id}}">{{$cou->course}}</a>
+                                <a class="nav-link" href="/teachers/class/{{$cou->c_id}}"><i class="fas fa-arrow-right me-2"></i>{{$cou->course}}</a>
 
                                 @endforeach
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Pages
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
+                        </a> --}}
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            {{-- <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
                                     Authentication
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -97,17 +97,17 @@
                                         <a class="nav-link" href="#">500 Page</a>
                                     </nav>
                                 </div>
-                            </nav>
+                            </nav> --}}
                         </div>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="#">
+                        {{-- <div class="sb-sidenav-menu-heading">Addons</div> --}}
+                        {{-- <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Charts
                         </a>
                         <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Tables
-                        </a>
+                        </a> --}}
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -160,6 +160,7 @@
                             <h1 class="mt-4">{{$var}} : <strong>{{$course->name}}</strong></h1>
                         </div>
                         <div class="col-md-4 float-end">
+                            <button class="btn btn-outline-warning mt-4 float-end" data-bs-toggle="modal" data-bs-target="#studentsList"> Students List</button>
                             <button class="btn btn-outline-primary mt-4 float-end" data-bs-toggle="modal" data-bs-target="#Message"> + create new post</button>
                         </div>
                     </div>
@@ -281,6 +282,27 @@
             </div>
         </div>
          <!-- Modal -->
+         <div class="modal fade" id="RemoveStdModal" tabindex="1" aria-labelledby="RemoveStdModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="RemoveStdModalLabel">Confirm Disable</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you really want to delete message with id <span class="fw-bold" id="stdId"></span>?
+                </div>
+                <div class="modal-footer">
+                <form action="" method="post" name="form" id="DeleteStd">
+                    @csrf
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#studentsList">Close</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+         <!-- Modal -->
          <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="EditModalLabel" aria-hidden="true">
             <div class="modal-dialog">
             <div class="modal-content">
@@ -298,6 +320,59 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit"  class="btn btn-primary">update</button>
                 </form>
+                </div>
+            </div>
+            </div>
+        </div>
+         <!-- Modal -->
+         <div class="modal fade" id="studentsList" tabindex="-1" aria-labelledby="studentsListLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="studentsListLabel">Students List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table  id="stdlist" class="table table-responsive table-striped table-hover compact">
+                        <thead>
+                            <tr>
+                                <th>Id </th>
+                                <th>Name</th>
+                                <th class="text-center">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        {{-- <a href="somelink/here" class="remstd" onclick="return RemoveStudent(this)">some</a> --}}
+                            @php
+                                $items = DB::select('SELECT std.s_name,std.s_id FROM `class` 
+                                INNER join students std on class.s_id = std.s_id 
+                                where course_id = ?',[$course->id]);
+                            @endphp
+
+                            @foreach ($items  as $item)
+                                
+                                <tr >
+
+                                        
+                                        <td ><label for="student{{$item->s_id}}" >{{$item->s_id}}</label></td>
+                                        <td> <label for="student{{$item->s_id}}" >{{$item->s_name}}</label></td>
+                                        <td class="text-center">
+                                            <a href="remove/{{$item->s_id}}" onclick="return RemoveStudent(this)" data-c_id="{{$course->id}}" data-s_id="{{$item->s_id}}" class="btn btn-outline-danger"   data-bs-target="#RemoveStdModal" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                                
+                                                    <i class="fas fa-ban"></i>
+                                                </a>
+                                                </td>
+                                    
+                                
+                                    
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
             </div>
@@ -500,6 +575,57 @@
             }
             });
         });
+
+
+        function RemoveStudent(params) {
+            var action = $(params).attr('href');
+            
+      
+            var s_id = $(params).data("s_id");
+            $("#stdId").html(s_id);
+
+            $("#DeleteStd").attr("action",action);
+      
+            return false;
+
+        }
+        $("#DeleteStd").submit(function (e) {  
+            e.preventDefault();
+            var form = $("#DeleteStd");
+            var action = form.attr("action");
+            var pathname = window.location.pathname; 
+            var urlreq = pathname +"/"+action;
+ 
+
+
+            $.ajax({
+            type: "POST",
+            url: urlreq,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                .then(function(value) {
+                            location.reload();
+                        });
+                // punchout.show()
+                // $("#teacher_punchout").attr("disabled","disabled");
+            
+            },
+            error:function(requestObject){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!", requestObject.errorMsg, "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+        });
+
     </script>
           
     <script src="/js/scripts.js"></script>
@@ -507,7 +633,7 @@
     <script src="/js/datatables-simple-demo.js"></script>
 {{-- <div class="container">
         
-<h1>Hello! {{session('admin')}} </h1>
+<h1>Hello! {{session('Teacher')}} </h1>
     <ul>
     @foreach ($var as $item)
         <li>{{$item->s_id}} - {{$item->s_name}}</li>

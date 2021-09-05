@@ -35,3 +35,12 @@ $(document).ready( function () {
     ]
 });
 } );
+$(document).ready( function () {
+    $('#stdlist').DataTable({
+        "paging":   false,
+    "columnDefs": [
+        {bSortable: false, targets: [2]} ,
+    ]
+});
+} );
+

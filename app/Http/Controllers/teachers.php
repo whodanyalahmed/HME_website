@@ -295,7 +295,18 @@ class teachers extends Controller
     {
         $data = DB::select("SELECT * FROM `message` where course_id = ? order by posted_at DESC",[$c_id]);
         return $data;
-    }   
+    }
+    public function RemoveStudent($c_id,$s_id)
+    {
+        try {
+            DB::delete('delete from class where course_id = ? and s_id = ?', [$c_id,$s_id]);
+            return ["msg"=>"Successfully Removed"];
+        }catch (\Throwable $th) {
+                return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
+            }
+    }
 
     public function DeleteMessage(Request $req)
     {

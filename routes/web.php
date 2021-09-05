@@ -96,3 +96,4 @@ Route::post('teachers/class/{c_id}/punchout/{id}',[teachers::class,'Punchout']);
 Route::post('teachers/class/{c_id}/messsage',[teachers::class,'PostMessage']);
 Route::post('teachers/class/{c_id}/delete/message',[teachers::class,'DeleteMessage']);
 Route::post('teachers/class/{c_id}/edit/message',[teachers::class,'EditMessage']);
+Route::post('teachers/class/{c_id}/remove/{id}',[teachers::class,'RemoveStudent']);

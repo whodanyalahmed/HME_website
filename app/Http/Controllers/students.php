@@ -286,10 +286,43 @@ class students extends Controller
         
         return $data;
     }
-    public function GetCourse($id,$t_id)
+    public function GetCourse($id)
     {
-        $data = DB::select("SELECT * FROM `course` where id=? and t_id=?", [$id,$t_id]);
+        $data = DB::select("SELECT * FROM `course` where id=? and course_status=1", [$id]);
         return $data[0];
+    }
+    public function getMessages($c_id)
+    {
+        $data = DB::select("SELECT * FROM `message` where course_id = ? order by posted_at DESC",[$c_id]);
+        return $data;
+    } 
+    public function ClassView($id,Request $req)
+    {
+        
+        if(session('user')){
+        $name = session('user')['name'];
+        $cred = [$name,$name,session('user')['pass']];
+        $exe= $this->getData($cred);
+            if($exe[0]->s_status == 1){
+                $courses = $this->GetCourses(session('user')['id']);
+                $course = $this->GetCourse($id);
+                $messages = $this->getMessages($id);
+                return view('students.class',['course'=>$course,'courses'=>$courses,'messages'=>$messages]);
+            }
+            else{
+                if(session()->has('user')){
+                    // session()->pull('student');
+                    session()->flush();
+                    $req->session()->flash('disable', $name);
+                    return redirect('/students/login');
+                }
+                
+            }
+
+        }
+        else{
+            return redirect('/teachers/login');
+        }
     }
 
 }
