@@ -218,6 +218,29 @@ class admin extends Controller
 
 
     }
+
+
+    public function Contactus(Request $req)
+    {
+        try {
+            $name = 
+            DB::insert('insert into contactus (name,email,message) values (?, ?, ?)', 
+            [
+                $req->name,
+                $req->email,
+                $req->message
+            ]);
+            return ["msg"=>"successfully sent "];
+    
+        } 
+        catch (\Throwable $th) 
+        {
+                
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>$th];
+        }
+    }
 }
 
 

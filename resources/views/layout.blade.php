@@ -36,6 +36,7 @@
         $(window).on("load",function(){
         $('#navbar').removeClass('hidden');
         $('#myCarousel').removeClass('hidden');
+        $('.serviceBox').removeClass('hidden');
         $(".loader-wrapper").fadeOut("slow");
         });
     // },1000);

@@ -7,8 +7,158 @@
 @section('content') 
 
 <x-navbar/>
-<div class="content">
+<style>
+  .align-center {
+  text-align: center;
+}
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  position: relative;
+}
+
+.row {
+  margin: -20px 0;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.row .col {
+  padding: 0 20px;
+  float: left;
+  box-sizing: border-box;
+}
+.row .col.x-50 {
+  width: 50%;
+}
+.row .col.x-100 {
+  width: 100%;
+}
+
+.content-wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+.get-in-touch {
+  max-width: 650px;
+  margin: 0 auto;
+  position: relative;
+  top:20%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+.get-in-touch .title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 36px;
+  line-height: 48px;
+  padding-bottom: 48px;
+}
+
+.contact-form .form-field {
+  position: relative;
+  margin: 32px 0;
+}
+.contact-form .input-text {
+  display: block;
+  width: 100%;
+  height: 36px;
+  border-width: 0 0 2px 0;
+  border-color: #000;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 400;
+}
+.contact-form .input-text:focus {
+  outline: none;
+}
+.contact-form .input-text:focus + .label, .contact-form .input-text.not-empty + .label {
+  -webkit-transform: translateY(-24px);
+          transform: translateY(-24px);
+}
+.contact-form .label {
+  position: absolute;
+  left: 20px;
+  bottom: 11px;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 400;
+  color: #888;
+  cursor: text;
+  -webkit-transition: -webkit-transform .2s ease-in-out;
+  transition: -webkit-transform .2s ease-in-out;
+  transition: transform .2s ease-in-out;
+  transition: transform .2s ease-in-out, -webkit-transform .2s ease-in-out;
+}
+.contact-form .submit-btn {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 16px;
+  line-height: 24px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+.contact-form .submit-btn:disabled{
+  background: #888;
+  cursor: default;
+}
+
+.note {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 21px;
+}
+.note .link {
+  color: #888;
+  text-decoration: none;
+}
+.note .link:hover {
+  text-decoration: underline;
+}
+.serviceBox{text-align: center;margin-top: 60px;position: relative;z-index: 1; margin-bottom: 21px;}
+.serviceBox .service-icon{width: 78px;height: 78px;border-radius:3px;background: #fff;margin: 0 auto;position: absolute;top: -34px;left: 0;right: 0;z-index: 1;transition: all 0.3s ease-out 0s;}
+.serviceBox:hover .service-icon{transform: rotate(45deg);}
+.serviceBox .service-icon span{display: inline-block;width: 60px;height: 60px;line-height: 60px;border-radius:3px;background: #727cb6;font-size: 30px;color: #fff;margin: auto;position: absolute;top: 0;left: 0;bottom: 0;right: 0;transition: all 0.3s ease-out 0s;}
+.serviceBox .service-icon span i{transition: all 0.3s ease-out 0s;}
+.serviceBox:hover .service-icon span i{transform: rotate(-45deg);}
+.serviceBox .service-content{background: #fff;border: 1px solid #e7e7e7;border-radius: 3px;padding: 55px 15px;position: relative;}
+.serviceBox .service-content:before{content: "";display: block;width: 80px;height: 80px;border: 1px solid #e7e7e7;border-radius: 3px;margin: 0 auto;position: absolute;top: -37px;left: 0;right: 0;z-index: -1;transition: all 0.3s ease-out 0s;}
+.serviceBox:hover .service-content:before{transform: rotate(45deg);}
+.serviceBox .title{font-size: 17px;font-weight: 500;color: #324545;text-transform: uppercase;margin: 0 0 25px 0;position: relative;transition: all 0.3s ease-out 0s;}
+.serviceBox:hover .title{color: #727cb6;}
+.serviceBox .description{font-size: 14px;font-weight: 500;line-height: 24px;margin-bottom: 0;}
+.serviceBox .read-more{display: block;width: 40px;height: 40px;line-height: 38px;border-radius: 50%;background: #fff;border: 1px solid #e7e7e7;font-size: 14px;color: #c4c2c2;margin: 0 auto;position: absolute;bottom: -17px;left: 0; right: 0;transition: all 0.3s ease-out 0s;}
+.serviceBox .read-more:hover{border: 1px solid #727cb6;color: #727cb6;text-decoration: none;}
+.serviceBox.green .service-icon span{ background: #008b8b; }
+.serviceBox.blue .service-icon span{ background: #3498db; }
+.serviceBox.orange .service-icon span{ background: #e67e22; }
+.serviceBox.green:hover .title{ color: #008b8b; }
+.serviceBox.blue:hover .title{ color: #3498db; }
+.serviceBox.orange:hover .title{ color: #e67e22; }
+
+.serviceBox:hover .read-more{border: 1px solid #727cb6;color: #727cb6;}
+.serviceBox.green:hover .read-more{border: 1px solid #008b8b;color: #008b8b;}
+.serviceBox.blue:hover .read-more{border: 1px solid #3498db;color: #3498db;}
+.serviceBox.orange:hover .read-more{border: 1px solid #e67e22;color: #e67e22;}
+</style>
+<div class="content">
+{{-- Carousel start here --}}
 <div id="myCarousel" class="carousel slide hidden cover-container h-100" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
@@ -59,6 +209,7 @@
     </button>
   </div>
 </div>
+{{-- services section start here --}}
 <section class="py-5 text-center container" id="services">
   <div class="row py-lg-5">
     <div class="col-lg-6 col-md-8 mx-auto">
@@ -71,113 +222,62 @@
     </div>
   </div>
 </section>
-<div class="album py-5 bg-light">
-  <div class="container">
-
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-              <small class="text-muted">9 mins</small>
+<div class="container">
+	<div class="row ">
+	<div class="col-md-3 col-sm-6 col-xsx-6">
+            <div class="serviceBox hidden">
+                <div class="service-icon">
+                    <span><i class="fas fa-users"></i></span>
+                </div>
+                <div class="service-content">
+                    <h3 class="title">Tuition</h3>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-              <small class="text-muted">9 mins</small>
+ 
+        <div class="col-md-3 col-sm-6 col-xsx-6">
+            <div class="serviceBox green hidden">
+                <div class="service-icon">
+                    <span><i class="fa fa-desktop"></i></span>
+                </div>
+                <div class="service-content">
+                    <h3 class="title">Computer Courses</h3>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
 
-          <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-              <small class="text-muted">9 mins</small>
+        <div class="col-md-3 col-sm-6 col-xsx-6">
+            <div class="serviceBox orange hidden">
+                <div class="service-icon">
+                    <span><i class="fa fa-tablet"></i></span>
+                </div>
+                <div class="service-content">
+                    <h3 class="title">English Diploma</h3>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
 
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-              <small class="text-muted">9 mins</small>
+        <div class="col-md-3 col-sm-6 col-xsx-6">
+            <div class="serviceBox blue hidden">
+                <div class="service-icon">
+                    <span><i class="fas fa-briefcase"></i></span>
+                </div>
+                <div class="service-content">
+                    <h3 class="title">Business</h3>
+                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-              <small class="text-muted">9 mins</small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card shadow-sm">
-          <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-
-          <div class="card-body">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-              </div>
-              <small class="text-muted">9 mins</small>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-    </div>
-  </div>
+	</div>
 </div>
-
+{{-- Skills section starts here --}}
 <div class="container px-4 py-5" id="icon-grid">
   <section class="py-5 text-center container" id="Skills">
     <div class="row py-lg-5">
@@ -248,6 +348,7 @@
       </div>
     </div>
   </div>
+  {{-- Jumbotron starts here --}}
     <section class="container" id="events">
     <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
@@ -275,6 +376,45 @@
     </div>
   </div>
   </section>
+  {{-- contact us section starts here --}}
+  <section class="py-5 text-center " id="Contact">
+<div  id="icon-grid">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light" >Contact us</h1>
+      </div>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 py-5">
+      <div class="col-md-6">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1208.104469633752!2d66.99836740440493!3d24.856232915894655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb315bee876aaf7%3A0xd15eb828d1af616e!2sMadni%20house!5e0!3m2!1sen!2s!4v1631002241664!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+      <div class="col-md-6 container">
+        <div class="get-in-touch">
+          <h1 class="title">Get in touch</h1>
+          <form action="/admin/contactus" class="contact-form" id="contactus">
+            @csrf
+             <div class="form-field col x-50">
+                <input id="name" class="input-text js-input" name="name" type="text" required>
+                <label class="label" for="name">Name</label>
+             </div>
+             <div class="form-field col x-50">
+                <input id="email" class="input-text js-input" name="email" type="email" required>
+                <label class="label" for="email">E-mail</label>
+             </div><br>
+             <div class="form-field col x-100">
+                <input id="message" class="input-text js-input" name="message" type="text" required>
+                <label class="label" for="message">Message</label>
+             </div>
+             <div class="form-field col x-100 align-center">
+                <input class="submit-btn" type="submit" value="Submit" id="submitContactus">
+             </div>
+          </form>
+       </div>
+      </div>
+    </div>
+  </section>
+
+  {{-- Footer starts here --}}
   <footer id="footer" class="footer-1 mt-5 ">
     <div class="main-footer widgets-dark typo-light ">
     <div class="container pt-4">
@@ -318,7 +458,11 @@
     
     <div class="col-xs-12 col-sm-6 col-md-3">
     <div class="widget no-box">
-    <h5 class="widget-title">Get Started<span></span></h5>
+    <h5 class="widget-title">Get Started<br>
+      <i class="fas fa-long-arrow-alt-right text-warning " style="font-size: 60px ;height:20px;"></i><span></span>
+    
+    </h5>
+
     <p>Get access to your full Training of presentation and other academic skills.</p>
     <a class="btn btn-outline-light" href="https://www.youtube.com/channel/UC_osRDuNAp1ZZxKckdKlNsw?sub_confirmation=1" target="_blank">Subscribe Now</a>
     </div>
@@ -353,11 +497,66 @@
     </div>
     </div>
     </footer>
+     {{-- toaster start here --}}
+     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 110">
+      <div id="Toastcontact" class="toast bg-success hide" role="alert" aria-live="assertive" data-autohide="true" data-bs-animation="true" aria-atomic="true">
+        <div class="toast-header bg-outline-success">
+          <strong class="me-auto">Successfully sent...</strong>
+          <small>Just now</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-white">
+          Contact information has been sent...
+        </div>
+      </div>
+  </div>
 {{-- <footer class="p-3 py-4 mt-4  border-top bg-warning text-white">
   <div class="container text-center">
     <span > Copyright © and All rights reserved by <a href="#">{{ $siteTitle }}</a> 2021</span>
   </div>
 </footer> --}}
+<script>
+
+      var contactusel = document.getElementById('Toastcontact');
+      var contactToast = bootstrap.Toast.getOrCreateInstance(contactusel); 
+      $("#contactus").submit(function (e) {
+            e.preventDefault();
+            var form = $('#contactus');
+            var action = form.attr('action'); 
+            
+            $.ajax({
+            type: "POST",
+            url: action,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                // window.swal("Success", response.msg, "success")
+                // .then(function(value) {
+                //             location.reload();
+                //         });
+                contactToast.show()
+                $("#submitContactus").attr("disabled","disabled");
+             
+            },
+            error:function(requestObject){
+                    console.log(requestObject);
+                    window.swal("Oops!", requestObject.responseJSON.errorMsg.errorInfo[2], "error")
+                    .then(function(value) {
+                        });
+                    
+                    
+                        
+
+            }
+            });
+        });
+  $( '.js-input' ).keyup(function() {
+  if( $(this).val() ) {
+     $(this).addClass('not-empty');
+  } else {
+     $(this).removeClass('not-empty');
+  }
+});
+</script>
 
 
 @endsection

@@ -11,7 +11,7 @@
         <li class="nav-item"><a href="/#Skills" class="nav-link text-dark">skills</a></li>
         <li class="nav-item"><a href="#" class="nav-link text-dark">Events</a></li>
         <li class="nav-item"><a href="#" class="nav-link text-dark">About</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-dark">Contact us</a></li>
+        <li class="nav-item"><a href="/#Contact" class="nav-link text-dark">Contact us</a></li>
       </ul>
       
       <div class="text-end ">
