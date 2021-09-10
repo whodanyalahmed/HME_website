@@ -258,3 +258,11 @@ transition: all 250ms ease-in-out 0s;
   color:#f7bd10;
   opacity: 0.5;
 }
+.fas ,.fab,#Skills h4{
+  transition: 0.3s ease-out;
+}
+
+#Skills .fas:hover, .fab:hover {
+  color:#f7bd10;
+
+} 

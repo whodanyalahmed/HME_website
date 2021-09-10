@@ -172,8 +172,8 @@ body {
         <div class="container">
           <div class="carousel-caption text-start">
             <h1>Life in {{ $siteTitle }}.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-warning" href="#">Sign up today</a></p>
+            
+            <p><a class="btn btn-lg btn-warning" href="/students/signup">Sign up today</a></p>
           </div>
         </div>
       </div>
@@ -182,9 +182,9 @@ body {
 
         <div class="container">
           <div class="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-warning" href="#">Learn more</a></p>
+            <h1>Act for change.</h1>
+      
+            <p><a class="btn btn-lg btn-warning" href="#services">Learn more</a></p>
           </div>
         </div>
       </div>
@@ -193,8 +193,7 @@ body {
         <div class="container">
           <div class="carousel-caption text-end">
             <h1>One more for good measure.</h1>
-            <p>Some representative placeholder content for the third slide of this carousel.</p>
-            <p><a class="btn btn-lg btn-warning" href="#">Browse gallery</a></p>
+            <p><a class="btn btn-lg btn-warning" href="#Contact">more info</a></p>
           </div>
         </div>
       </div>
@@ -216,8 +215,8 @@ body {
       <h1 class="fw-light" >Services</h1>
       <p class="lead text-muted">we provide the best language and tuition service in the town</p>
       <p>
-        <a href="#" class="btn btn-warning my-2">Join today</a>
-        <a href="#myCarousel" class="btn btn-secondary my-2">more services</a>
+        <a href="/student/signup" class="btn btn-warning my-2">Join today</a>
+        <a href="#Contact" class="btn btn-secondary my-2">more information</a>
       </p>
     </div>
   </div>
@@ -231,7 +230,7 @@ body {
                 </div>
                 <div class="service-content">
                     <h3 class="title">Tuition</h3>
-                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <p class="description"><strong>{{$FullsiteTitle}}</strong> offers tuition classes from <strong>Primary to Higher Secondary</strong> classes. click the below link to register to get more info.</p>
                     <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
                 </div>
             </div>
@@ -244,7 +243,7 @@ body {
                 </div>
                 <div class="service-content">
                     <h3 class="title">Computer Courses</h3>
-                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <p class="description"><strong>{{$FullsiteTitle}}</strong> offers Computer classes from <strong>MS office to Programming</strong> classes. click the below link to register to get more info.</p>
                     <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
                 </div>
             </div>
@@ -257,7 +256,7 @@ body {
                 </div>
                 <div class="service-content">
                     <h3 class="title">English Diploma</h3>
-                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <p class="description"><strong>{{$FullsiteTitle}}</strong> offers English classes to boost <strong>public speaking</strong> and much more. click the below link to register to get more info.</p>
                     <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
                 </div>
             </div>
@@ -270,7 +269,7 @@ body {
                 </div>
                 <div class="service-content">
                     <h3 class="title">Business</h3>
-                    <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean in volutpat elit. Class aptent taciti.</p>
+                    <p class="description"><strong>{{$FullsiteTitle}}</strong> offers Business classes from <strong>Marking to buisness strategies</strong>. click the below link to register to get more info.</p>
                     <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
                 </div>
             </div>
@@ -279,98 +278,110 @@ body {
 </div>
 {{-- Skills section starts here --}}
 <div class="container px-4 py-5" id="icon-grid">
-  <section class="py-5 text-center container" id="Skills">
-    <div class="row py-lg-5">
+  <section class="py-5  container" id="Skills">
+    <div class="row text-center py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light" >Skills</h1>
         <p class="lead text-muted">we provide the best language and tuition service in the town</p>
       </div>
     </div>
-  </section>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 py-5">
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg> --}}
+        <i class="fas fa-users display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Confidence</h4>
+          <p>{{$FullsiteTitle}} aims to make their students confident.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg> --}}
+        <i class="fas fa-user-tie display-5 me-3"></i>
         
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Public Speaking</h4>
+          <p>{{$FullsiteTitle}} aims to provide Public Speaking skill.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#calendar3"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#calendar3"></use></svg> --}}
+        {{-- <i class="fas fa-user-graduate display-5 me-3"></i> --}}
+        <i class="fas fa-book-reader display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Knowledge</h4>
+          <p>{{$FullsiteTitle}} aims to make their students knowledgeable.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"></use></svg> --}}
+        <i class="fas fa-chalkboard-teacher display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Presentation</h4>
+          <p>{{$FullsiteTitle}} aims to provide Presentation skills.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#speedometer2"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#speedometer2"></use></svg> --}}
+        <i class="fas fa-laptop-code display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Computer</h4>
+          <p>{{$FullsiteTitle}} also provide computer courses skills.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#toggles2"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#toggles2"></use></svg> --}}
+        <i class="fab fa-black-tie display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Professional</h4>
+          <p>{{$FullsiteTitle}} will make sure to make students professional.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#geo-fill"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#geo-fill"></use></svg> --}}
+        <i class="fas fa-dumbbell display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Motivation</h4>
+          <p>{{$FullsiteTitle}} provide motivation to their student to work.</p>
         </div>
       </div>
       <div class="col d-flex align-items-start">
-        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#tools"></use></svg>
+        {{-- <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#tools"></use></svg> --}}
+        <i class="fas fa-bullhorn display-5 me-3"></i>
         <div>
-          <h4 class="fw-bold mb-0">Featured title</h4>
-          <p>Paragraph of text beneath the heading to explain the heading.</p>
+          <h4 class="fw-bold mb-0">Marketing</h4>
+          <p>{{$FullsiteTitle}} also provide Marketing & Business skills.</p>
         </div>
       </div>
     </div>
+    
+  </section>
   </div>
   {{-- Jumbotron starts here --}}
     <section class="container" id="events">
     <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold">Custom jumbotron</h1>
-      <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-      <button class="btn btn-primary btn-lg" type="button">Example button</button>
+      <h1 class="display-5 ">Why to join <abbr title="{{$FullsiteTitle}}"><strong> HME</strong></abbr> ?</h1>
+      <p class="col-md-8 fs-4">{{$FullsiteTitle}}gives a platform to practice public speaking presentation skills and boost your confidence to play part as a presentator which will enhance your personality and can be helpful in Professional Practices.</p>
+      <a class="btn btn-outline-warning btn-lg" href="#services">Other services</a>
     </div>
   </div>
   <div class="container-fluid ">
     <div class="row align-items-md-stretch">
       <div class="col-md-6">
         <div class="h-100 p-5 text-white bg-dark rounded-3">
-          <h2>Change the background</h2>
-          <p>Swap the background-color utility and add a `.text-*` color utility to mix up the jumbotron look. Then, mix and match with additional component themes and more.</p>
-          <button class="btn btn-outline-light" type="button">Example button</button>
+          <h2>Computer and Tuition Classes</h2>
+          <p>{{$FullsiteTitle}} also provide Quality education from primary classes to higher secondary level with experienced teacher.
+            It also provide Technical courses in computer like Graphics, MS Office and programming and more.   
+          </p>
+          <a class="btn btn-outline-light" href="#services">Join now</a>
         </div>
       </div>
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
-          <h2>Add borders</h2>
-          <p>Or, keep it light and add a border for some added definition to the boundaries of your content. Be sure to look under the hood at the source HTML here as we've adjusted the alignment and sizing of both column's content for equal-height.</p>
-          <button class="btn btn-outline-secondary" type="button">Example button</button>
+          <h2>IELTS and Business</h2>
+          <p>{{$FullsiteTitle}} also aims to provide IELTS courses to make students stand out from others and it also provide courses related to business for more info please get in touch with us.</p>
+          <a class="btn btn-outline-secondary" href="Contact">Contact us</a>
         </div>
       </div>
     </div>
@@ -422,7 +433,7 @@ body {
       
     <div class="col-xs-12 col-sm-6 col-md-3">
     <div class="widget subscribe no-box">
-    <h5 class="widget-title">House of Modern English<span></span></h5>
+    <h5 class="widget-title">{{$FullsiteTitle}}<span></span></h5>
     <p>We aim to provide quality education and skills to the students </p>
     </div>
     </div>
@@ -432,13 +443,13 @@ body {
     <h5 class="widget-title">Quick Links<span></span></h5>
     <ul class="thumbnail-widget">
     <li>
-    <div class="thumb-content"><a href="#.">Get Started</a></div> 
+    <div class="thumb-content"><a href="students/signup.">Get Started</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#.">Top Leaders</a></div> 
+    <div class="thumb-content"><a href="#">Home</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#.">Success Stories</a></div> 
+    <div class="thumb-content"><a href="#Services">Services</a></div> 
     </li>
     <li>
     <div class="thumb-content"><a href="#.">Event/Tickets</a></div> 
@@ -450,7 +461,7 @@ body {
     <div class="thumb-content"><a href="#.">Lifestyle</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#.">About</a></div> 
+    <div class="thumb-content"><a href="#Contact">Contact</a></div> 
     </li>
     </ul>
     </div>
@@ -464,7 +475,7 @@ body {
     </h5>
 
     <p>Get access to your full Training of presentation and other academic skills.</p>
-    <a class="btn btn-outline-light" href="https://www.youtube.com/channel/UC_osRDuNAp1ZZxKckdKlNsw?sub_confirmation=1" target="_blank">Subscribe Now</a>
+    <a class="btn btn-outline-light" href="/students/signup" target="_blank">Join now</a>
     </div>
     </div>
     
@@ -491,14 +502,14 @@ body {
     <div class="container p-3">
     <div class="row">
     <div class="col-md-12 text-center">
-    <p>Copyright <a href="#">{{ $siteTitle }}</a>  © 2021. All rights reserved.</p>
+    <p>Copyright <a href="/">{{ $siteTitle }}</a>  © 2021. All rights reserved.</p>
     </div>
     </div>
     </div>
     </div>
     </footer>
      {{-- toaster start here --}}
-     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 110">
+     <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 110">
       <div id="Toastcontact" class="toast bg-success hide" role="alert" aria-live="assertive" data-autohide="true" data-bs-animation="true" aria-atomic="true">
         <div class="toast-header bg-outline-success">
           <strong class="me-auto">Successfully sent...</strong>
@@ -506,7 +517,7 @@ body {
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body bg-white">
-          Contact information has been sent...
+          Message has been Successfully sent...
         </div>
       </div>
   </div>
@@ -534,7 +545,13 @@ body {
                 //             location.reload();
                 //         });
                 contactToast.show()
+
+                
                 $("#submitContactus").attr("disabled","disabled");
+                setTimeout(() => {
+                  
+                  $("#submitContactus").prop("disabled",false);
+                }, 3000);
              
             },
             error:function(requestObject){
