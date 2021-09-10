@@ -211,6 +211,7 @@ class students extends Controller
         // $year = date("Y");
         // $m_id = $this->getAddMonth($month,$year);
         $admission = 0;
+        $arrears = 0;
         $noofvouchers = $this->getNoofVouchers($s_id);
         if($noofvouchers == 0){
             if($data ->is_new_admission == 1){
@@ -219,6 +220,10 @@ class students extends Controller
             }
         }
         else{
+            $Lastm_id = $this->getLastGeneratedFeeMonth($s_id);
+            $arrears = DB::select('select fees_amount from fees where s_id = ? and month_id=?', [$s_id,$Lastm_id]);
+            $arrears = $arrears['fees_amount'];
+            echo $arrears;
             DB::update('update students set is_new_admission =0 where s_id = ?', [$s_id]);        
         }
         $fees = $this->getfees($data->sub_interest_id);
@@ -226,7 +231,7 @@ class students extends Controller
         // echo gettype($admission);
         $total = $fees+$admission;
         $all = ["fees" => $fees,"total"=>$total];
-        $fees = DB::insert('insert into fees (fees_amount, fees_paid,s_id,month_id,fee_challan_url) values (?, ?, ?, ?, ?)', [$total, 0,$s_id,$m_id,null]);
+        $fees = DB::insert('insert into fees (fees_amount, fees_paid,s_id,month_id,fee_challan_url,fee_arrears) values (?, ?, ?, ?, ?, ?)', [$total, 0,$s_id,$m_id,null,$arrears]);
         DB::update('update students set fee_status = 0 where s_id = ?', [$s_id]);
         return $all;
 

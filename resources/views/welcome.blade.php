@@ -443,23 +443,23 @@ body {
     <h5 class="widget-title">Quick Links<span></span></h5>
     <ul class="thumbnail-widget">
     <li>
-    <div class="thumb-content"><a href="students/signup.">Get Started</a></div> 
+    <div class="thumb-content"><a href="students/signup">Get Started</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#">Home</a></div> 
+    <div class="thumb-content"><a href="#myCarousel">Home</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#Services">Services</a></div> 
+    <div class="thumb-content"><a href="#services">Services</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#.">Event/Tickets</a></div> 
+    <div class="thumb-content"><a href="#Skills">Skills</a></div>  
     </li>
     <li>
-    <div class="thumb-content"><a href="#.">News</a></div>  
+    <div class="thumb-content"><a href="#.">Event/News</a></div> 
     </li>
-    <li>
+    {{-- <li>
     <div class="thumb-content"><a href="#.">Lifestyle</a></div> 
-    </li>
+    </li> --}}
     <li>
     <div class="thumb-content"><a href="#Contact">Contact</a></div> 
     </li>
