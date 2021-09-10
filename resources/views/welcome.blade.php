@@ -173,18 +173,18 @@ body {
           <div class="carousel-caption text-start">
             <h1>Life in {{ $siteTitle }}.</h1>
             
-            <p><a class="btn btn-lg btn-warning" href="/students/signup">Sign up today</a></p>
+            <p><a class="btn btn-lg-block btn-sm-block btn-warning" href="/students/signup">Sign up today</a></p>
           </div>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://source.unsplash.com/1400x680/?academy,institute" height="730vh" width="100%" alt="school">
+        <img src="https://source.unsplash.com/1400x680/?academy,institute" height="100%" width="100%" alt="school">
 
         <div class="container">
           <div class="carousel-caption">
             <h1>Act for change.</h1>
       
-            <p><a class="btn btn-lg btn-warning" href="#services">Learn more</a></p>
+            <p><a class="btn  btn-lg-block btn-sm-block btn-warning" href="#services">Learn more</a></p>
           </div>
         </div>
       </div>
@@ -193,7 +193,7 @@ body {
         <div class="container">
           <div class="carousel-caption text-end">
             <h1>One more for good measure.</h1>
-            <p><a class="btn btn-lg btn-warning" href="#Contact">more info</a></p>
+            <p><a class="btn btn-lg-block btn-sm-block btn-warning" href="#Contact">more info</a></p>
           </div>
         </div>
       </div>

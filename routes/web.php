@@ -73,6 +73,10 @@ Route::post('/admin/admissionfee',[admin::class,'admissionfeeUpdate']);
 Route::get('/admin/coursesfee',[admin::class,'coursesfee']);
 Route::post('/admin/coursesfee',[admin::class,'coursesfeeUpdate']);
 Route::get('/admin/feedback',[admin::class,'feedback']);
+Route::get('/admin/news',[admin::class,'news']);
+Route::post('/admin/news',[admin::class,'newsCreate']);
+Route::post('/admin/newsUpdate',[admin::class,'newsUpdate']);
+Route::post('/admin/newsDelete',[admin::class,'newsDelete']);
 // Route::get('/admin/student/payable/{id}',[students::class,'getPayableFees']);
 // Route::get('/students/test',[students::class,'getAddMonth']);
 

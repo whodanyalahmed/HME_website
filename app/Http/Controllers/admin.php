@@ -79,9 +79,27 @@ class admin extends Controller
             return redirect('/admin/login');
         }
     }
+    public function news(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->GetNewsDetails();
+            return view('admin.news',['data' => $data]);
+
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
     public function GetAdmissionFeeDetails()
     {
         $data = DB::select('select * from interest');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetNewsDetails()
+    {
+        $data = DB::select('select * from news');
 
         $data = json_decode(json_encode($data),true);
         return $data;
@@ -143,6 +161,31 @@ class admin extends Controller
         }
         
     }
+    public function newsUpdate(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $message = $req->message;
+            DB::update('update news set message =? where id= ?', [$message,$id]);
+            return ["msg"=>"Successfully updated information"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+        
+    }
+    public function newsDelete(Request $req)
+    {
+        try {
+            $id = $req->id;
+            DB::update('delete from news where id= ?', [$id]);
+            return ["msg"=>"Successfully deleted"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+        
+    }
     public function UpcomingCreate(Request $req)    
     {
         try {
@@ -152,6 +195,17 @@ class admin extends Controller
             $s_timing = $req->s_time;
             $contact= $req->contact;
             DB::update('insert into upcoming_teachers (name,s_timing,e_timing,contact) Values(?,?,?,?)', [$name,$s_timing,$e_timing,$contact]);
+            return ["msg"=>"Successfully added"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+    }
+    public function newsCreate(Request $req)    
+    {
+        try {
+            $message= $req->message;
+            DB::update('insert into news (message) Values(?)', [$message]);
             return ["msg"=>"Successfully added"];
         } catch (\Throwable $th) {
             //throw $th;

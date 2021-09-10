@@ -113,7 +113,7 @@
                                         data-onsite="{{$item['onsite']}}"  
                                         data-sub_interest_id="{{$item['sub_interest_id']}}" 
                                         class="btn btn-outline-warning edit_btn">Edit</button>
-                                        <a href="delete/{{$item['s_id']}}" name="action"  onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a>
+                                        <a href="delete/{{$item['s_id']}}" name="action"  o  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a>
                                         <a href="active/{{$item['s_id']}}" name="action" onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#ActiveModal" class="btn btn-outline-success">Active</a>
                                         
                                       </div>

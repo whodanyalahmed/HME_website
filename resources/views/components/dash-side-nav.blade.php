@@ -88,6 +88,10 @@
                         <div class="sb-nav-link-icon"><i class="far fa-comments"></i></div>
                         Feedback
                     </a>
+                    <a class="nav-link" href="news">
+                        <div class="sb-nav-link-icon"><i class="far fa-newspaper"></i></div>
+                        News
+                    </a>
                     {{-- <div class="sb-sidenav-menu-heading">Addons</div> --}}
                     {{-- <a class="nav-link" href="#">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
