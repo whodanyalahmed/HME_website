@@ -65,6 +65,14 @@ Route::post('/admin/student/notpaid/{id}',[admin::class,'notpaidStudent']);
 Route::post('/admin/student/pending/{id}',[admin::class,'pendingStudent']);
 Route::post('/admin/student/paid/{id}',[admin::class,'paidStudent']);
 Route::post('/admin/contactus',[admin::class,'Contactus']);
+Route::get('/admin/upcoming',[admin::class,'Upcoming']);
+Route::post('/admin/upcoming',[admin::class,'UpcomingUpdate']);
+Route::post('/admin/upcomingcreate',[admin::class,'UpcomingCreate']);
+Route::get('/admin/admissionfee',[admin::class,'admissionfee']);
+Route::post('/admin/admissionfee',[admin::class,'admissionfeeUpdate']);
+Route::get('/admin/coursesfee',[admin::class,'coursesfee']);
+Route::post('/admin/coursesfee',[admin::class,'coursesfeeUpdate']);
+Route::get('/admin/feedback',[admin::class,'feedback']);
 // Route::get('/admin/student/payable/{id}',[students::class,'getPayableFees']);
 // Route::get('/students/test',[students::class,'getAddMonth']);
 

@@ -187,11 +187,11 @@ class students extends Controller
     }
     
     public function getPayableFees($id){
-        $total = 0;
-        $data = DB::select('SELECT * FROM `fees` where s_id = ? and fees_paid = 0', [$id]);
-        foreach ($data as $value) {
-            $total += $value->fees_amount;
-          }
+        $total = $this->GetLastMonthPayableFee($id);
+        // $data = DB::select('SELECT * FROM `fees` where s_id = ? and fees_paid = 0', [$id]);
+        // foreach ($data as $value) {
+        //     $total += $value->fees_amount;
+        //   }
         return $total;
     }
 
@@ -220,10 +220,14 @@ class students extends Controller
             }
         }
         else{
-            $Lastm_id = $this->getLastGeneratedFeeMonth($s_id);
-            $arrears = DB::select('select fees_amount from fees where s_id = ? and month_id=?', [$s_id,$Lastm_id]);
-            $arrears = $arrears['fees_amount'];
-            echo $arrears;
+        //     $Lastm_id = $this->getLastGeneratedFeeMonth($s_id);
+        //     // echo json_encode($Lastm_id->id);
+        //     $fee_info= DB::select('select fees_amount,fee_arrears from fees where s_id = ? and month_id=? and fees_paid=0', [$s_id,$Lastm_id->id])[0];
+        //     // echo json_encode($fee_info);
+        //     $fee_amount = $fee_info->fees_amount;
+        //     $arrears = $fee_info->fee_arrears+$fee_amount;
+            $arrears = $this->GetLastMonthPayableFee($s_id);
+            // echo $fee_arrears;
             DB::update('update students set is_new_admission =0 where s_id = ?', [$s_id]);        
         }
         $fees = $this->getfees($data->sub_interest_id);
@@ -238,7 +242,16 @@ class students extends Controller
         
 
     }
-
+    public function GetLastMonthPayableFee($s_id)
+    {
+        $Lastm_id = $this->getLastGeneratedFeeMonth($s_id);
+        // echo json_encode($Lastm_id->id);
+        $fee_info= DB::select('select fees_amount,fee_arrears from fees where s_id = ? and month_id=? and fees_paid=0', [$s_id,$Lastm_id->id])[0];
+        // echo json_encode($fee_info);
+        $fee_amount = $fee_info->fees_amount;
+        $arrears = $fee_info->fee_arrears+$fee_amount;
+        return $arrears;
+    }
     public function GetStudentJoiningMonth($id)
     {
         $data = DB::select('SELECT Month(s_joined_date) as joining_month,YEAR(s_joined_date) as joining_year FROM `students` where s_id = ?', [$id]);
@@ -247,7 +260,7 @@ class students extends Controller
     }
     public function getLastGeneratedFeeMonth($id)
     {
-        $data = DB::select("SELECT MONTH(months.month_name) as month,YEAR(months.month_name) as year  FROM `fees` 
+        $data = DB::select("SELECT months.month_id as id , MONTH(months.month_name) as month,YEAR(months.month_name) as year  FROM `fees` 
         INNER join months on fees.month_id=months.month_id
         where s_id = ?
         ORDER BY `fees`.`month_id` DESC limit 1", [$id]);

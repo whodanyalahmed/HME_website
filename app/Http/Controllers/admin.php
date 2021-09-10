@@ -30,6 +30,141 @@ class admin extends Controller
         }
         
     }
+
+    public function Upcoming(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->getupcomingData();
+            // echo json_encode($data); 
+            return view('admin.upcoming',['data' => $data]);
+            // }
+            // else{
+            //     return view('s_payment',['challan'=>$challa_url]);
+            // }
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
+    public function admissionfee(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->GetAdmissionFeeDetails();
+            return view('admin.admissionfee',['data' => $data]);
+
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
+    public function coursesfee(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->GetCoursesFeeDetails();
+            return view('admin.coursesfee',['data' => $data]);
+
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
+    public function feedback(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->GetFeedbackDetails();
+            return view('admin.feedback',['data' => $data]);
+
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
+    public function GetAdmissionFeeDetails()
+    {
+        $data = DB::select('select * from interest');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetCoursesFeeDetails()
+    {
+        $data = DB::select('select * from modules');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetFeedbackDetails()
+    {
+        $data = DB::select('select * from contactus');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+
+    public function UpcomingUpdate(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $name = $req->name;
+            $e_timing = $req->e_time;
+            $s_timing = $req->s_time;
+            $contact= $req->contact;
+            DB::update('update upcoming_teachers set name=?,s_timing = ?,e_timing =?, contact =? where id= ?', [$name,$s_timing,$e_timing,$contact,$id]);
+            return ["msg"=>"Successfully updated information"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+        
+    }
+    public function admissionfeeUpdate(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $fee = $req->fee;
+            DB::update('update interest set fee =? where id= ?', [$fee,$id]);
+            return ["msg"=>"Successfully updated information"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+        
+    }
+    public function coursesfeeUpdate(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $fee = $req->fee;
+            DB::update('update modules set fee =? where id= ?', [$fee,$id]);
+            return ["msg"=>"Successfully updated information"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+        
+    }
+    public function UpcomingCreate(Request $req)    
+    {
+        try {
+            $id = $req->id;
+            $name = $req->name;
+            $e_timing = $req->e_time;
+            $s_timing = $req->s_time;
+            $contact= $req->contact;
+            DB::update('insert into upcoming_teachers (name,s_timing,e_timing,contact) Values(?,?,?,?)', [$name,$s_timing,$e_timing,$contact]);
+            return ["msg"=>"Successfully added"];
+        } catch (\Throwable $th) {
+            //throw $th;
+            return ['errorMsg'=> $th];
+        }
+    }
+    public function getupcomingData()
+    {
+        $data = DB::select('select * from upcoming_teachers');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
     function Dashboard(Request $req){
         if(session('admin')){
             // if(session('user')['fee_status'] == 1){

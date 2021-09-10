@@ -43,4 +43,23 @@ $(document).ready( function () {
     ]
 });
 } );
+$(document).ready( function () {
+    $('#upcoming').DataTable({
+    "columnDefs": [
+        {bSortable: false, targets: [5]} ,
+    ]
+});
+} );
+$(document).ready( function () {
+    $('#admissionfeetab').DataTable({
+    "columnDefs": [
+        {bSortable: false, targets: [3]} ,
+    ]
+});
+} );
+$(document).ready( function () {
+    $('#feedbacktab').DataTable({
+
+});
+} );
 

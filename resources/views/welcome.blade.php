@@ -178,7 +178,7 @@ body {
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://source.unsplash.com/1400x680/?academy,institute" height="100%" width="100%" alt="school">
+        <img src="https://source.unsplash.com/1400x680/?academy,institute" height="730vh" width="100%" alt="school">
 
         <div class="container">
           <div class="carousel-caption">
@@ -358,7 +358,7 @@ body {
   </section>
   </div>
   {{-- Jumbotron starts here --}}
-    <section class="container" id="events">
+    <section class="container" id="about">
     <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
       <h1 class="display-5 ">Why to join <abbr title="{{$FullsiteTitle}}"><strong> HME</strong></abbr> ?</h1>
