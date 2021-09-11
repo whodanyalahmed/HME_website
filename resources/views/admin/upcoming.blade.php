@@ -308,7 +308,7 @@ $('.edit_btn').click(function(e) {
             error:function(requestObject){
                    $("#form_modal").modal('toggle');
     
-                         window.swal("Oops!", requestObject.errorMsg, "error");
+                         window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error");
                             
                     // location.reload();
                                         setTimeout(() => {
@@ -339,7 +339,7 @@ $('.edit_btn').click(function(e) {
             error:function(requestObject){
                    $("#form_modal").modal('toggle');
     
-                         window.swal("Oops!", requestObject.errorMsg, "error");
+                         window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error");
                             
                     // location.reload();
                                         setTimeout(() => {

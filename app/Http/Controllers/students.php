@@ -160,7 +160,10 @@ class students extends Controller
 
         // echo json_encode($data[0]->num);
         if($data[0]->num == 0){
-            $data = DB::insert('insert into months(month_name,year) values (?,?)',[$month,$year]);
+            
+            $date = date($year."-".$month."-1");
+            // echo $date;
+            $data = DB::insert('insert into months(month_name,year) values (?,?)',[$date,$date]);
             // return $data;
         }
         $data = DB::select('SELECT * FROM months WHERE 
@@ -213,8 +216,13 @@ class students extends Controller
         $admission = 0;
         $arrears = 0;
         $noofvouchers = $this->getNoofVouchers($s_id);
+        // echo "no of vouchers: ".$noofvouchers . "\n<br>";
+
         if($noofvouchers == 0){
+            // echo "\n new adm: ".$data ->is_new_admission. "<br>";
+            // echo "on if<br>";
             if($data ->is_new_admission == 1){
+                // echo "in inner if";
     
                 $admission = $this->getAdmissionfees($data->interest);
             }
@@ -227,7 +235,7 @@ class students extends Controller
         //     $fee_amount = $fee_info->fees_amount;
         //     $arrears = $fee_info->fee_arrears+$fee_amount;
             $arrears = $this->GetLastMonthPayableFee($s_id);
-            // echo $fee_arrears;
+            // echo "in else\n<br>";
             DB::update('update students set is_new_admission =0 where s_id = ?', [$s_id]);        
         }
         $fees = $this->getfees($data->sub_interest_id);
@@ -246,10 +254,15 @@ class students extends Controller
     {
         $Lastm_id = $this->getLastGeneratedFeeMonth($s_id);
         // echo json_encode($Lastm_id->id);
-        $fee_info= DB::select('select fees_amount,fee_arrears from fees where s_id = ? and month_id=? and fees_paid=0', [$s_id,$Lastm_id->id])[0];
+        try {
+            $fee_info= DB::select('select fees_amount,fee_arrears from fees where s_id = ? and month_id=? and fees_paid=0', [$s_id,$Lastm_id->id])[0];
+            
+            $fee_amount = $fee_info->fees_amount;
+            $arrears = $fee_info->fee_arrears+$fee_amount;
+        } catch (\Throwable $th) {
+            $arrears = 0;
+        }
         // echo json_encode($fee_info);
-        $fee_amount = $fee_info->fees_amount;
-        $arrears = $fee_info->fee_arrears+$fee_amount;
         return $arrears;
     }
     public function GetStudentJoiningMonth($id)
@@ -260,11 +273,24 @@ class students extends Controller
     }
     public function getLastGeneratedFeeMonth($id)
     {
-        $data = DB::select("SELECT months.month_id as id , MONTH(months.month_name) as month,YEAR(months.month_name) as year  FROM `fees` 
-        INNER join months on fees.month_id=months.month_id
-        where s_id = ?
-        ORDER BY `fees`.`month_id` DESC limit 1", [$id]);
-        return $data[0];
+        try {
+            
+            $data = DB::select("SELECT months.month_id as id , MONTH(months.month_name) as month,YEAR(months.month_name) as year  FROM `fees` 
+            INNER join months on fees.month_id=months.month_id
+            where s_id = ?
+            ORDER BY `fees`.`month_id` DESC limit 1", [$id]);
+            
+            // echo json_encode($data);
+            return $data[0];
+        } catch (\Throwable $th) {
+            
+            // echo "in catch";
+            $data = DB::select('select Month(s_joined_date) as month,Year(s_joined_date) as year from students where s_id  = ?', [$id]);
+            
+            // echo json_encode($data);
+            return $data[0];
+        }
+        
     }
     
     public function GenerateFeesAll($id)
@@ -284,11 +310,13 @@ class students extends Controller
                     $last_gen_month = 1;
                     $last_gen_year++;
                 } 
-                $last_gen_month++;
+                // echo $last_gen_year . " - ". $last_gen_month;
+                
                 $m_id = $this->getAddMonth($last_gen_month,$last_gen_year);
                 // echo json_encode($m_id);
                 $this->GenerateFees($id,$m_id);
-                if ($last_gen_month == $cur_month && $last_gen_year == $cur_year){
+                $last_gen_month++;
+                if ($last_gen_month == $cur_month+1 && $last_gen_year == $cur_year){
                     break;
                 }
             }

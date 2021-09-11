@@ -113,7 +113,7 @@
                                         data-onsite="{{$item['onsite']}}"  
                                         data-sub_interest_id="{{$item['sub_interest_id']}}" 
                                         class="btn btn-outline-warning edit_btn">Edit</button>
-                                        <a href="delete/{{$item['s_id']}}" name="action"  o  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a>
+                                        <a href="delete/{{$item['s_id']}}" name="action"  onclick="update(this,{{$item['s_id']}})"  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Disable</a>
                                         <a href="active/{{$item['s_id']}}" name="action" onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#ActiveModal" class="btn btn-outline-success">Active</a>
                                         
                                       </div>
@@ -175,7 +175,7 @@
                     @csrf
                     <input type="hidden" name="id" value="">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit"  class="btn btn-primary">Disable</button>
+                    <button type="submit"  class="btn btn-danger">Disable</button>
                 </form>
                 </div>
             </div>
@@ -423,7 +423,7 @@
             error:function(requestObject, error, errorThrown){
                    $("#form").modal('toggle');
     
-                   window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                   window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error")
                          .then(function(value) {
                                 location.reload();
                             });
@@ -442,7 +442,7 @@
 
             var form = $('#Disform');
             var url = form.attr('action');
-            console.log(url)
+            // console.log(url)
 
             $.ajax({
                 type: "POST",
@@ -457,7 +457,7 @@
             error:function(requestObject, error, errorThrown){
                    $("#form").modal('toggle');
     
-                         window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                         window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error")
                          .then(function(value) {
                                 location.reload();
                             });
@@ -563,7 +563,7 @@ $('.edit_btn').click(function(e) {
             error:function(requestObject){
                    $("#form_modal").modal('toggle');
     
-                         window.swal("Oops!", requestObject.errorMsg, "error");
+                         window.swal("Oops!", requestObject.responseJSON.errorMsg.errorInfo[2], "error");
                             
                     // location.reload();
                                         setTimeout(() => {

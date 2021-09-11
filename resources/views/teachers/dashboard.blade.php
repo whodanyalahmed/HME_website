@@ -345,7 +345,7 @@
             error:function(requestObject, error, errorThrown){
             $("#form").modal('toggle');
 
-                    window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                    window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error")
                     .then(function(value) {
                             location.reload();
                         });
@@ -386,7 +386,7 @@
         error:function(requestObject, error, errorThrown){
             $("#form").modal('toggle');
 
-            window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+            window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error")
                     .then(function(value) {
                             location.reload();
                         });
@@ -424,7 +424,7 @@
             error:function(requestObject){
             $("#form").modal('toggle');
 
-                    window.swal("Oops!", requestObject.errorMsg, "error")
+                    window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error")
                     .then(function(value) {
                             location.reload();
                         });
