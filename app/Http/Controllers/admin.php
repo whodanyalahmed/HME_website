@@ -104,6 +104,7 @@ class admin extends Controller
         $data = json_decode(json_encode($data),true);
         return $data;
     }
+   
     public function GetCoursesFeeDetails()
     {
         $data = DB::select('select * from modules');
@@ -166,7 +167,8 @@ class admin extends Controller
         try {
             $id = $req->id;
             $message = $req->message;
-            DB::update('update news set message =? where id= ?', [$message,$id]);
+            $heading = $req->heading;
+            DB::update('update news set Heading =? , message =? where id= ?', [$heading,$message,$id]);
             return ["msg"=>"Successfully updated information"];
         } catch (\Throwable $th) {
             //throw $th;
@@ -205,7 +207,8 @@ class admin extends Controller
     {
         try {
             $message= $req->message;
-            DB::update('insert into news (message) Values(?)', [$message]);
+            $heading= $req->heading;
+            DB::update('insert into news (Heading,message) Values(?,?)', [$heading,$message]);
             return ["msg"=>"Successfully added"];
         } catch (\Throwable $th) {
             //throw $th;

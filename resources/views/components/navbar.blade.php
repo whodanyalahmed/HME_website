@@ -9,7 +9,7 @@
         <li class="nav-item active"><a href="/" class="nav-link text-dark " aria-current="page">Home</a></li>
         <li class="nav-item"><a href="/#services" class="nav-link text-dark">Services</a></li>
         <li class="nav-item"><a href="/#Skills" class="nav-link text-dark">Skills</a></li>
-        <li class="nav-item"><a href="#" class="nav-link text-dark">Events</a></li>
+        <li class="nav-item"><a href="/#news" class="nav-link text-dark">Events</a></li>
         <li class="nav-item"><a href="/#about" class="nav-link text-dark">About</a></li>
         <li class="nav-item"><a href="/#Contact" class="nav-link text-dark">Contact us</a></li>
       </ul>

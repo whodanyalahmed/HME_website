@@ -357,6 +357,36 @@ body {
     
   </section>
   </div>
+  {{-- News start here --}}
+  <div class="container px-4 py-5" id="icon-grid">
+    <section class="py-5  container" id="news">
+      <div class="row text-center py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light" >News/Events Update</h1>
+          <p class="lead text-muted">All the latest news and updates are here.</p>
+        </div>
+      </div>
+  
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-1 g-3 py-5">
+        <div class="col d-flex align-items-start">
+          @foreach ($news as $item)
+              
+          <div class="card border-dark mb-3 me-3" style="width: 100%">
+            {{-- <div class="card-header">Header</div> --}}
+            <div class="card-body text-dark">
+              <h5 class="card-title"><blink>{{$item['Heading']}}</blink></h5>
+              <p class="card-text">{{$item['message']}}</p>
+            </div>
+            <div class="card-footer bg-dark text-white border-dark">Posted at: {{$item['posted_at']}}</div>
+          </div>
+   
+          @endforeach
+          
+        </div>
+        <div class="container d-flex justify-content-center  ">{{ $news->links() }}</div>
+      </div>
+    </section>
+  </div>
   {{-- Jumbotron starts here --}}
     <section class="container" id="about">
     <div class="p-5 mb-4 bg-light rounded-3">

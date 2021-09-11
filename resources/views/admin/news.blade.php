@@ -44,6 +44,7 @@
                                 @foreach ($data as $item)
                                 <tr>
                                 <td>{{$item['id']}}</td>
+                                <td>{{$item['Heading']}}</td>
                                 <td>{{$item['message']}}</td>
                                 <td>{{$item['posted_at']}}</td>
                                 
@@ -53,6 +54,7 @@
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                         <button 
                                         data-id="{{$item['id']}}"  
+                                        data-heading="{{$item['Heading']}}"  
                                         data-message="{{$item['message']}}"  
                                         data-posted_at="{{$item['posted_at']}}"  
                                      
@@ -125,7 +127,13 @@
 
         
           
-               
+                    <div class="row mb-md-4">
+                        <div class="form-group col-md-12  mb-3 mb-md-0">
+
+                            <label for="heading">Heading</label>
+                            <input type="text" class="form-control item" id="c_heading" name="heading" required>
+                        </div>
+                    </div>
          
                 <div class="row mb-md-4">
                     <div class="form-group col-md-12  mb-3 mb-md-0">
@@ -158,6 +166,13 @@
                 <form  id="Edit_news" method="POST" >
                         @csrf
                     <input type="hidden" name="id" id="id">
+                    <div class="row mb-md-4">
+                        <div class="form-group col-md-12  mb-3 mb-md-0">
+
+                            <label for="heading">Heading</label>
+                            <input type="text" class="form-control item" id="heading" name="heading" required>
+                        </div>
+                    </div>
                     <div class="row mb-md-4">
                         <div class="form-group col-md-12  mb-3 mb-md-0">
 
@@ -219,12 +234,14 @@ $('.edit_btn').click(function(e) {
         
         var id = $(this).data('id');
         var message = $(this).data('message');
+        var heading= $(this).data('heading');
         var posted_at = $(this).data('posted_at');
 
 
         // sending values to modal
         $('#id').val(id);
         $("#message").val(message);
+        $("#heading").val(heading);
         $("#Posted_at").val(posted_at);
         
         $("#form_modal").modal('toggle');
