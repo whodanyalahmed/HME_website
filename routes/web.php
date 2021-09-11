@@ -31,7 +31,7 @@ Route::get('students/dashboard',[students::class,'Dashboard']) ->middleware('rev
 Route::get('students/logout', function () {
     if(session()->has('user')){
         // session()->pull('user');
-        session()->flush();
+        session()->forget('user');
     }
     return redirect('students/login');
 })-> middleware('revalidate');
@@ -52,7 +52,7 @@ Route::get('admin/dashboard',[admin::class,'Dashboard']) ->middleware('revalidat
 Route::get('admin/logout', function () {
     if(session()->has('admin')){
         // session()->pull('user');
-        session()->flush();
+        session()->forget('admin');
     }
     return redirect('admin/login');
 })-> middleware('revalidate');
@@ -93,7 +93,7 @@ Route::get('teachers/dashboard',[teachers::class,'Dashboard']) ->middleware('rev
 Route::get('teachers/logout', function () {
     if(session()->has('teacher')){
         // session()->pull('user');
-        session()->flush();
+        session()->forget('teacher');
     }
     return redirect('teachers/login');
 })-> middleware('revalidate');

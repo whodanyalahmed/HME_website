@@ -302,7 +302,7 @@ class students extends Controller
         $cur_month = Date("m");
         $cur_year = Date("Y");
 
-        if(!($last_gen_month == $cur_month && $last_gen_year == $cur_year)){
+        if(!($last_gen_month == $cur_month+1 && $last_gen_year == $cur_year)){
 
             
             while (true) {
