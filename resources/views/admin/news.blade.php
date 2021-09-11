@@ -34,6 +34,7 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
+                                        <th>Heading</th>
                                         <th>Message</th>
                                         <th>Posted at</th>
                                         <th class="text-center">Edit/Delete</th>
@@ -159,7 +160,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="form_modalLabel">Edit upcoming teacher</h5>
+            <h5 class="modal-title" id="form_modalLabel">Edit news</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -269,15 +270,11 @@ $('.edit_btn').click(function(e) {
                             });
             },
             error:function(requestObject){
+                console.log(requestObject);
                    $("#form_modal").modal('toggle');
     
-                         window.swal("Oops!", requestObject.errorMsg, "error");
-                            
-                    // location.reload();
-                                        setTimeout(() => {
-                    location.reload();
-                      },2000);
-  
+                         window.swal("Oops!",requestObject.responseJSON.errorMsg.errorInfo[2], "error");
+                  
                 }
         });
         
@@ -300,14 +297,12 @@ $('.edit_btn').click(function(e) {
                             });
             },
             error:function(requestObject){
-                   $("#form_modal").modal('toggle');
+                
+                console.log(requestObject);
+                   $("#Message").modal('toggle');
     
-                         window.swal("Oops!", requestObject.errorMsg, "error");
+                         window.swal("Oops!", requestObject.responseJSON.errorMsg.errorInfo[2], "error");
                             
-                    // location.reload();
-                                        setTimeout(() => {
-                    location.reload();
-                      },2000);
   
                 }
         });
@@ -353,9 +348,8 @@ $('.edit_btn').click(function(e) {
         error:function(requestObject, error, errorThrown){
         $("#form").modal('toggle');
 
-                window.swal("Oops!", requestObject.responseJSON.errorMsg, "error")
+                window.swal("Oops!", requestObject.responseJSON.errorMsg.errorInfo[2], "error")
                 .then(function(value) {
-                        location.reload();
                     });
                 
                 

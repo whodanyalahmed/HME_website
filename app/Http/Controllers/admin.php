@@ -131,8 +131,9 @@ class admin extends Controller
             DB::update('update upcoming_teachers set name=?,s_timing = ?,e_timing =?, contact =? where id= ?', [$name,$s_timing,$e_timing,$contact,$id]);
             return ["msg"=>"Successfully updated information"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
         
     }
@@ -144,8 +145,9 @@ class admin extends Controller
             DB::update('update interest set fee =? where id= ?', [$fee,$id]);
             return ["msg"=>"Successfully updated information"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
         
     }
@@ -157,8 +159,9 @@ class admin extends Controller
             DB::update('update modules set fee =? where id= ?', [$fee,$id]);
             return ["msg"=>"Successfully updated information"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
         
     }
@@ -171,8 +174,9 @@ class admin extends Controller
             DB::update('update news set Heading =? , message =? where id= ?', [$heading,$message,$id]);
             return ["msg"=>"Successfully updated information"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>json_encode($th)];
         }
         
     }
@@ -183,8 +187,9 @@ class admin extends Controller
             DB::update('delete from news where id= ?', [$id]);
             return ["msg"=>"Successfully deleted"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+            return ["errorMsg"=>json_encode($th)];
         }
         
     }
@@ -199,8 +204,9 @@ class admin extends Controller
             DB::update('insert into upcoming_teachers (name,s_timing,e_timing,contact) Values(?,?,?,?)', [$name,$s_timing,$e_timing,$contact]);
             return ["msg"=>"Successfully added"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+            return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
     }
     public function newsCreate(Request $req)    
@@ -211,8 +217,9 @@ class admin extends Controller
             DB::update('insert into news (Heading,message) Values(?,?)', [$heading,$message]);
             return ["msg"=>"Successfully added"];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
     }
     public function getupcomingData()
@@ -318,8 +325,9 @@ class admin extends Controller
             $data = DB::update('update students set s_status = 0 where s_id = ?', [$id]);
             return ['msg'=> 'Successfully updated'];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
         
     }
@@ -329,8 +337,9 @@ class admin extends Controller
             $data = DB::update('update students set s_status = 1 where s_id = ?', [$id]);
             return ['msg'=> 'Successfully updated'];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
 
     }
@@ -340,8 +349,9 @@ class admin extends Controller
             $data = DB::update('update students set fee_status = 0 where s_id = ?', [$id]);
             return ['msg'=> 'Successfully changed to not paid'];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
     }
     public function pendingStudent($id)
@@ -351,8 +361,9 @@ class admin extends Controller
             $data = DB::update('update students set fee_status = 3 where s_id = ?', [$id]);
             return ['msg'=> 'Successfully added to pending'];
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
     }
     public function paidStudent($id,Request $req)
@@ -365,8 +376,9 @@ class admin extends Controller
             return ['msg'=> 'Successfully paid'];
             
         } catch (\Throwable $th) {
-            //throw $th;
-            return ['errorMsg'=> $th];
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
         }
     }
     public function updateStudent(Request $req){
