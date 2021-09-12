@@ -18,6 +18,8 @@ use App\Http\Controllers\Common;
 */
 
 Route::get('/',[Common::class,'Index']);
+Route::post('/careers',[Common::class,'Upload']);
+Route::view('careers', 'careers');
 // students
 // Students routes
 Route::get("students/login", function () {

@@ -12,6 +12,7 @@
         <li class="nav-item"><a href="/#news" class="nav-link text-dark">Events</a></li>
         <li class="nav-item"><a href="/#about" class="nav-link text-dark">About</a></li>
         <li class="nav-item"><a href="/#Contact" class="nav-link text-dark">Contact us</a></li>
+        <li class="nav-item"><a href="/careers" class="nav-link text-dark">Careers</a></li>
       </ul>
       
       <div class="text-end ">

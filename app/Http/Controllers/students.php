@@ -184,11 +184,33 @@ class students extends Controller
     }
     
     public function getNoofVouchers($id){
-
         $data = DB::select('SELECT count(*) as vouchers FROM `fees` where s_id = ?', [$id]);
         return $data[0]->vouchers;
     }
     
+    public function CurrentMonthGenerated($id){
+
+        $monthid = $this->getCurMonthId();
+        try {
+            $data = DB::select('SELECT count(*) as vouchers FROM `fees` where s_id = ? and month_id=?', [$id,$monthid]);
+            return $data[0]->vouchers;
+            
+        } catch (\Throwable $th) {
+            return 0;
+        }
+    
+    }
+    public function getCurMonthId(){
+        $monthId =DB::select("SELECT month_id FROM `months` where MONTH(month_name)=? and Year(year)=?",[intval(date('m')),intval(date('Y'))]); 
+        try {
+            $monthId = $monthId[0]->month_id;
+        } catch (\Throwable $th) {
+            $monthId = 0;
+            
+        }
+        return $monthId;
+
+    }
     public function getPayableFees($id){
         $total = $this->GetLastMonthPayableFee($id);
         // $data = DB::select('SELECT * FROM `fees` where s_id = ? and fees_paid = 0', [$id]);
@@ -295,14 +317,14 @@ class students extends Controller
     
     public function GenerateFeesAll($id)
     {
- 
+        $CurGenerated = $this->CurrentMonthGenerated($id);
         $data = $this->getLastGeneratedFeeMonth($id);
         $last_gen_month =$data->month;
         $last_gen_year = $data->year;
         $cur_month = Date("m");
         $cur_year = Date("Y");
 
-        if(!($last_gen_month == $cur_month+1 && $last_gen_year == $cur_year)){
+        if($CurGenerated == 0){
 
             
             while (true) {
