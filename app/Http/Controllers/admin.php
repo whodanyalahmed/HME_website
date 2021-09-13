@@ -46,6 +46,23 @@ class admin extends Controller
             return redirect('/admin/login');
         }
     }
+    public function classes(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->getCoursesData();
+            $teachers = $this->GetTeachersData();
+
+            // echo json_encode($data); 
+            return view('admin.classes',['data' => $data,'teachers'=>$teachers]);
+            // }
+            // else{
+            //     return view('s_payment',['challan'=>$challa_url]);
+            // }
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
     public function admissionfee(Request $req)
     {
         if(session('admin')){
@@ -73,6 +90,17 @@ class admin extends Controller
         if(session('admin')){
             $data = $this->GetFeedbackDetails();
             return view('admin.feedback',['data' => $data]);
+
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
+    public function careers(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->GetCareersDetails();
+            return view('admin.careers',['data' => $data]);
 
         }
         else{
@@ -112,9 +140,33 @@ class admin extends Controller
         $data = json_decode(json_encode($data),true);
         return $data;
     }
+    public function getCoursesData()
+    {
+        $data = DB::select('select * from course co 
+        inner join teachers te on co.t_id = te.t_id
+        where course_status = 1
+            ');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
     public function GetFeedbackDetails()
     {
         $data = DB::select('select * from contactus');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetTeachersData()
+    {
+        $data = DB::select('select * from teachers where t_status = 1');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetCareersDetails()
+    {
+        $data = DB::select('select * from careers');
 
         $data = json_decode(json_encode($data),true);
         return $data;
@@ -177,6 +229,20 @@ class admin extends Controller
             return response( ["errorMsg"=>$th],422)
             ->header('Content-Type', 'application/json');
             return ["errorMsg"=>json_encode($th)];
+        }
+        
+    }
+    public function updateTeacher(Request $req)
+    {
+        try {
+            $id = $req->id;
+            $f_id = $req->from_teacher;
+            $t_id = $req->to_teacher;
+            DB::update('update course set t_id =?  where id= ? ', [$t_id,$id]);
+            return ["msg"=>"Successfully updated class " .$id." to teacher id ".$t_id];
+        } catch (\Throwable $th) {
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
         }
         
     }
@@ -310,7 +376,7 @@ class admin extends Controller
         // return $data;
         // echo gettype($data[0]['s_id']);
 
-        $data = DB::select('select st.s_id,st.s_name,st.s_email,st.fee_status,fe.fee_id,fe.fees_paid,fe.fee_challan_url as url,MONTHNAME(mon.month_name) as monthname,YEAR(mon.year) as year,inte.name from students as st
+        $data = DB::select('select st.s_id,st.s_name,st.s_email,st.fee_status,fe.fee_arrears,fe.fees_amount,fe.fee_id,fe.fees_paid,fe.fee_challan_url as url,MONTHNAME(mon.month_name) as monthname,YEAR(mon.year) as year,inte.name from students as st
         inner join fees fe on st.s_id = fe.s_id
         inner join months mon on fe.month_id = mon.month_id
         inner join interest inte on st.interest = inte.id
@@ -343,10 +409,11 @@ class admin extends Controller
         }
 
     }
-    public function notpaidStudent($id)
+    public function notpaidStudent($id,Request $req)
     {
         try {
             $data = DB::update('update students set fee_status = 0 where s_id = ?', [$id]);
+            DB::update('update fees set fees_paid = 0 where fee_id = ?', [$req->fee_id]);
             return ['msg'=> 'Successfully changed to not paid'];
         } catch (\Throwable $th) {
               return response( ["errorMsg"=>$th],422)

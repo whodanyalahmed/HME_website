@@ -206,25 +206,25 @@ input[type=number] {
     <h5 class="widget-title">Quick Links<span></span></h5>
     <ul class="thumbnail-widget">
     <li>
-    <div class="thumb-content"><a href="students/signup">Get Started</a></div> 
+    <div class="thumb-content"><a href="/students/signup">Get Started</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#myCarousel">Home</a></div> 
+    <div class="thumb-content"><a href="/#myCarousel">Home</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#services">Services</a></div> 
+    <div class="thumb-content"><a href="/#services">Services</a></div> 
     </li>
     <li>
-    <div class="thumb-content"><a href="#Skills">Skills</a></div>  
+    <div class="thumb-content"><a href="/#Skills">Skills</a></div>  
     </li>
     <li>
-    <div class="thumb-content"><a href="#news">Event/News</a></div> 
+    <div class="thumb-content"><a href="/#news">Event/News</a></div> 
     </li>
-    {{-- <li>
-    <div class="thumb-content"><a href="#.">Lifestyle</a></div> 
-    </li> --}}
     <li>
-    <div class="thumb-content"><a href="#Contact">Contact</a></div> 
+    <div class="thumb-content"><a href="/careers">Careers</a></div> 
+    </li>
+    <li>
+    <div class="thumb-content"><a href="/#Contact">Contact</a></div> 
     </li>
     </ul>
     </div>

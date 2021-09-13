@@ -79,6 +79,9 @@ Route::get('/admin/news',[admin::class,'news']);
 Route::post('/admin/news',[admin::class,'newsCreate']);
 Route::post('/admin/newsUpdate',[admin::class,'newsUpdate']);
 Route::post('/admin/newsDelete',[admin::class,'newsDelete']);
+Route::get('/admin/careers',[admin::class,'careers']);
+Route::get('/admin/classes',[admin::class,'classes']);
+Route::post('/admin/classedit',[admin::class,'updateTeacher']);
 // Route::get('/admin/student/payable/{id}',[students::class,'getPayableFees']);
 // Route::get('/students/test',[students::class,'getAddMonth']);
 
@@ -104,6 +107,7 @@ Route::view('teachers/signup','teachers.signup');
 Route::post('teachers/signup', [teachers::class,'signup']);
 Route::post('teachers/class/create', [teachers::class,'CreateClass']);
 Route::post('teachers/class/delete', [teachers::class,'DeleteClass']);
+Route::post('teachers/class/add', [teachers::class,'AddStudentClass']);
 Route::get('teachers/class/{id}', [teachers::class,'ClassView']) -> middleware('revalidate');
 // Route::get('teachers/class/puchin/{id}',[teachers::class,'getPunchin']);
 Route::post('teachers/class/{c_id}/punchin/{id}', [teachers::class,'Punchin']);

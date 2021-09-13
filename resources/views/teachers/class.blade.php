@@ -159,9 +159,10 @@
                         <div class="col-md-8">
                             <h1 class="mt-4">{{$var}} : <strong>{{$course->name}}</strong></h1>
                         </div>
-                        <div class="col-md-4 float-end">
-                            <button class="btn btn-outline-warning mt-4 float-end" data-bs-toggle="modal" data-bs-target="#studentsList"> Students List</button>
-                            <button class="btn btn-outline-primary mt-4 float-end" data-bs-toggle="modal" data-bs-target="#Message"> + create new post</button>
+                        <div class="btn-group btn-group-sm col-md-4 float-end">
+                            <button class="btn btn-sm btn-outline-warning mt-4 float-end" data-bs-toggle="modal" data-bs-target="#studentsList"> Students List</button>
+                            <button class="btn btn-sm btn-outline-primary mt-4 float-end" data-bs-toggle="modal" data-bs-target="#Message"> + create new post</button>
+                            <button class="btn btn-sm btn-outline-dark mt-4 float-end" data-bs-toggle="modal" data-bs-target="#ActiveModal"> + Student</button>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -207,7 +208,69 @@
             </footer>
         </div>
     </div>
+ <!-- Modal -->
+ <div class="modal fade" id="ActiveModal" tabindex="-1" aria-labelledby="ActiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="ActiveModalLabel">Add new students</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+        <form action="add" method="post" name="form" id="AddClass">
+            <div class="container">
+                <input type="hidden" name="id" value="{{$course->id}}">
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label for="students"><strong>Select Students</strong></label>
+                        <table  id="students" class="table table-responsive table-striped table-hover compact">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Id </th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                @php
+                                $id =$course->id;
+                                    $items = DB::select('SELECT  *
+                                FROM    students
+                                WHERE   s_id NOT IN (SELECT s_id FROM class where class.course_id=?)',[$id]);
+                                @endphp
+
+                                @foreach ($items  as $item)
+                                    
+                                    <tr >
+
+                                        <td><input class="form-check-input" type="checkbox" name="students[]" id="student{{$item->s_id}}" value="{{$item->s_id}}" ></td>
+                                        {{-- <label for="student{{$item->s_id}}" class="form-check-label"> --}}
+                                            
+                                            <td ><label for="student{{$item->s_id}}" >{{$item->s_id}}</label></td>
+                                            <td> <label for="student{{$item->s_id}}" >{{$item->s_name}}</label></td>
+                                        {{-- </label> --}}
+                                    
+                                        
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> 
+        </div>
+        <div class="modal-footer">
+            @csrf
+            <input type="hidden" name="t_id" value="{{session('teacher')['id']}}">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Add</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
         {{-- toaster start here --}}
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 110">
             <div id="Toastpunchin" class="toast bg-success hide" role="alert" aria-live="assertive" data-autohide="true" data-bs-animation="true" aria-atomic="true">
@@ -625,7 +688,40 @@
             }
             });
         });
+        $("#AddClass").submit(function (e) {
+            e.preventDefault();
+            var form = $("#AddClass");
+            var action = form.attr("action"); 
+            $("button[type=submit]").attr("disabled","disabled");
 
+            $.ajax({
+            type: "POST",
+            url: action,
+            data: form.serialize(), // serializes the form's elements.
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                .then(function(value) {
+                            location.reload();
+                        });
+                // punchout.show()
+                // $("#teacher_punchout").attr("disabled","disabled");
+            
+            },
+            error:function(requestObject){
+            $("#form").modal('toggle');
+
+                    window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error")
+                    .then(function(value) {
+                            location.reload();
+                        });
+                    
+                    
+                        
+
+            }
+            });
+            
+        });
     </script>
           
     <script src="/js/scripts.js"></script>

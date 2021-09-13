@@ -66,6 +66,7 @@
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="classes">Classes</a>
                             <a class="nav-link" href="upcoming">Upcoming Teachers</a>
                         </nav>
                        
@@ -91,6 +92,10 @@
                     <a class="nav-link" href="news">
                         <div class="sb-nav-link-icon"><i class="far fa-newspaper"></i></div>
                         News
+                    </a>
+                    <a class="nav-link" href="careers">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user-tie"></i></div>
+                        Careers
                     </a>
                     {{-- <div class="sb-sidenav-menu-heading">Addons</div> --}}
                     {{-- <a class="nav-link" href="#">

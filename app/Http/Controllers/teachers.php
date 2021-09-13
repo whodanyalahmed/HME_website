@@ -135,6 +135,33 @@ class teachers extends Controller
             return ["errorMsg"=>json_encode($th)];
         }
     }
+    public function AddStudentClass(Request $req)
+    {
+        try {
+
+            $selected = $req->all(); 
+            $students = $selected['students'];
+            
+            $id = $req->id;
+            foreach ($students as $ele) 
+            {
+                DB::table('class')->insert(
+                    array('course_id' => $id, 's_id' => $ele)
+                );
+            }
+        
+        
+            // return ["msg"=>$ele];
+            return ["msg"=>"Successfully added to Class"];
+    
+        } 
+        catch (\Throwable $th) 
+        {
+                
+            return response( ["errorMsg"=>$th],422)
+            ->header('Content-Type', 'application/json');
+        }
+    }
 
 
     public function GetCourses($id)

@@ -367,11 +367,11 @@ body {
         </div>
       </div>
   
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-1 g-3 py-5">
-        <div class="col d-flex align-items-start">
-          @foreach ($news as $item)
+      <div class="row  g-3 py-5">
+        @foreach ($news as $item)
+        <div class="col-md-6 ">
               
-          <div class="card border-dark mb-3 me-3" style="width: 100%;height:20  0px;">
+          <div class="card border-dark mb-3 me-3" style="width: 100%;height:200px;">
             {{-- <div class="card-header">Header</div> --}}
             <div class="card-body text-dark">
               <h5 class="card-title blink fw-bolder">{{$item['Heading']}}</h5>
@@ -380,11 +380,11 @@ body {
             <div class="card-footer bg-dark text-white border-dark">Posted at: {{date('d-M-Y h:i',json_decode($item['posted_at']))}}</div>
           </div>
    
+        </div>
           @endforeach
           
-        </div>
-        <div class="container d-flex justify-content-center  ">{{ $news->links() }}</div>
       </div>
+      <div class="container d-flex justify-content-center  ">{{ $news->links() }}</div>
     </section>
   </div>
   {{-- Jumbotron starts here --}}
@@ -487,9 +487,9 @@ body {
     <li>
     <div class="thumb-content"><a href="#news">Event/News</a></div> 
     </li>
-    {{-- <li>
-    <div class="thumb-content"><a href="#.">Lifestyle</a></div> 
-    </li> --}}
+    <li>
+    <div class="thumb-content"><a href="/careers">Careers</a></div> 
+    </li>
     <li>
     <div class="thumb-content"><a href="#Contact">Contact</a></div> 
     </li>

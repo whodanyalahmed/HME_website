@@ -64,8 +64,10 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
+                                        <th>S.Id</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Amount</th>
                                         <th>fee status</th>
                                         <th>Fee Paid</th>
                                         <th>Month</th>
@@ -81,9 +83,11 @@
                                 @foreach ($data as $item)
                                 <tr>
                                 <td>{{$item['fee_id']}}</td>
+                                <td>{{$item['s_id']}}</td>
                                 <td>{{$item['s_name']}}</td>
                                 {{-- <td>{{$item['s_co_id']}}</td> --}}
                                 <td>{{$item['s_email']}}</td>
+                                <td>{{$item['fees_amount'] + $item['fee_arrears']}}</td>
                                 {{-- <td>{{($item['s_status']) ? "yes" : "no"}}</td> --}}
                                 {{-- <td>{{$item['s_joined_date']}}</td> --}}
                                 @php
@@ -119,7 +123,7 @@
                                     Edit</button></td> --}}
                                 <td>
                                     <div class="btn-group d-flex justify-content-center" role="group" aria-label="Basic mixed styles example">
-                                        <a href="notpaid/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Not Paid</a>
+                                        <a href="notpaid/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}},{{$item['fee_id']}})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-outline-danger">Not Paid</a>
                                         <a href="pending/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}})" data-bs-toggle="modal" data-bs-target="#Pending" class="btn btn-outline-warning">Pending</a>
                                         <a href="paid/{{$item['s_id']}}"   onclick="update(this,{{$item['s_id']}},{{$item['fee_id']}})" data-bs-toggle="modal" data-bs-target="#Paid" class="btn btn-outline-success">Paid</a>
                                     </div>
