@@ -387,6 +387,75 @@ body {
       <div class="container d-flex justify-content-center  ">{{ $news->links() }}</div>
     </section>
   </div>
+  {{-- News start here --}}
+  <div class="container px-4 py-5" id="icon-grid">
+    <section class="py-5  container" id="fee">
+      <div class="row text-center py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light" >Fee Structure</h1>
+          <p class="lead text-muted">All the fee details are available here</p>
+        </div>
+      </div>
+  
+      <div class="row  g-3 py-5">
+        <div class="col-md-6 ">
+              
+          <div class="card border-dark mb-3 me-3" style="width: 100%;height:250px;overflow-y:scroll  ">
+            <div class="card-header bg-dark text-white " style="border-radius: 0px">Admission fees</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title fw-bolder">Admission</h5>
+              
+              @foreach ($admissions as $admission)
+              <div class="container row mt-3">
+                <div class="col-lg-6">
+                  <p class="card-text">{{str_replace('_', ' ', $admission['name'])}}</p>
+                </div>
+                <div class="col-lg-6">
+                  <span class=" float-end">
+                    Rs.{{$admission['fee']}}/=
+
+                  </span>
+                </div>
+                <hr>
+                
+              </div>
+              @endforeach
+            </div>
+            {{-- <div class="card-footer  border-dark">Posted at: {{date('d-M-Y h:i',json_decode($item['posted_at']))}}</div> --}}
+          </div>
+   
+        </div>
+        
+        <div class="col-md-6 ">
+          <div class="card border-dark mb-3 me-3" style="width: 100%;height:250px;overflow-y:scroll  ">
+            <div class="card-header bg-dark text-white " style="border-radius: 0px">Courses fees</div>
+            <div class="card-body text-dark">
+              <h5 class="card-title fw-bolder">Courses</h5>
+              
+              @foreach ($courses as $course)
+              <div class="container row mt-3">
+                <div class="col-lg-6">
+                  <p class="card-text">{{str_replace('_', ' ', $course['name'])}}</p>
+                </div>
+                <div class="col-lg-6">
+                  <span class=" float-end">
+                    Rs.{{$course['fee']}}/=
+
+                  </span>
+                </div>
+                <hr>
+                
+              </div>
+              @endforeach
+            </div>
+            {{-- <div class="card-footer  border-dark">Posted at: {{date('d-M-Y h:i',json_decode($item['posted_at']))}}</div> --}}
+          </div>
+   
+        </div>
+          
+      </div>
+    </section>
+  </div>
   {{-- Jumbotron starts here --}}
     <section class="container" id="about">
     <div class="p-5 mb-4 bg-light rounded-3">

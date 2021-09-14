@@ -18,10 +18,32 @@ class Common extends Controller
         // $data = json_decode(json_encode($data),true);
         return $data;
     }
+    public function GetAdmissionFeeDetails()
+    {
+        $data = DB::select('select * from interest ')
+            // ->sortByDesc('posted_at')
+        ;  
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetCourseFeeDetails()
+    {
+        $data = DB::select('SELECT * 
+        FROM modules 
+        WHERE id NOT IN ( 1,2,3,4,5 )')
+            // ->sortByDesc('posted_at')
+        ;  
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
     public function Index(Request $req){
         $news = $this->GetNewsDetailsPag();
+        $admission = $this->GetAdmissionFeeDetails();
+        $courses = $this->GetCourseFeeDetails();
         // echo json_encode($news);
-        return view('welcome',["news"=>$news]);
+        return view('welcome',["news"=>$news,'admissions'=>$admission,'courses'=>$courses]);
     } 
     public function Upload(Request $req)
     {   
