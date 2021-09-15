@@ -19,7 +19,7 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Activity Log</a></li>
+                <li><a class="dropdown-item" href="activity">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="logout">Logout</a></li>
             </ul>
@@ -44,8 +44,8 @@
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="students">All Students</a>
-                            <a class="nav-link" href="studentsfee">Students Fee Details</a>
+                            <a class="nav-link" href="students"><i class="fas fa-list me-2"></i> All Students</a>
+                            <a class="nav-link" href="studentsfee"> <i class="fas fa-list me-2"></i> Students Fee Details</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#Fees" aria-expanded="false" aria-controls="Fees">
@@ -55,8 +55,8 @@
                     </a>
                     <div class="collapse" id="Fees" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="admissionfee">Admission Fees</a>
-                            <a class="nav-link" href="coursesfee">Courses Fees</a>
+                            <a class="nav-link" href="admissionfee"><i class="fas fa-list me-2"></i> Admission Fees</a>
+                            <a class="nav-link" href="coursesfee"> <i class="fas fa-list me-2"></i>Courses Fees</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -66,8 +66,9 @@
                     </a>
                     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="classes">Classes</a>
-                            <a class="nav-link" href="upcoming">Upcoming Teachers</a>
+                            <a class="nav-link" href="classes"> <i class="fas fa-list me-2"></i> Classes</a>
+                            <a class="nav-link" href="activity"><i class="fas fa-list me-2"></i> Activity</a>
+                            <a class="nav-link" href="upcoming"><i class="fas fa-list me-2"></i> Upcoming Teachers</a>
                         </nav>
                        
                         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">

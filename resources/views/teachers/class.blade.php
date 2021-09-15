@@ -305,7 +305,7 @@
           <h5 class="modal-title" id="MessageLabel">Create new post</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form action="messsage/" method="POST" id="messageform">
+        <form action="messsage" method="POST" id="messageform">
             @csrf
             <div class="modal-body">
                 <div class="mb-3">

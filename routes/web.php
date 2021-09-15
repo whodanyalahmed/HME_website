@@ -82,6 +82,7 @@ Route::post('/admin/newsDelete',[admin::class,'newsDelete']);
 Route::get('/admin/careers',[admin::class,'careers']);
 Route::get('/admin/classes',[admin::class,'classes']);
 Route::post('/admin/classedit',[admin::class,'updateTeacher']);
+Route::get('/admin/activity',[admin::class,'Activity']);
 // Route::get('/admin/student/payable/{id}',[students::class,'getPayableFees']);
 // Route::get('/students/test',[students::class,'getAddMonth']);
 

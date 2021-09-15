@@ -96,6 +96,17 @@ class admin extends Controller
             return redirect('/admin/login');
         }
     }
+    public function Activity(Request $req)
+    {
+        if(session('admin')){
+            $data = $this->GetActivityDetails();
+            return view('admin.activity',['data' => $data]);
+
+        }
+        else{
+            return redirect('/admin/login');
+        }
+    }
     public function careers(Request $req)
     {
         if(session('admin')){
@@ -153,6 +164,15 @@ class admin extends Controller
     public function GetFeedbackDetails()
     {
         $data = DB::select('select * from contactus');
+
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
+    public function GetActivityDetails()
+    {
+        $data = DB::select('SELECT * FROM `daily_logs` 
+        inner join teachers te on daily_logs.t_id = te.t_id
+        inner join course co on course_id = co.id');
 
         $data = json_decode(json_encode($data),true);
         return $data;
