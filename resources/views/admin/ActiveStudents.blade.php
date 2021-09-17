@@ -100,7 +100,10 @@
                                 {{-- <td>{{($item['onsite']) ? "yes" : "no"}}</td> --}}
                                 <td>{{$item['monthname']}}</td>
                                 <td>{{$item['year']}}</td>
-                                <td class="text-center"><a href="{{$item['url']}}"  onclick="updateView(this)" data-bs-toggle="modal" data-bs-target="#view">View</a></td>
+                                <td class="text-center"><a href="{{$item['url']}}"   onclick="updateView(this)" data-bs-toggle="modal" data-bs-target="#view">
+                                    <?php echo ($item['url'] == "")? "":"View" ?>
+                                    {{-- {{$item['url']}} --}}
+                                </a></td>
                                 <td>{{$item['name']}}</td>
                                 {{-- <td><button 
                                     data-id="{{$item['s_id']}}"  
