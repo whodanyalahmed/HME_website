@@ -396,10 +396,11 @@ class admin extends Controller
         // return $data;
         // echo gettype($data[0]['s_id']);
 
-        $data = DB::select('select st.s_id,st.s_name,st.s_email,st.fee_status,fe.fee_arrears,fe.fees_amount,fe.fee_id,fe.fees_paid,fe.fee_challan_url as url,MONTHNAME(mon.month_name) as monthname,YEAR(mon.year) as year,inte.name from students as st
+        $data = DB::select('select st.s_id,st.s_name,st.s_email,st.fee_status,mo.name as modname,fe.fee_arrears,fe.fees_amount,fe.fee_id,fe.fees_paid,fe.fee_challan_url as url,MONTHNAME(mon.month_name) as monthname,YEAR(mon.year) as year,inte.name from students as st
         inner join fees fe on st.s_id = fe.s_id
         inner join months mon on fe.month_id = mon.month_id
         inner join interest inte on st.interest = inte.id
+        left join modules mo on st.sub_interest_id = mo.id
         where st.s_status = 1');
         $data = json_decode(json_encode($data),true);
         return $data;

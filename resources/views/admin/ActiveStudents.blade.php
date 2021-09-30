@@ -104,7 +104,7 @@
                                     <?php echo ($item['url'] == "")? "":"View" ?>
                                     {{-- {{$item['url']}} --}}
                                 </a></td>
-                                <td>{{$item['name']}}</td>
+                                <td>{{$item['modname']}}</td>
                                 {{-- <td><button 
                                     data-id="{{$item['s_id']}}"  
                                     data-name="{{$item['s_name']}}"  
