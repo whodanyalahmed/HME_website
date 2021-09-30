@@ -51,6 +51,10 @@ class students extends Controller
         $exe = DB::select('select * from students where s_email = ? or s_name=? and s_password =?',$cred );
         return $exe;
     }
+    public function getSubCourses($id){
+        $exe = DB::select('select * from modules where parent = ? order by id ASC',[$id] );
+        return $exe;     
+    }
     function Index(Request $req){
         // return $this->getAddMonth();
         $data= $req->Input();

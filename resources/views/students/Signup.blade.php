@@ -33,11 +33,21 @@
     <div class="form-group col-4">
     <select class="form-select item " onchange="SelectField()" id="field" aria-label="Default select example" name="interest" required>
         <option value='' selected>Interested in</option>
-        <option value="1">English Language</option>
+        @php
+          $items = DB::select('SELECT * from modules 
+          where parent= 0');
+          foreach ($items as $key ) {
+            
+            echo '<option value="'.$key->id.'">'.$key->name.'</option>';               
+          }
+        @endphp
+
+        
+        {{-- <option value="1">English Language</option>
         <option value="2">Tuition</option>
         <option value="3">Computer Courses</option>
         <option value="4">IELTS</option>
-        <option value="5">Business</option>
+        <option value="5">Business</option> --}}
       </select>
     </div>
     <div id="ele" class="col-8"></div>
@@ -75,51 +85,41 @@
 <script>
   function SelectField() {
     var data = document.getElementById('field').value
-    console.log(data)
-    l = [ `<div class="form-group">
+
+    var somedata = "";
+
+
+    // console.log(data)
+    var web = window.location.origin;
+    // console.log(web)
+  fetch(web+"/students/getSubCourses/"+data)
+  .then((response) => {
+    return  response.json();
+  }).then((myJson) => {
+    somedata = myJson
+    var optionsDAta ="";
+    somedata.forEach(element => {
+        optionsDAta+=`<option value="${element.id}">${element.name}</option>`;
+      });
+    // console.log(optionsDAta)
+    options = `<div class="form-group">
         <select class="form-select item " aria-label="Default select example" id="module" name="sub_interest" required>
-      <option value='' selected>Select Module</option>
-      <option value="7">Beginner</option>
-      <option value="8">Module - 1</option>
-      <option value="9">Module - 2</option>
-      <option value="10">Module - 3</option>
-      <option value="11">Special Advance</option>
-      <option value="12">Conversation</option>
-    </select>
-  </div>`,
-  `<div class="form-group ">
-  
-    <select class="form-select item " aria-label="Default select example" id="tuition" name="sub_interest" required>
-      <option value='' selected>Select tuition</option>
-      <option value="13">6th</option>
-      <option value="14">7th</option>
-      <option value="15">8th</option>
-      <option value="16">9th</option>
-      <option value="17">Matric</option>
-      <option value="18">1st year</option>
-      <option value="19">2nd year</option>
-    </select>
-  </div>`,
-  `<div class="form-group ">
-  
-    <select class="form-select item " aria-label="Default select example" id="Computer" name="sub_interest" required>
-      <option value='' selected>Select Computer Course</option>
-      <option value="20">Programming</option>
-      <option value="21">Graphics</option>
-      <option value="22">Video Editing</option>
-      <option value="23">MS Office</option>
-    </select>
-  </div>`];
-    switch (data) {
+      <option value='' selected>Select course</option>
+        ${optionsDAta}
+      </select>
+  </div>`;
+      
+      // console.log(options) ;
+      switch (data) {
       case '1':
-        document.getElementById('ele').innerHTML = l[0];
+        document.getElementById('ele').innerHTML = options;
         
         break;
         case '2':
-        document.getElementById('ele').innerHTML = l[1];
+        document.getElementById('ele').innerHTML = options;
         break;
         case '3':
-          document.getElementById('ele').innerHTML = l[2];
+          document.getElementById('ele').innerHTML = options;
         
         break;
         case '4':
@@ -133,6 +133,65 @@
       default:
         break;
     }
+
+  });
+  //   l = [ `<div class="form-group">
+  //       <select class="form-select item " aria-label="Default select example" id="module" name="sub_interest" required>
+  //     <option value='' selected>Select Module</option>
+  //     <option value="7">Beginner</option>
+  //     <option value="8">Module - 1</option>
+  //     <option value="9">Module - 2</option>
+  //     <option value="10">Module - 3</option>
+  //     <option value="11">Special Advance</option>
+  //     <option value="12">Conversation</option>
+  //   </select>
+  // </div>`,
+  // `<div class="form-group ">
+  
+  //   <select class="form-select item " aria-label="Default select example" id="tuition" name="sub_interest" required>
+  //     <option value='' selected>Select tuition</option>
+  //     <option value="13">6th</option>
+  //     <option value="14">7th</option>
+  //     <option value="15">8th</option>
+  //     <option value="16">9th</option>
+  //     <option value="17">Matric</option>
+  //     <option value="18">1st year</option>
+  //     <option value="19">2nd year</option>
+  //   </select>
+  // </div>`,
+  // `<div class="form-group ">
+  
+  //   <select class="form-select item " aria-label="Default select example" id="Computer" name="sub_interest" required>
+  //     <option value='' selected>Select Computer Course</option>
+  //     <option value="20">Programming</option>
+  //     <option value="21">Graphics</option>
+  //     <option value="22">Video Editing</option>
+  //     <option value="23">MS Office</option>
+  //   </select>
+  // </div>`];
+  //   switch (data) {
+  //     case '1':
+  //       document.getElementById('ele').innerHTML = l[0];
+        
+  //       break;
+  //       case '2':
+  //       document.getElementById('ele').innerHTML = l[1];
+  //       break;
+  //       case '3':
+  //         document.getElementById('ele').innerHTML = l[2];
+        
+  //       break;
+  //       case '4':
+  //         document.getElementById('ele').innerHTML = "";
+        
+  //       break;
+  //       case '5':
+  //         document.getElementById('ele').innerHTML = "";
+        
+  //       break;
+  //     default:
+  //       break;
+  //   }
   }
 </script>
 @endsection

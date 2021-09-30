@@ -41,6 +41,7 @@ Route::view('students/signup','students.signup');
 Route::post('students/signup', [students::class,'signup']);
 Route::post('students/upload',[students::class,'Upload']);
 Route::get('students/class/{id}', [students::class,'ClassView']) -> middleware('revalidate');
+Route::get('students/getSubCourses/{id}',[students::class,'getSubCourses']);
 // Admin
 // Admin data
 Route::get("admin/login", function () {
