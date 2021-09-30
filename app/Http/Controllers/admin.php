@@ -146,7 +146,7 @@ class admin extends Controller
    
     public function GetCoursesFeeDetails()
     {
-        $data = DB::select('select * from modules');
+        $data = DB::select('select * from modules WHERE id NOT IN ( select id from modules where parent=0)');
 
         $data = json_decode(json_encode($data),true);
         return $data;
@@ -301,6 +301,32 @@ class admin extends Controller
             $message= $req->message;
             $heading= $req->heading;
             DB::update('insert into news (Heading,message) Values(?,?)', [$heading,$message]);
+            return ["msg"=>"Successfully added"];
+        } catch (\Throwable $th) {
+              return response( ["errorMsg"=>$th],422)
+                ->header('Content-Type', 'application/json');
+                return ["errorMsg"=>json_encode($th)];
+        }
+    }
+    public function courseCreate(Request $req)    
+    {
+        try {
+            $name= $req->course;
+            if($req->parent){
+                $id = DB::table('modules')->insertGetId(
+                    [
+                        'name'=>$name,
+                        'parent'=>0,
+                        'fee' => 0
+                    ]
+                    );
+                $data= DB::insert('insert into interest (id,name,fee) Values(?,?,5000)', [$id,$name]);
+            }
+            else{
+                $data = DB::insert('insert into modules (name,parent,fee) values (?, ?,?)', [$name,$req->parentName,$req->fees]);
+                
+            }
+            
             return ["msg"=>"Successfully added"];
         } catch (\Throwable $th) {
               return response( ["errorMsg"=>$th],422)

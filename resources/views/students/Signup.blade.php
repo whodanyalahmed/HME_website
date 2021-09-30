@@ -108,31 +108,38 @@
         ${optionsDAta}
       </select>
   </div>`;
-      
+      if(optionsDAta){
+        
+        document.getElementById('ele').innerHTML = options;
+      }
+      else{
+        document.getElementById('ele').innerHTML = "";
+
+      }
       // console.log(options) ;
-      switch (data) {
-      case '1':
-        document.getElementById('ele').innerHTML = options;
+    //   switch (data) {
+    //   case '1':
+    //     document.getElementById('ele').innerHTML = options;
         
-        break;
-        case '2':
-        document.getElementById('ele').innerHTML = options;
-        break;
-        case '3':
-          document.getElementById('ele').innerHTML = options;
+    //     break;
+    //     case '2':
+    //     document.getElementById('ele').innerHTML = options;
+    //     break;
+    //     case '3':
+    //       document.getElementById('ele').innerHTML = options;
         
-        break;
-        case '4':
-          document.getElementById('ele').innerHTML = "";
+    //     break;
+    //     case '4':
+    //       document.getElementById('ele').innerHTML = "";
         
-        break;
-        case '5':
-          document.getElementById('ele').innerHTML = "";
+    //     break;
+    //     case '5':
+    //       document.getElementById('ele').innerHTML = "";
         
-        break;
-      default:
-        break;
-    }
+    //     break;
+    //   default:
+    //     break;
+    // }
 
   });
   //   l = [ `<div class="form-group">

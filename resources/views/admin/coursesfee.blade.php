@@ -13,7 +13,16 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">{{$var}}</h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1 class="mt-4">{{$var}}</h1>
+
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-outline-dark float-end mt-4" data-bs-toggle="modal" data-bs-target="#Message">+ Add Course</button>
+
+                        </div>
+                    </div>
                     {{-- <div  my-4>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
@@ -135,44 +144,131 @@
        <!-- edit Modal -->
 <div class="modal fade" id="form_modal" tabindex="-1" aria-labelledby="form_modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="form_modalLabel">Edit Course Fee Details</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-        <form  id="coursesfee" method="POST" >
-                @csrf
-            <input type="hidden" name="id" id="id">
-            <div class="row mb-md-4">
-                <div class="form-group col-md-12  mb-3 mb-md-0">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control item" id="name" name="name" placeholder="Username" required disabled>
-                </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="form_modalLabel">Edit Course Fee Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <form  id="coursesfee" method="POST" >
+                    @csrf
+                    <input type="hidden" name="id" id="id">
+                    <div class="row mb-md-4">
+                        <div class="form-group col-md-12  mb-3 mb-md-0">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control item" id="name" name="name" placeholder="Username" required disabled>
+                        </div>
+                    </div>
 
-      
-     
-           
-     
-            <div class="row mb-md-4">
-                <div class="form-group col-md-12  mb-3 mb-md-0">
-                    <label for="fee">Fees </label>
-                    <input type="text" class="form-control item" id="fee" name="fee" placeholder="fee" required>
-                </div>
-            </div>
+        
+        
             
         
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" id="admsubmit"class="btn btn-primary">Save changes</button>
+                    <div class="row mb-md-4">
+                        <div class="form-group col-md-12  mb-3 mb-md-0">
+                            <label for="fee">Fees </label>
+                            <input type="text"  class="form-control item" id="fee" name="fee" placeholder="fee" required>
+                        </div>
+                    </div>
+                
+            
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="admsubmit"class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
+    </div>
+</div>
+
+  {{-- add modal --}}
+  <div class="modal fade" id="Message" tabindex="-1" aria-labelledby="MessageLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="MessageLabel">Create Course</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+<div class="modal-body">
+        <form action="/admin/course" id="Add_News" method="POST" >
+            @csrf
+
+
+  
+        <div class="row mb-md-4">
+            <div class="form-group col-md-12  mb-3 mb-md-0">
+
+                <label for="heading">Course</label>
+                <input type="text" class="form-control item" id="c_heading" name="course" required>
+            </div>
+        </div>
+
+        <div class="row mb-md-4" id="feeComp">
+            <div class="form-group col-md-12  mb-3 mb-md-0">
+                <label for="c_fees">Fees </label>
+                <input type="number" class="form-control item" id="c_fees" name="fees" required>
+            </div>
+        </div>
+        <div class="container  mb-md-4">
+            <div class="form-check col-md-12  mb-3 mb-md-0">
+                <input class="form-check-input" type="checkbox" name="parent" value="1" onchange="CheckParent()" class="parent" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                Parent                
+                </label>
+              </div>
+        </div>
+        @php
+        $items = DB::select('SELECT * FROM `modules` 
+ 
+            where parent = 0');
+        @endphp
+        <div class="row mb-md-4" id="feeComp">
+            <div class="form-group col-md-12  mb-3 mb-md-0">
+                
+                <label for="heading">Select parent: </label>
+                @foreach ($items as $item)
+                    
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="parentName" value="{{$item->id}}" id="ra{{$item->id}}">
+                        <label class="form-check-label" for="ra{{$item->id}}">
+                            {{$item->name}}
+                        </label>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="sub">Create</button>
+        </div>
+    </form>
+
       </div>
     </div>
   </div>
+</div>
+
         <script>
-    
+    function CheckParent(){
+        var checkedValue = $('input[id=flexCheckDefault]');
+        // console.log(checkedValue[0].checked)
+        checkedValue = checkedValue[0]['checked'];
+        console.log(checkedValue)
+        if(checkedValue){
+            console.log('in if')
+            $('#c_fees').attr('disabled',true);
+            $('input[name=parentName]').attr('disabled',true)
+        }
+        else{
+            console.log('in else')
+            $('#c_fees').attr('disabled',false);
+            $('input[name=parentName]').attr('disabled',false)
+
+        }
+    }
           
 $('.edit_btn').click(function(e) {
         e.preventDefault();
@@ -212,6 +308,37 @@ $('.edit_btn').click(function(e) {
             },
             error:function(requestObject){
                    $("#form_modal").modal('toggle');
+    
+                         window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error");
+                            
+                    // location.reload();
+                                        setTimeout(() => {
+                    location.reload();
+                      },2000);
+  
+                }
+        });
+    });
+    $('#Add_News').submit(function(e){
+    
+    e.preventDefault();
+
+        form = $("#Add_News");
+        action = form.attr('action');
+        $("#sub").attr("disabled","disabled");
+
+        $.ajax({
+            type : 'POST',
+            url  : action,
+            data : form.serialize(),
+            success:function(response){
+                window.swal("Success", response.msg, "success")
+                            .then(function(value) {
+                               location.reload();
+                            });
+            },
+            error:function(requestObject){
+                   $("#Message").modal('toggle');
     
                          window.swal("Oops!",  requestObject.responseJSON.errorMsg.errorInfo[2], "error");
                             
