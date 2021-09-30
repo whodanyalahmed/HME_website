@@ -25,8 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         view()->share('siteTitle', 'HME');
         view()->share('FullsiteTitle', 'House of Modern English');
-        view()->share('Accountnno', '1103071021002301');
-        view()->share('Bank_name', 'MCB');
-        view()->share('Account_holder', 'Danyal Ahmed');
+        view()->share('Accountnno', '0110 0100983187');
+        view()->share('Bank_name', 'Meezan Bank');
+        view()->share('Account_holder', 'Syed Abdul Rehman Khan');
     }
 }
