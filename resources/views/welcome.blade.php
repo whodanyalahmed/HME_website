@@ -269,8 +269,8 @@ body {
                     <span><i class="fa fa-tablet"></i></span>
                 </div>
                 <div class="service-content">
-                    <h3 class="title">English Diploma</h3>
-                    <p class="description"><strong>{{$FullsiteTitle}}</strong> offers English classes to boost <strong>public speaking</strong> and much more. click the below link to register to get more info.</p>
+                    <h3 class="title">Language Diploma</h3>
+                    <p class="description"><strong>{{$FullsiteTitle}}</strong> offers language classes for <strong>Chinese,Dutch and English</strong> and much more. click the below link to register to get more info.</p>
                     <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
                 </div>
             </div>
@@ -283,7 +283,7 @@ body {
                     <span><i class="fas fa-briefcase"></i></span>
                 </div>
                 <div class="service-content">
-                    <h3 class="title">Business</h3>
+                    <h3 class="title">Business/<br>Certfication</h3>
                     <p class="description"><strong>{{$FullsiteTitle}}</strong> offers Business classes from <strong>Marking to buisness strategies</strong>. click the below link to register to get more info.</p>
                     <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
                 </div>
@@ -296,8 +296,14 @@ body {
                   <span><i class="fa fa-tablet"></i></span>
               </div>
               <div class="service-content">
-                  <h3 class="title"> Certificaion </h3>
-                  <p class="description"><strong>{{$FullsiteTitle}}</strong> offers other courses and certification to boost <strong>Soft skills</strong> and much more. click the below link to register to get more info.</p>
+                  <h3 class="title"> Demo </h3>
+                  <p class="description">
+                    Try - <strong>Language </strong> |  <a href="#"> here </a><br> 
+                    Try - <strong>Computer </strong> |  <a href="#"> here </a><br> 
+                    Try - <strong>Chinese </strong> |  <a href="#"> here </a><br> 
+                    Try - <strong>Certific. </strong> |  <a href="#"> here </a><br> 
+                    
+                    for more. click the below link to register to get more info.</p>
                   <a href="students/signup" class="read-more fa fa-plus" data-toggle="tooltip" title="Read More"></a>
               </div>
           </div>
