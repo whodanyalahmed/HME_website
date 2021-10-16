@@ -113,11 +113,11 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
-                @if ($days != 0){
+                @if ($days != 0)
                     <div class="alert alert-danger" role="alert">
-                        {{$days}}
+                        <strong class="text-center">{{$days}}</strong>
                       </div>
-                }
+                
                     
                 @endif
                 <div class="container">
