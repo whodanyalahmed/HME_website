@@ -11,7 +11,7 @@ class Common extends Controller
 {
     public function GetNewsDetailsPag()
     {
-        $data = news::orderBy('posted_at','DESC')->paginate(2)
+        $data = news::orderBy('posted_at','DESC')->paginate(4)
             // ->sortByDesc('posted_at')
         ;  
 

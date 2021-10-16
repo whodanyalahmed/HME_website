@@ -261,11 +261,19 @@
                     <label for="field">Interested</label>
                 <select class="form-select item " onload="SelectField()" onchange="SelectField()" id="field" aria-label="Default select example" name="interest" required>
                     <option value='' selected>Interested in</option>
-                    <option value="1">English Language</option>
+                    @php
+                    $items = DB::select('SELECT * from modules 
+                    where parent= 0');
+                    foreach ($items as $key ) {
+                        
+                        echo '<option value="'.$key->id.'">'.$key->name.'</option>';               
+                    }
+                    @endphp
+                    {{-- <option value="1">English Language</option>
                     <option value="2">Tuition</option>
                     <option value="3">Computer Courses</option>
                     <option value="4">IELTS</option>
-                    <option value="5">Business</option>
+                    <option value="5">Business</option> --}}
                 </select>
                 </div>
                 <div id="ele" class="col-md-6  mb-3 mb-md-0"></div>
@@ -405,29 +413,40 @@
   </div>`;
       
       // console.log(options) ;
-      switch (data) {
-      case '1':
-        document.getElementById('ele').innerHTML = options;
-        
-        break;
-        case '2':
-        document.getElementById('ele').innerHTML = options;
-        break;
-        case '3':
-          document.getElementById('ele').innerHTML = options;
-        
-        break;
-        case '4':
+      if(optionsDAta == ""){
+            console.log(optionsDAta)
           document.getElementById('ele').innerHTML = "";
         
-        break;
-        case '5':
-          document.getElementById('ele').innerHTML = "";
-        
-        break;
-      default:
-        break;
-    }
+      }
+      else{
+
+      
+    switch (data) {
+        case data:
+            document.getElementById('ele').innerHTML = options;
+            
+            break;
+            // case '2':
+            // document.getElementById('ele').innerHTML = options;
+            // break;
+            // case '3':
+            //   document.getElementById('ele').innerHTML = options;
+            
+            // break;
+            // case '4':
+            //   document.getElementById('ele').innerHTML = options;
+            
+            // break;
+            // case '':
+            //   document.getElementById('ele').innerHTML = "";
+            
+            // break;
+        default:
+            document.getElementById('ele').innerHTML = "";
+            
+            break;
+            }
+        }
 
   });
   //   l = [ `<div class="form-group">

@@ -161,17 +161,29 @@ body {
 {{-- Carousel start here --}}
 <div id="myCarousel" class="carousel slide hidden cover-container h-100" data-bs-ride="carousel">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="active" aria-current="true"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class="" aria-current="true"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="3" aria-label="Slide 4" class="" aria-current="true"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item">
+      <div class="carousel-item active">
         {{-- <svg class="bd-placeholder-img" width="100%" height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" width="100%" fill="#777"></rect></svg> --}}
         <img src="https://source.unsplash.com/1400x680/?education" height="100%" width="100%" alt="school">
         <div class="container">
           <div class="carousel-caption text-start">
             <h1>Life in {{ $siteTitle }}.</h1>
+            
+            <p><a class="btn btn-lg-block btn-sm-block btn-warning" href="/students/signup">Sign up today</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        {{-- <svg class="bd-placeholder-img" width="100%" height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" width="100%" fill="#777"></rect></svg> --}}
+        <img src="assets/img/img.jpg" height="100%" width="100%" alt="school">
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Join {{ $siteTitle }}.</h1>
             
             <p><a class="btn btn-lg-block btn-sm-block btn-warning" href="/students/signup">Sign up today</a></p>
           </div>
@@ -188,7 +200,7 @@ body {
           </div>
         </div>
       </div>
-      <div class="carousel-item active">
+      <div class="carousel-item ">
         <img src="https://source.unsplash.com/1400x680/?students" height="100%" width="100%" alt="school">
         <div class="container">
           <div class="carousel-caption text-end">
@@ -215,7 +227,7 @@ body {
       <h1 class="fw-light" ><strong>Online</strong> Services</h1>
       <p class="lead text-muted">we provide the best language and tuition service in the town</p>
       <p>
-        <a href="/student/signup" class="btn btn-warning my-2">Join today</a>
+        <a href="/student/signup" class="btn btn-warning my-2">Progress today</a>
         <a href="#Contact" class="btn btn-secondary my-2">more information</a>
       </p>
     </div>

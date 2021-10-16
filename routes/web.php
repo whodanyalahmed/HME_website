@@ -37,7 +37,7 @@ Route::get('students/logout', function () {
     }
     return redirect('students/login');
 })-> middleware('revalidate');
-Route::view('students/signup','students.signup');
+Route::view('students/signup','students.Signup');
 Route::post('students/signup', [students::class,'signup']);
 Route::post('students/upload',[students::class,'Upload']);
 Route::get('students/class/{id}', [students::class,'ClassView']) -> middleware('revalidate');
