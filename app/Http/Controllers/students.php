@@ -95,9 +95,13 @@ class students extends Controller
             // return $exe[0]->s_status;
             if($exe[0]->s_status == 1){
                 if(session('user')['fee_status'] == 1){
+                    $left_days = 0;
+                    if(date('d') >= 25){
+                        $left_days = "Please pay your fees before 1st to get uninterrupted services";
+                    }
                     $courses = $this->GetCourses(session('user')['id']);
                     // return session('fee_status');
-                    return view('dashboard',['courses'=>$courses]);
+                    return view('dashboard',['courses'=>$courses,'days'=>$left_days]);
                 }
                 else{
                     return view('s_payment');
