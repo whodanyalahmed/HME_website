@@ -97,7 +97,7 @@ class students extends Controller
                 if(session('user')['fee_status'] == 1){
                     $left_days = 0;
                     if(date('d') >= 25){
-                        $left_days = "Please pay your fees before 1st to get uninterrupted services";
+                        $left_days = "Please pay your fees before 1st to get uninterrupted services...after 1st portal wouldn't be able to open if you haven't paid your dues.";
                     }
                     $courses = $this->GetCourses(session('user')['id']);
                     // return session('fee_status');
