@@ -29,9 +29,7 @@ class Common extends Controller
     }
     public function GetCourseFeeDetails()
     {
-        $data = DB::select('SELECT * 
-        FROM modules 
-        WHERE id NOT IN ( 1,2,3,4,5 )')
+        $data = DB::select('select * from modules WHERE id NOT IN ( select id from modules where parent=0)')
             // ->sortByDesc('posted_at')
         ;  
 
