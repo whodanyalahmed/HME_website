@@ -3,7 +3,7 @@
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         {{-- <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg> --}}
         {{-- <span class="fs-4 fw-bold"> {{ $siteTitle }}</span> --}}
-        <img src="assets\img\logo.svg" width="80px" alt="site logo" srcset="">
+        <img src="../assets/img/logo.svg" width="80px" alt="site logo" srcset="">
       </a>
 
       <ul class="nav navbar" id="top-menu">
